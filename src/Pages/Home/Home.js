@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import {
   Box,
   Image,
@@ -39,7 +39,7 @@ const Home = () => {
     rating: 4,
   };
   const toast = useToast();
-  const toastIdRef = React.useRef();
+  const toastIdRef = useRef();
   function addToast() {
     toastIdRef.current = toast({
       title: `top toast`,
@@ -48,9 +48,9 @@ const Home = () => {
     });
   }
   //   const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = React.useRef();
+  const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef();
+  const btnRef = useRef();
   console.log(formData);
 
   return (

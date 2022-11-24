@@ -32,6 +32,7 @@ export const routes = createBrowserRouter([
     path: "/dashboard",
     element: <DashBoard />,
     children: [
+      { index: true, element: <AllBuyers /> },
       { path: "/dashboard/all-buyers", element: <AllBuyers /> },
       { path: "/dashboard/all-sellers", element: <AllSellers /> },
       { path: "/dashboard/add-product", element: <AddProduct /> },
