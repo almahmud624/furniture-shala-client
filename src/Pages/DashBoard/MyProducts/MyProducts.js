@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Table,
   Thead,
@@ -9,9 +9,16 @@ import {
   Td,
   TableContainer,
   Heading,
+  Image,
+  Text,
+  Button,
 } from "@chakra-ui/react";
+import { DataStoreContext } from "../../../Context/DataProvider";
 
 const MyProducts = () => {
+  const { sellerProducts } = useContext(DataStoreContext);
+  console.log(sellerProducts);
+
   return (
     <div>
       <Heading
@@ -23,38 +30,43 @@ const MyProducts = () => {
         My Product
       </Heading>
       <TableContainer>
-        <Table variant="simple" bg={"gray.300"}>
+        <Table variant="simple" bg={"gray.300"} _dark={{ bg: "gray.800" }}>
           <Thead>
             <Tr>
-              <Th>To convert</Th>
-              <Th>into</Th>
-              <Th isNumeric>multiply by</Th>
+              <Th></Th>
+              <Th>Name</Th>
+              <Th>Category</Th>
+              <Th isNumeric>Price</Th>
+              <Th>Status</Th>
+              <Th>Action</Th>
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
-            </Tr>
-            <Tr>
-              <Td>feet</Td>
-              <Td>centimetres (cm)</Td>
-              <Td isNumeric>30.48</Td>
-            </Tr>
-            <Tr>
-              <Td>yards</Td>
-              <Td>metres (m)</Td>
-              <Td isNumeric>0.91444</Td>
-            </Tr>
+            {sellerProducts?.map((product) => (
+              <Tr key={Math.random()}>
+                <Image
+                  src={product?.productImg}
+                  w="12"
+                  p={"1"}
+                  rounded={"2xl"}
+                />
+                <Td>{product?.productName}</Td>
+                <Td>{product?.categories}</Td>
+                <Td isNumeric color="green.600">
+                  <Text as="del" fontSize={"xs"} color="red.600" pr={1}>
+                    ${product?.oldPrice}
+                  </Text>
+                  ${product?.newPrice}
+                </Td>
+                <Td color="green.600">Available</Td>
+                <Td>
+                  <Button bg="teal.600" size="sm">
+                    Advertise
+                  </Button>
+                </Td>
+              </Tr>
+            ))}
           </Tbody>
-          <Tfoot>
-            <Tr>
-              <Th>To convert</Th>
-              <Th>into</Th>
-              <Th isNumeric>multiply by</Th>
-            </Tr>
-          </Tfoot>
         </Table>
       </TableContainer>
     </div>

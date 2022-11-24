@@ -4,7 +4,7 @@ export const DataStoreContext = createContext();
 
 const DataProvider = ({ children }) => {
   const [formData, setFormData] = useState();
-  const [sellerProducts, setSellerProducts] = useState();
+  const [sellerProducts, setSellerProducts] = useState([]);
 
   const dataStore = {
     formData,

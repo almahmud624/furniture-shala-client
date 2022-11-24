@@ -22,10 +22,12 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { DataStoreContext } from "../../../Context/DataProvider";
 
 const AddProduct = () => {
-  const [setSellerProducts] = useContext(DataStoreContext);
+  const { sellerProducts, setSellerProducts } = useContext(DataStoreContext);
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -36,11 +38,13 @@ const AddProduct = () => {
 
   // image preview state
   const [imgPreview, setImgPreview] = useState(null);
-  console.log(imgPreview);
 
-  function onSubmit(values) {
-    values.productImg = imgPreview?.imgSrc;
-    console.log(values);
+  function onSubmit(product) {
+    product._id = Math.random() * 400;
+    product.productImg = imgPreview?.imgSrc;
+    const newProducts = [product, ...sellerProducts];
+    setSellerProducts(newProducts);
+    navigate("/dashboard/my-products");
     return new Promise((resolve) => {
       setTimeout(() => {
         toastIdRef.current = toast({
@@ -185,23 +189,24 @@ const AddProduct = () => {
                   </Flex>
                 </FormControl>
               </HStack>
-              <HStack>
-                <Box>
-                  <FormControl isRequired>
-                    <FormLabel>Product Name</FormLabel>
-                    <Input
-                      id="productName"
-                      type="text"
-                      {...register("productName", {
-                        required: "This is required",
-                      })}
-                      placeholder="ex. chest of drawers"
-                    />
-                    {/* <FormErrorMessage>
+              <Box>
+                <FormControl isRequired>
+                  <FormLabel>Product Name</FormLabel>
+                  <Input
+                    id="productName"
+                    type="text"
+                    {...register("productName", {
+                      required: "This is required",
+                    })}
+                    placeholder="ex. chest of drawers"
+                  />
+                  {/* <FormErrorMessage>
                       {errors.productName && errors.productName.message}
                     </FormErrorMessage> */}
-                  </FormControl>
-                </Box>
+                </FormControl>
+              </Box>
+              <Stack direction={["column", "row"]}>
+                {" "}
                 <Box>
                   <FormControl isRequired>
                     <FormLabel>Old Amount</FormLabel>
@@ -234,7 +239,7 @@ const AddProduct = () => {
                     </NumberInput>
                   </FormControl>
                 </Box>
-              </HStack>
+              </Stack>
               <FormControl isRequired>
                 <FormLabel>Product Description</FormLabel>
                 <Textarea
@@ -246,7 +251,53 @@ const AddProduct = () => {
                 />
               </FormControl>
               <Box>
-                <HStack>
+                <Stack direction={["column", "row"]}>
+                  <FormControl isRequired>
+                    <FormLabel>Categories</FormLabel>
+                    <Select
+                      placeholder="Home Furniture"
+                      {...register("categories", {
+                        required: "This is required",
+                      })}
+                    >
+                      <option
+                        value="home furniture"
+                        textTransform={"capitalize"}
+                      >
+                        home furniture
+                      </option>
+                      <option
+                        value="office furniture"
+                        textTransform={"capitalize"}
+                      >
+                        office furniture
+                      </option>
+                      <option
+                        value="restaurent furniture"
+                        textTransform={"capitalize"}
+                      >
+                        restaurent furniture
+                      </option>
+                    </Select>
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>In Stock</FormLabel>
+                    <NumberInput>
+                      <NumberInputField
+                        {...register("stock", {
+                          required: "This is required",
+                        })}
+                        placeholder="2"
+                      />
+                      {/* <FormErrorMessage>
+                        {errors.oldPrice && errors.oldPrice.message}
+                      </FormErrorMessage> */}
+                    </NumberInput>
+                  </FormControl>
+                </Stack>
+              </Box>
+              <Box>
+                <Stack direction={["column", "row"]}>
                   <FormControl isRequired>
                     <FormLabel>Product Condition</FormLabel>
                     <Select placeholder="Excellent">
@@ -259,7 +310,7 @@ const AddProduct = () => {
                     <FormLabel>Year of purchase</FormLabel>
                     <NumberInput>
                       <NumberInputField
-                        {...register("priceYear", {
+                        {...register("purchaseYear", {
                           required: "This is required",
                         })}
                         placeholder="23/12/2018"
@@ -269,10 +320,10 @@ const AddProduct = () => {
                       </FormErrorMessage> */}
                     </NumberInput>
                   </FormControl>
-                </HStack>
+                </Stack>
               </Box>
               <Box>
-                <HStack>
+                <Stack direction={["column", "row"]}>
                   <FormControl isRequired>
                     <FormLabel>Location</FormLabel>
                     <Input
@@ -298,7 +349,7 @@ const AddProduct = () => {
                       </FormErrorMessage> */}
                     </NumberInput>
                   </FormControl>
-                </HStack>
+                </Stack>
               </Box>
 
               <Stack spacing={10} pt={2}>
