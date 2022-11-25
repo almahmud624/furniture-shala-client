@@ -17,24 +17,50 @@ import {
   PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
-  PopoverAnchor,
   Button,
   Portal,
   Grid,
-  Container,
+  useToast,
 } from "@chakra-ui/react";
-import { BsArrowUpRight, BsHeartFill, BsHeart } from "react-icons/bs";
+import { BsHeartFill, BsHeart } from "react-icons/bs";
 
 const CategoryProducts = () => {
   const { sellerProducts } = useContext(DataStoreContext);
+  const toast = useToast();
   const [liked, setLiked] = useState(false);
+
+  const handleWishList = (product) => {
+    const item = sellerProducts.find((prod) => prod?._id === product?._id);
+
+    if (!liked) {
+      item.wishListed = true;
+      toast({
+        title: `Product Add on WishList`,
+        position: "top",
+        isClosable: true,
+        status: "success",
+      });
+    } else {
+      item.wishListed = false;
+      toast({
+        title: `Product remove from WishList`,
+        position: "top",
+        isClosable: true,
+        status: "success",
+      });
+    }
+  };
+  console.log(sellerProducts);
+
   return (
-    <Container maxW={"xl"} centerContent>
-      <Grid templateColumns="repeat(3, 1fr)">
+    <Box maxW={"container.lg"} mx={"auto"}>
+      <Grid
+        templateColumns={["repeat(1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]}
+      >
         {sellerProducts?.map((product) => (
           <Center py={6}>
             <Box
-              w="xs"
+              w="full"
               rounded={"sm"}
               my={5}
               mx={[0, 5]}
@@ -107,14 +133,16 @@ const CategoryProducts = () => {
                     <Portal>
                       <PopoverContent>
                         <PopoverArrow />
-                        <PopoverHeader>Are You Sure?</PopoverHeader>
+                        <PopoverHeader>Are you sure?</PopoverHeader>
                         <PopoverCloseButton />
                         <PopoverBody>
-                          <Button size={"sm"} colorScheme="blue">
-                            Confirm
-                          </Button>
+                          <Text>You want to report this seller!!</Text>
                         </PopoverBody>
-                        <PopoverFooter>This is the footer</PopoverFooter>
+                        <PopoverFooter textAlign={"right"}>
+                          <Button size={"sm"} colorScheme="teal">
+                            Reported
+                          </Button>
+                        </PopoverFooter>
                       </PopoverContent>
                     </Portal>
                   </Popover>
@@ -126,9 +154,12 @@ const CategoryProducts = () => {
                   roundedBottom={"sm"}
                   borderLeft={"1px"}
                   cursor="pointer"
-                  onClick={() => setLiked(!liked)}
+                  onClick={() => {
+                    handleWishList(product);
+                    setLiked(!liked);
+                  }}
                 >
-                  {liked ? (
+                  {product?.wishListed ? (
                     <BsHeartFill fill="red" fontSize={"24px"} />
                   ) : (
                     <BsHeart fontSize={"24px"} />
@@ -139,7 +170,7 @@ const CategoryProducts = () => {
           </Center>
         ))}
       </Grid>
-    </Container>
+    </Box>
   );
 };
 

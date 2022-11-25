@@ -22,6 +22,7 @@ const LinkItems = [
   { name: "My Products", icon: FiCompass, path: "/dashboard/my-products" },
   { name: "My Buyers", icon: FiCompass, path: "/dashboard/my-buyers" },
   { name: "My Orders", icon: FiCompass, path: "/dashboard/my-orders" },
+  { name: "My WishList", icon: FiCompass, path: "/dashboard/my-wishlist" },
   {
     name: "Make Admin",
     icon: FiCompass,

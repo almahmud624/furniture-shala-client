@@ -3,7 +3,6 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
@@ -17,7 +16,6 @@ import { DataStoreContext } from "../../../Context/DataProvider";
 
 const MyProducts = () => {
   const { sellerProducts } = useContext(DataStoreContext);
-  console.log(sellerProducts);
 
   return (
     <div>

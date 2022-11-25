@@ -10,6 +10,7 @@ import MakeAdmin from "../Pages/DashBoard/MakeAdmin/MakeAdmin";
 import MyBuyers from "../Pages/DashBoard/MyBuyers/MyBuyers";
 import MyOrders from "../Pages/DashBoard/MyOrders/MyOrders";
 import MyProducts from "../Pages/DashBoard/MyProducts/MyProducts";
+import MyWishlist from "../Pages/DashBoard/MyWishlist/MyWishlist";
 import ReportedItems from "../Pages/DashBoard/ReportedItems/ReportedItems";
 import Home from "../Pages/Home/Home";
 import LoginSignUp from "../Pages/LoginSignUp/LoginSignUp";
@@ -39,6 +40,7 @@ export const routes = createBrowserRouter([
       { path: "/dashboard/my-products", element: <MyProducts /> },
       { path: "/dashboard/my-buyers", element: <MyBuyers /> },
       { path: "/dashboard/my-orders", element: <MyOrders /> },
+      { path: "/dashboard/my-wishlist", element: <MyWishlist /> },
       { path: "/dashboard/reported-items", element: <ReportedItems /> },
       { path: "/dashboard/make-admin", element: <MakeAdmin /> },
     ],

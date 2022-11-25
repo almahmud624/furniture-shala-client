@@ -19,6 +19,9 @@ import {
   Textarea,
   Select,
   Image,
+  InputLeftAddon,
+  InputGroup,
+  GridItem,
 } from "@chakra-ui/react";
 import { useRef, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
@@ -42,16 +45,27 @@ const AddProduct = () => {
   function onSubmit(product) {
     product._id = Math.random() * 400;
     product.productImg = imgPreview?.imgSrc;
+    if (Number(product.newPrice) >= Number(product.oldPrice)) {
+      toast({
+        title: `Reselling new price should be less than from old price`,
+        position: "top",
+        isClosable: true,
+        status: "error",
+      });
+      return;
+    }
     const newProducts = [product, ...sellerProducts];
     setSellerProducts(newProducts);
-    navigate("/dashboard/my-products");
+
     return new Promise((resolve) => {
       setTimeout(() => {
         toastIdRef.current = toast({
-          title: `Data Submitted`,
+          title: `Product Successfully Added`,
           position: "top",
           isClosable: true,
+          status: "success",
         });
+        navigate("/dashboard/my-products");
         resolve();
       }, 3000);
     });
@@ -199,10 +213,8 @@ const AddProduct = () => {
                       required: "This is required",
                     })}
                     placeholder="ex. chest of drawers"
+                    focusBorderColor="teal.400"
                   />
-                  {/* <FormErrorMessage>
-                      {errors.productName && errors.productName.message}
-                    </FormErrorMessage> */}
                 </FormControl>
               </Box>
               <Stack direction={["column", "row"]}>
@@ -210,33 +222,55 @@ const AddProduct = () => {
                 <Box>
                   <FormControl isRequired>
                     <FormLabel>Old Amount</FormLabel>
-                    <NumberInput max={50} min={10}>
-                      <NumberInputField
-                        {...register("oldPrice", {
-                          required: "This is required",
-                        })}
-                        placeholder="0000"
-                      />
-                      {/* <FormErrorMessage>
-                        {errors.oldPrice && errors.oldPrice.message}
-                      </FormErrorMessage> */}
-                    </NumberInput>
+                    <InputGroup size="md">
+                      <InputLeftAddon
+                        bg="gray.50"
+                        _dark={{
+                          bg: "gray.800",
+                        }}
+                        color="gray.500"
+                        rounded="md"
+                      >
+                        $
+                      </InputLeftAddon>
+                      <NumberInput>
+                        <NumberInputField
+                          {...register("oldPrice", {
+                            required: "This is required",
+                          })}
+                          placeholder="0000"
+                          roundedBottomLeft={0}
+                          roundedTopLeft={0}
+                        />
+                      </NumberInput>
+                    </InputGroup>
                   </FormControl>
                 </Box>
                 <Box>
                   <FormControl isRequired>
                     <FormLabel>New Amount</FormLabel>
-                    <NumberInput max={50} min={10}>
-                      <NumberInputField
-                        {...register("newPrice", {
-                          required: "This is required",
-                        })}
-                        placeholder="0000"
-                      />
-                      {/* <FormErrorMessage>
-                        {errors.oldPrice && errors.oldPrice.message}
-                      </FormErrorMessage> */}
-                    </NumberInput>
+                    <InputGroup size="md">
+                      <InputLeftAddon
+                        bg="gray.50"
+                        _dark={{
+                          bg: "gray.800",
+                        }}
+                        color="gray.500"
+                        rounded="md"
+                      >
+                        $
+                      </InputLeftAddon>
+                      <NumberInput>
+                        <NumberInputField
+                          {...register("newPrice", {
+                            required: "This is required",
+                          })}
+                          placeholder="0000"
+                          roundedBottomLeft={0}
+                          roundedTopLeft={0}
+                        />
+                      </NumberInput>
+                    </InputGroup>
                   </FormControl>
                 </Box>
               </Stack>
@@ -289,9 +323,6 @@ const AddProduct = () => {
                         })}
                         placeholder="2"
                       />
-                      {/* <FormErrorMessage>
-                        {errors.oldPrice && errors.oldPrice.message}
-                      </FormErrorMessage> */}
                     </NumberInput>
                   </FormControl>
                 </Stack>
@@ -308,17 +339,15 @@ const AddProduct = () => {
                   </FormControl>
                   <FormControl isRequired>
                     <FormLabel>Year of purchase</FormLabel>
-                    <NumberInput>
-                      <NumberInputField
-                        {...register("purchaseYear", {
-                          required: "This is required",
-                        })}
-                        placeholder="23/12/2018"
-                      />
-                      {/* <FormErrorMessage>
+                    <Input
+                      {...register("purchaseYear", {
+                        required: "This is required",
+                      })}
+                      placeholder="23/12/2018"
+                    />
+                    {/* <FormErrorMessage>
                         {errors.oldPrice && errors.oldPrice.message}
                       </FormErrorMessage> */}
-                    </NumberInput>
                   </FormControl>
                 </Stack>
               </Box>
@@ -330,24 +359,34 @@ const AddProduct = () => {
                       id="location"
                       type="text"
                       {...register("location", {
-                        required: "Product Pick Up Location...",
+                        required: "This is required",
                       })}
-                      placeholder="Where to pick..."
+                      placeholder="Product Pick Up Location..."
                     />
                   </FormControl>
-                  <FormControl isRequired>
+                  <FormControl as={GridItem} colSpan={[3, 2]} isRequired>
                     <FormLabel>Your Phone</FormLabel>
-                    <NumberInput>
-                      <NumberInputField
+                    <InputGroup size="md">
+                      <InputLeftAddon
+                        bg="gray.50"
+                        _dark={{
+                          bg: "gray.800",
+                        }}
+                        color="gray.500"
+                        rounded="md"
+                      >
+                        +880
+                      </InputLeftAddon>
+                      <Input
+                        type="tel"
+                        placeholder="1400000000"
+                        focusBorderColor="teal.400"
+                        rounded="md"
                         {...register("phone", {
                           required: "This is required",
                         })}
-                        placeholder="+880 1700000000"
                       />
-                      {/* <FormErrorMessage>
-                        {errors.oldPrice && errors.oldPrice.message}
-                      </FormErrorMessage> */}
-                    </NumberInput>
+                    </InputGroup>
                   </FormControl>
                 </Stack>
               </Box>
