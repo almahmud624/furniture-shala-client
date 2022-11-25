@@ -57,7 +57,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
         </Flex>
         {LinkItems.map((link) => (
           <NavItem
-            key={link.name}
+            key={Math.random()}
             icon={link.icon}
             path={link?.path}
             onClose={onClose}

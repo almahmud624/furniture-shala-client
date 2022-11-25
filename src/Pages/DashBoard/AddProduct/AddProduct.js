@@ -22,6 +22,7 @@ import {
   InputLeftAddon,
   InputGroup,
   GridItem,
+  Checkbox,
 } from "@chakra-ui/react";
 import { useRef, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
@@ -34,7 +35,7 @@ const AddProduct = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm();
   const toast = useToast();
   const toastIdRef = useRef();
@@ -44,6 +45,7 @@ const AddProduct = () => {
 
   function onSubmit(product) {
     product._id = Math.random() * 400;
+    product.inStock = "available";
     product.productImg = imgPreview?.imgSrc;
     if (Number(product.newPrice) >= Number(product.oldPrice)) {
       toast({
@@ -70,6 +72,8 @@ const AddProduct = () => {
       }, 3000);
     });
   }
+  console.log(sellerProducts);
+
   const handleImgPreview = (e) => {
     e.preventDefault();
     const imgFile = e.target.files[0];
@@ -296,39 +300,39 @@ const AddProduct = () => {
                     >
                       <option
                         value="home furniture"
-                        textTransform={"capitalize"}
+                        texttransform={"capitalize"}
                       >
                         home furniture
                       </option>
                       <option
                         value="office furniture"
-                        textTransform={"capitalize"}
+                        texttransform={"capitalize"}
                       >
                         office furniture
                       </option>
                       <option
                         value="restaurent furniture"
-                        textTransform={"capitalize"}
+                        texttransform={"capitalize"}
                       >
                         restaurent furniture
                       </option>
                     </Select>
                   </FormControl>
-                  <FormControl>
-                    <FormLabel>In Stock</FormLabel>
+                  <FormControl isRequired>
+                    <FormLabel>Years of use</FormLabel>
                     <NumberInput>
                       <NumberInputField
-                        {...register("stock", {
+                        {...register("yearsOfUse", {
                           required: "This is required",
                         })}
-                        placeholder="2"
+                        placeholder="0"
                       />
                     </NumberInput>
                   </FormControl>
                 </Stack>
               </Box>
               <Box>
-                <Stack direction={["column", "row"]}>
+                <Stack direction={["column", "row"]} alignItems={"center"}>
                   <FormControl isRequired>
                     <FormLabel>Product Condition</FormLabel>
                     <Select placeholder="Excellent">
@@ -337,17 +341,10 @@ const AddProduct = () => {
                       <option value="Fair">Fair</option>
                     </Select>
                   </FormControl>
-                  <FormControl isRequired>
-                    <FormLabel>Year of purchase</FormLabel>
-                    <Input
-                      {...register("purchaseYear", {
-                        required: "This is required",
-                      })}
-                      placeholder="23/12/2018"
-                    />
-                    {/* <FormErrorMessage>
-                        {errors.oldPrice && errors.oldPrice.message}
-                      </FormErrorMessage> */}
+                  <FormControl>
+                    <Checkbox {...register("negotiable", {})}>
+                      Negotiable
+                    </Checkbox>
                   </FormControl>
                 </Stack>
               </Box>

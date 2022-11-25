@@ -11,7 +11,9 @@ import {
   Text,
   Button,
   SimpleGrid,
+  Box,
 } from "@chakra-ui/react";
+import { CloseIcon } from "@chakra-ui/icons";
 import { DataStoreContext } from "../../../Context/DataProvider";
 
 const MyWishlist = () => {
@@ -19,7 +21,11 @@ const MyWishlist = () => {
   const wishList = sellerProducts.filter(
     (product) => product?.wishListed === true
   );
-  console.log(wishList);
+
+  const handleRemoveWishItem = (id) => {
+    const item = wishList.find((prod) => prod?._id === id);
+    item.wishListed = false;
+  };
 
   return (
     <div>
@@ -32,32 +38,57 @@ const MyWishlist = () => {
         My WishList
       </Heading>
 
-      <SimpleGrid columns={[1, 2, 3]} gap={"5"}>
-        {wishList?.map((product) => (
+      {/* <SimpleGrid columns={[1, 2, 3]} gap={"5"}>
+        {wishList?.map((product, i) => (
           <Card
-            direction={{ base: "column", sm: "row" }}
+            direction={{ base: "row" }}
             overflow="hidden"
+            display={"flex"}
+            justifyContent={"space-between"}
             variant="outline"
             maxH={"20"}
+            key={Math.random()}
           >
-            <Image
-              objectFit="cover"
-              maxW={{ base: "100%", sm: "200px" }}
-              src={product?.productImg}
-              alt="Caffe Latte"
-            />
+            <Flex>
+              <Image
+                objectFit="cover"
+                maxW={{ base: "100%", sm: "200px" }}
+                src={product?.productImg}
+                alt="Caffe Latte"
+              />
 
-            <Stack spacing={"2"}>
-              <CardBody>
-                <Heading size="sm">The perfect latte</Heading>
-                <Button variant="solid" colorScheme="blue" size={"xs"} mt={"2"}>
-                  Buy Latte
-                </Button>
-              </CardBody>
-            </Stack>
+              <Stack spacing={"0"}>
+                <CardBody p={1} ml={1}>
+                  <Heading size="sm" fontWeight={"normal"}>
+                    The perfect latte
+                  </Heading>
+                  <Button
+                    variant="outline"
+                    colorScheme="blue"
+                    size={"xs"}
+                    mt={"2.5"}
+                    borderRadius={3}
+                    px={3}
+                  >
+                    Buy
+                  </Button>
+                </CardBody>
+              </Stack>
+            </Flex>
+            <Box alignItems={"center"}>
+              <Text>
+                <CloseIcon
+                  fontSize={"xs"}
+                  mr={"2"}
+                  color={"gray.500"}
+                  onClick={() => handleRemoveWishItem(product?._id)}
+                  cursor={"pointer"}
+                />
+              </Text>
+            </Box>
           </Card>
         ))}
-      </SimpleGrid>
+      </SimpleGrid> */}
     </div>
   );
 };

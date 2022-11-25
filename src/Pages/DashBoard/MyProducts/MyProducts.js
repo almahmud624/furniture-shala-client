@@ -40,7 +40,7 @@ const MyProducts = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {sellerProducts?.map((product) => (
+            {sellerProducts?.map((product, i) => (
               <Tr key={Math.random()}>
                 <Image
                   src={product?.productImg}

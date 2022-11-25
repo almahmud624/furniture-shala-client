@@ -29,8 +29,8 @@ const CategoryProducts = () => {
   const toast = useToast();
   const [liked, setLiked] = useState(false);
 
-  const handleWishList = (product) => {
-    const item = sellerProducts.find((prod) => prod?._id === product?._id);
+  const handleWishList = (id) => {
+    const item = sellerProducts.find((prod) => prod?._id === id);
 
     if (!liked) {
       item.wishListed = true;
@@ -50,15 +50,24 @@ const CategoryProducts = () => {
       });
     }
   };
-  console.log(sellerProducts);
+  const handleReportedItem = (id) => {
+    const item = sellerProducts.find((prod) => prod?._id === id);
+    item.reported = true;
+    toast({
+      title: `Reported successfully done!`,
+      position: "top",
+      isClosable: true,
+      status: "success",
+    });
+  };
 
   return (
     <Box maxW={"container.lg"} mx={"auto"}>
       <Grid
         templateColumns={["repeat(1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]}
       >
-        {sellerProducts?.map((product) => (
-          <Center py={6}>
+        {sellerProducts?.map((product, i) => (
+          <Center py={6} key={Math.random()}>
             <Box
               w="full"
               rounded={"sm"}
@@ -94,7 +103,7 @@ const CategoryProducts = () => {
                   <Text
                     fontSize={"xs"}
                     fontWeight="medium"
-                    textTransform={"capitalize"}
+                    texttransform={"capitalize"}
                   >
                     {product?.categories}
                   </Text>
@@ -126,25 +135,32 @@ const CategoryProducts = () => {
                         _hover={{
                           bg: "red.400",
                         }}
+                        disabled={product?.reported}
                       >
-                        Report
+                        {product?.reported ? "Reported" : "Report"}
                       </Button>
                     </PopoverTrigger>
-                    <Portal>
-                      <PopoverContent>
-                        <PopoverArrow />
-                        <PopoverHeader>Are you sure?</PopoverHeader>
-                        <PopoverCloseButton />
-                        <PopoverBody>
-                          <Text>You want to report this seller!!</Text>
-                        </PopoverBody>
-                        <PopoverFooter textAlign={"right"}>
-                          <Button size={"sm"} colorScheme="teal">
-                            Reported
-                          </Button>
-                        </PopoverFooter>
-                      </PopoverContent>
-                    </Portal>
+                    {!product?.reported && (
+                      <Portal>
+                        <PopoverContent>
+                          <PopoverArrow />
+                          <PopoverHeader>Are you sure?</PopoverHeader>
+                          <PopoverCloseButton />
+                          <PopoverBody>
+                            <Text>You want to report this seller!!</Text>
+                          </PopoverBody>
+                          <PopoverFooter textAlign={"right"}>
+                            <Button
+                              size={"sm"}
+                              colorScheme="teal"
+                              onClick={() => handleReportedItem(product?._id)}
+                            >
+                              Reported
+                            </Button>
+                          </PopoverFooter>
+                        </PopoverContent>
+                      </Portal>
+                    )}
                   </Popover>
                 </Flex>
                 <Flex
@@ -155,7 +171,7 @@ const CategoryProducts = () => {
                   borderLeft={"1px"}
                   cursor="pointer"
                   onClick={() => {
-                    handleWishList(product);
+                    handleWishList(product?._id);
                     setLiked(!liked);
                   }}
                 >
