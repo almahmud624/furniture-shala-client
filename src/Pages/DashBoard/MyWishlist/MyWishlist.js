@@ -22,9 +22,8 @@ const MyWishlist = () => {
     (product) => product?.wishListed === true
   );
 
-  const handleRemoveWishItem = (id) => {
-    const item = wishList.find((prod) => prod?._id === id);
-    item.wishListed = false;
+  const handleRemoveWishItem = (product) => {
+    product.wishListed = false;
   };
 
   return (
@@ -84,7 +83,7 @@ const MyWishlist = () => {
                   fontSize={"xs"}
                   mr={"2"}
                   color={"gray.500"}
-                  onClick={() => handleRemoveWishItem(product?._id)}
+                  onClick={() => handleRemoveWishItem(product)}
                   cursor={"pointer"}
                 />
               </Text>

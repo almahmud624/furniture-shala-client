@@ -11,11 +11,33 @@ import {
   Image,
   Text,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import { DataStoreContext } from "../../../Context/DataProvider";
 
 const MyProducts = () => {
   const { sellerProducts } = useContext(DataStoreContext);
+  const toast = useToast();
+  const handleAdvertisement = (product) => {
+    if (!product?.advertisement) {
+      product.advertisement = true;
+      toast({
+        title: `Advertisement added`,
+        position: "top",
+        isClosable: true,
+        status: "success",
+      });
+    } else {
+      product.advertisement = false;
+      toast({
+        title: `Advertisement removed`,
+        position: "top",
+        isClosable: true,
+        status: "success",
+      });
+    }
+  };
+  console.log(sellerProducts);
 
   return (
     <div>
@@ -58,8 +80,12 @@ const MyProducts = () => {
                 </Td>
                 <Td color="green.600">Available</Td>
                 <Td>
-                  <Button bg="teal.600" size="sm">
-                    Advertise
+                  <Button
+                    bg="teal.600"
+                    size="sm"
+                    onClick={() => handleAdvertisement(product)}
+                  >
+                    {product.advertisement ? "Remove Advertise" : "Advertise"}
                   </Button>
                 </Td>
               </Tr>
