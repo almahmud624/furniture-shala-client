@@ -16,20 +16,26 @@ import {
 } from "@chakra-ui/react";
 import { useContext, useRef } from "react";
 import { DataStoreContext } from "../Context/DataProvider";
+import moment from "moment";
 
 export default function OrderForm({ user, productInfo, onClose }) {
-  const { setFormData } = useContext(DataStoreContext);
+  const { setFormData, setOrders, orders } = useContext(DataStoreContext);
   const toast = useToast();
   const toastIdRef = useRef();
+
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
   } = useForm();
 
-  function onSubmit(values) {
-    setFormData(values);
-    console.log(values);
+  function onSubmit(order) {
+    order.productId = productInfo?._id;
+    order.orderdAt = moment().format("ll");
+    console.log(order);
+
+    const newOrders = [order, ...orders];
+    setOrders(newOrders);
 
     return new Promise((resolve) => {
       setTimeout(() => {

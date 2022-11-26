@@ -1,4 +1,5 @@
 import { RepeatIcon } from "@chakra-ui/icons";
+import moment from "moment";
 import {
   Flex,
   Box,
@@ -28,9 +29,11 @@ import { useRef, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { DataStoreContext } from "../../../Context/DataProvider";
+import { AuthContext } from "../../../Context/AuthProvider";
 
 const AddProduct = () => {
   const { sellerProducts, setSellerProducts } = useContext(DataStoreContext);
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -47,6 +50,9 @@ const AddProduct = () => {
     product._id = Math.random() * 400;
     product.inStock = "available";
     product.productImg = imgPreview?.imgSrc;
+    product.createdAt = moment().format("ll");
+    product.sellerName = user.displayName;
+    product.sellerEmail = user.email;
     if (Number(product.newPrice) >= Number(product.oldPrice)) {
       toast({
         title: `Reselling new price should be less than from old price`,
@@ -293,28 +299,19 @@ const AddProduct = () => {
                   <FormControl isRequired>
                     <FormLabel>Categories</FormLabel>
                     <Select
-                      placeholder="Home Furniture"
+                      defaultValue="Home Furniture"
                       {...register("categories", {
                         required: "This is required",
                       })}
                     >
-                      <option
-                        value="home furniture"
-                        texttransform={"capitalize"}
-                      >
-                        home furniture
+                      <option value="home" texttransform={"capitalize"}>
+                        Home Furniture
                       </option>
-                      <option
-                        value="office furniture"
-                        texttransform={"capitalize"}
-                      >
-                        office furniture
+                      <option value="office" texttransform={"capitalize"}>
+                        Office Furniture
                       </option>
-                      <option
-                        value="restaurent furniture"
-                        texttransform={"capitalize"}
-                      >
-                        restaurent furniture
+                      <option value="restaurent" texttransform={"capitalize"}>
+                        Restaurent Furniture
                       </option>
                     </Select>
                   </FormControl>

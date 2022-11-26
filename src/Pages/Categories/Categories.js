@@ -16,6 +16,10 @@ import { DataStoreContext } from "../../Context/DataProvider";
 
 const Categories = () => {
   const { sellerProducts } = useContext(DataStoreContext);
+  const duplicateCategories = sellerProducts.map((i) => i.categories);
+  const categories = duplicateCategories.filter(
+    (v, i) => duplicateCategories.indexOf(v) === i
+  );
 
   return (
     <div>
@@ -28,10 +32,10 @@ const Categories = () => {
         gap={5}
         py={8}
       >
-        {sellerProducts?.map((product) => (
+        {categories?.map((category) => (
           <Box>
             <SimpleGrid placeItems={"center"}>
-              <Link to={`/categories/${product?.categories}`}>
+              <Link to={`/categories/${category}`}>
                 <Heading
                   as={"h3"}
                   fontSize={"xl"}
@@ -45,7 +49,7 @@ const Categories = () => {
                   borderRadius={"md"}
                   _hover={{ bg: "gray.900" }}
                 >
-                  {product?.categories}
+                  {category} Furniture
                 </Heading>
               </Link>
             </SimpleGrid>
