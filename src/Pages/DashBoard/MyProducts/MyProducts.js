@@ -12,12 +12,32 @@ import {
   Text,
   Button,
   useToast,
+  Box,
 } from "@chakra-ui/react";
 import { DataStoreContext } from "../../../Context/DataProvider";
+import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../../../Context/AuthProvider";
+import axios from "axios";
 
 const MyProducts = () => {
-  const { sellerProducts } = useContext(DataStoreContext);
+  // const { sellerProducts } = useContext(DataStoreContext);
+  const { user } = useContext(AuthContext);
   const toast = useToast();
+
+  const { data: sellerProducts = [] } = useQuery({
+    queryKey: ["products", user?.email],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get(
+          `http://localhost:4000/products/${user?.email}`
+        );
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+
   const handleAdvertisement = (product) => {
     if (!product?.advertisement) {
       product.advertisement = true;
@@ -37,7 +57,7 @@ const MyProducts = () => {
       });
     }
   };
-  console.log(sellerProducts);
+  // console.log(sellerProducts);
 
   return (
     <div>
@@ -64,12 +84,16 @@ const MyProducts = () => {
           <Tbody>
             {sellerProducts?.map((product, i) => (
               <Tr key={Math.random()}>
-                <Image
-                  src={product?.productImg}
-                  w="12"
-                  p={"1"}
-                  rounded={"2xl"}
-                />
+                <Box w="12" h="12">
+                  <Image
+                    src={product?.productImg}
+                    w="full"
+                    h="full"
+                    objectFit={"cover"}
+                    p={"1"}
+                    rounded={"2xl"}
+                  />
+                </Box>
                 <Td>{product?.productName}</Td>
                 <Td>{product?.categories}</Td>
                 <Td isNumeric color="green.600">

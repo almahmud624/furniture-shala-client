@@ -25,31 +25,28 @@ import {
   GridItem,
   Checkbox,
 } from "@chakra-ui/react";
-import { useRef, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { DataStoreContext } from "../../../Context/DataProvider";
 import { AuthContext } from "../../../Context/AuthProvider";
+import axios from "axios";
 
 const AddProduct = () => {
-  const { sellerProducts, setSellerProducts } = useContext(DataStoreContext);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
     formState: { isSubmitting },
   } = useForm();
   const toast = useToast();
-  const toastIdRef = useRef();
 
   // image preview state
   const [imgPreview, setImgPreview] = useState(null);
 
-  function onSubmit(product) {
-    product._id = Math.random() * 400;
+  async function onSubmit(product) {
     product.inStock = "available";
-    product.productImg = imgPreview?.imgSrc;
     product.createdAt = moment().format("ll");
     product.sellerName = user.displayName;
     product.sellerEmail = user.email;
@@ -62,21 +59,43 @@ const AddProduct = () => {
       });
       return;
     }
-    const newProducts = [product, ...sellerProducts];
-    setSellerProducts(newProducts);
 
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        toastIdRef.current = toast({
-          title: `Product Successfully Added`,
-          position: "top",
-          isClosable: true,
-          status: "success",
-        });
-        navigate("/dashboard/my-products");
-        resolve();
-      }, 3000);
-    });
+    // formdata for img file
+    const formData = new FormData();
+    formData.append("image", imgPreview?.imgFile);
+    // host img on imgbb
+    try {
+      const { data } = await axios.post(
+        `https://api.imgbb.com/1/upload?expiration=600&key=${process.env.REACT_APP_imgbb_hostkey}`,
+        formData
+      );
+      console.log(data);
+
+      if (data.success) {
+        product.productImg = data.data.url;
+
+        // store new product
+        try {
+          const { data } = await axios.post(
+            "http://localhost:4000/products",
+            product
+          );
+          if (data.acknowledged) {
+            toast({
+              title: `Product Successfully Added`,
+              position: "top",
+              isClosable: true,
+              status: "success",
+            });
+            navigate("/dashboard/my-products");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const handleImgPreview = (e) => {
@@ -331,7 +350,7 @@ const AddProduct = () => {
                 <Stack direction={["column", "row"]} alignItems={"center"}>
                   <FormControl isRequired>
                     <FormLabel>Product Condition</FormLabel>
-                    <Select placeholder="Excellent">
+                    <Select defaultValue="Excellent">
                       <option value="Excellent">Excellent</option>
                       <option value="Good">Good</option>
                       <option value="Fair">Fair</option>
@@ -354,7 +373,7 @@ const AddProduct = () => {
                       {...register("location", {
                         required: "This is required",
                       })}
-                      placeholder="Product Pick Up Location..."
+                      placeholder="eg. Dhaka, Bangladesh"
                     />
                   </FormControl>
                   <FormControl as={GridItem} colSpan={[3, 2]} isRequired>

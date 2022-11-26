@@ -18,6 +18,7 @@ const DataProvider = ({ children }) => {
     reportedItems,
     setReportedItems,
   };
+
   return (
     <DataStoreContext.Provider value={dataStore}>
       {children}

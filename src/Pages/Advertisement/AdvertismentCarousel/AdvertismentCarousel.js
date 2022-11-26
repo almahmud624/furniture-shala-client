@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 import Slider from "react-slick";
-import "./style.AdvertismentCarousel.css";
+import "./AdvertismentCarousel.css";
 
 const settings = {
   dots: true,

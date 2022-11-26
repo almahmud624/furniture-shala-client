@@ -62,7 +62,7 @@ const MyWishlist = () => {
               <Stack spacing={"0"}>
                 <CardBody p={1} ml={1}>
                   <Heading size="sm" fontWeight={"normal"}>
-                    The perfect latte
+                    {product?.productName}
                   </Heading>
                   <Button
                     variant="outline"

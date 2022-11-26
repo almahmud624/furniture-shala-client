@@ -9,6 +9,7 @@ import {
   ModalCloseButton,
   Button,
 } from "@chakra-ui/react";
+import "./FormModal.css";
 const FormModal = ({ children, isOpen, onClose, modalTitle }) => {
   const [scrollBehavior] = useState("inside");
   return (
