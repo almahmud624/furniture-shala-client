@@ -41,9 +41,6 @@ const MyOrders = () => {
   const orderProducts = filterOrdersProducts.filter(
     (orderProduct) => orderProduct !== undefined
   );
-  console.log("seller products", sellerProducts);
-  console.log("orders products", orders);
-  console.log("filters products", orderProducts);
 
   return (
     <div>

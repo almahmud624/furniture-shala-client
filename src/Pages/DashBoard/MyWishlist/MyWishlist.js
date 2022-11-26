@@ -50,12 +50,15 @@ const MyWishlist = () => {
             key={Math.random()}
           >
             <Flex>
-              <Image
-                objectFit="cover"
-                maxW={{ base: "100%", sm: "200px" }}
-                src={product?.productImg}
-                alt="Caffe Latte"
-              />
+              <Box maxW={{ base: "100%", sm: "200px" }}>
+                <Image
+                  objectFit="cover"
+                  w="full"
+                  h="full"
+                  src={product?.productImg}
+                  alt="Caffe Latte"
+                />
+              </Box>
 
               <Stack spacing={"0"}>
                 <CardBody p={1} ml={1}>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { DataStoreContext } from "../../Context/DataProvider";
 import {
   Box,
@@ -11,7 +11,6 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  PopoverHeader,
   PopoverBody,
   PopoverFooter,
   PopoverArrow,
@@ -21,19 +20,37 @@ import {
   Grid,
   useToast,
   useDisclosure,
+  Checkbox,
+  CheckboxGroup,
+  Stack,
+  VisuallyHidden,
+  Input,
 } from "@chakra-ui/react";
 import { BsHeartFill, BsHeart } from "react-icons/bs";
 import FormModal from "../../Component/FormModal";
 import { AuthContext } from "../../Context/AuthProvider";
 import OrderForm from "../../Component/OrderForm";
+import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const CategoryProducts = () => {
-  const { sellerProducts } = useContext(DataStoreContext);
+  const { sellerProducts, setReportedItems, reportedItems } =
+    useContext(DataStoreContext);
   const { user } = useContext(AuthContext);
   const toast = useToast();
+  const toastIdRef = useRef();
   const [liked, setLiked] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [productInfo, setProductInfo] = useState();
+  const category = useParams();
+  const {
+    handleSubmit,
+    register,
+    formState: { isSubmitting },
+  } = useForm();
+  const products = sellerProducts.filter(
+    (sellerProduct) => sellerProduct?.categories === category.category
+  );
 
   const handleWishList = (id) => {
     const item = sellerProducts.find((prod) => prod?._id === id);
@@ -56,23 +73,31 @@ const CategoryProducts = () => {
       });
     }
   };
-  const handleReportedItem = (id) => {
-    const item = sellerProducts.find((prod) => prod?._id === id);
-    item.reported = true;
+
+  function handleReportedItem(reportItem) {
+    const reportedItem = {
+      productId: reportItem.productId,
+      productName: reportItem.productName,
+      reason1: reportItem.reason1 ? "Spammer" : null,
+      reason2: reportItem.reason2 ? "Fraud" : null,
+      reporterEmail: user.email,
+    };
+    setReportedItems([reportedItem, ...reportedItems]);
     toast({
-      title: `Reported successfully done!`,
+      title: `Report successfully done!`,
       position: "top",
       isClosable: true,
       status: "success",
     });
-  };
+  }
+  console.log(reportedItems);
 
   return (
     <Box maxW={"container.lg"} mx={"auto"}>
       <Grid
         templateColumns={["repeat(1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]}
       >
-        {sellerProducts?.map((product, i) => (
+        {products?.map((product, i) => (
           <Center py={6} key={Math.random()}>
             <Box
               w="full"
@@ -153,27 +178,61 @@ const CategoryProducts = () => {
                         {product?.reported ? "Reported" : "Report"}
                       </Button>
                     </PopoverTrigger>
-                    {!product?.reported && (
-                      <Portal>
-                        <PopoverContent>
-                          <PopoverArrow />
-                          <PopoverHeader>Are you sure?</PopoverHeader>
-                          <PopoverCloseButton />
+
+                    <Portal>
+                      <PopoverContent>
+                        <PopoverArrow />
+                        <PopoverCloseButton />
+                        <form onSubmit={handleSubmit(handleReportedItem)}>
                           <PopoverBody>
-                            <Text>You want to report this seller!!</Text>
+                            <Text mb={4} fontWeight={"semibold"}>
+                              Why you want to report this seller?
+                            </Text>
+                            <VisuallyHidden>
+                              <Input
+                                type="tel"
+                                focusBorderColor="teal.400"
+                                rounded="md"
+                                {...register("productId")}
+                                defaultValue={product?._id}
+                                readOnly
+                              />
+                            </VisuallyHidden>
+                            <VisuallyHidden>
+                              <Input
+                                type="text"
+                                focusBorderColor="teal.400"
+                                rounded="md"
+                                {...register("productName")}
+                                defaultValue={product?.productName}
+                                readOnly
+                              />
+                            </VisuallyHidden>
+                            <CheckboxGroup colorScheme="green">
+                              <Stack spacing={[1, 5]} direction={["column"]}>
+                                <Checkbox {...register("reason1")}>
+                                  Spammer
+                                </Checkbox>
+                                <Checkbox {...register("reason2")}>
+                                  Fraud
+                                </Checkbox>
+                              </Stack>
+                            </CheckboxGroup>
                           </PopoverBody>
                           <PopoverFooter textAlign={"right"}>
                             <Button
                               size={"sm"}
                               colorScheme="teal"
-                              onClick={() => handleReportedItem(product?._id)}
+                              type="submit"
+                              isLoading={isSubmitting}
+                              // onClick={() => handleReportedItem(product?._id)}
                             >
                               Reported
                             </Button>
                           </PopoverFooter>
-                        </PopoverContent>
-                      </Portal>
-                    )}
+                        </form>
+                      </PopoverContent>
+                    </Portal>
                   </Popover>
                 </Flex>
                 <Flex

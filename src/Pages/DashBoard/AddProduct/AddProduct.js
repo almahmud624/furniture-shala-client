@@ -78,7 +78,6 @@ const AddProduct = () => {
       }, 3000);
     });
   }
-  console.log(sellerProducts);
 
   const handleImgPreview = (e) => {
     e.preventDefault();

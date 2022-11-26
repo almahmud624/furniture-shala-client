@@ -22,7 +22,6 @@ import { AuthContext } from "../../Context/AuthProvider";
 
 const Navbar = () => {
   const { user, userSignOut } = useContext(AuthContext);
-  console.log(user);
 
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();

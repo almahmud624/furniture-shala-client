@@ -6,6 +6,7 @@ const DataProvider = ({ children }) => {
   const [formData, setFormData] = useState();
   const [sellerProducts, setSellerProducts] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [reportedItems, setReportedItems] = useState([]);
 
   const dataStore = {
     formData,
@@ -14,6 +15,8 @@ const DataProvider = ({ children }) => {
     setSellerProducts,
     orders,
     setOrders,
+    reportedItems,
+    setReportedItems,
   };
   return (
     <DataStoreContext.Provider value={dataStore}>
