@@ -14,6 +14,7 @@ import MyWishlist from "../Pages/DashBoard/MyWishlist/MyWishlist";
 import ReportedItems from "../Pages/DashBoard/ReportedItems/ReportedItems";
 import Home from "../Pages/Home/Home";
 import LoginSignUp from "../Pages/LoginSignUp/LoginSignUp";
+import PrivateRoute from "../Pages/Route/PrivateRoute";
 import ErrorPage from "../Pages/Shared/ErrorPage";
 
 export const routes = createBrowserRouter([
@@ -31,7 +32,11 @@ export const routes = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashBoard />,
+    element: (
+      <PrivateRoute>
+        <DashBoard />
+      </PrivateRoute>
+    ),
     children: [
       { index: true, element: <AllBuyers /> },
       { path: "/dashboard/all-buyers", element: <AllBuyers /> },

@@ -7,7 +7,6 @@ import {
   Img,
   Flex,
   Center,
-  useColorModeValue,
   HStack,
   Popover,
   PopoverTrigger,
@@ -21,13 +20,20 @@ import {
   Portal,
   Grid,
   useToast,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { BsHeartFill, BsHeart } from "react-icons/bs";
+import FormModal from "../../Component/FormModal";
+import { AuthContext } from "../../Context/AuthProvider";
+import OrderForm from "../../Component/OrderForm";
 
 const CategoryProducts = () => {
   const { sellerProducts } = useContext(DataStoreContext);
+  const { user } = useContext(AuthContext);
   const toast = useToast();
   const [liked, setLiked] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [productInfo, setProductInfo] = useState();
 
   const handleWishList = (id) => {
     const item = sellerProducts.find((prod) => prod?._id === id);
@@ -124,7 +130,14 @@ const CategoryProducts = () => {
                   cursor={"pointer"}
                   w="full"
                 >
-                  <Text fontSize={"md"} fontWeight={"semibold"}>
+                  <Text
+                    fontSize={"md"}
+                    fontWeight={"semibold"}
+                    onClick={() => {
+                      setProductInfo(product);
+                      onOpen();
+                    }}
+                  >
                     Purchase Now
                   </Text>
                   <Popover>
@@ -186,6 +199,9 @@ const CategoryProducts = () => {
           </Center>
         ))}
       </Grid>
+      <FormModal isOpen={isOpen} onClose={onClose} modalTitle={"demo"}>
+        <OrderForm user={user} productInfo={productInfo} onClose={onClose} />
+      </FormModal>
     </Box>
   );
 };

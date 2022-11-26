@@ -38,7 +38,7 @@ const MyWishlist = () => {
         My WishList
       </Heading>
 
-      {/* <SimpleGrid columns={[1, 2, 3]} gap={"5"}>
+      <SimpleGrid columns={[1, 2, 3]} gap={"5"}>
         {wishList?.map((product, i) => (
           <Card
             direction={{ base: "row" }}
@@ -88,7 +88,7 @@ const MyWishlist = () => {
             </Box>
           </Card>
         ))}
-      </SimpleGrid> */}
+      </SimpleGrid>
     </div>
   );
 };

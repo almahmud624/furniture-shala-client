@@ -21,7 +21,7 @@ import {
 import { useState, useContext } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 
 const LoginSignUp = () => {
@@ -32,6 +32,8 @@ const LoginSignUp = () => {
   const toast = useToast();
   const toastIdRef = useRef();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
   const {
     handleSubmit,
     register,
@@ -41,7 +43,9 @@ const LoginSignUp = () => {
   function onSubmit(user) {
     if (isLogin) {
       userLogIn(user?.email, user?.password)
-        .then((data) => {})
+        .then((data) => {
+          navigate(from, { replace: true });
+        })
         .catch((error) => {
           toast({
             title: `${error.code}`,
@@ -64,6 +68,7 @@ const LoginSignUp = () => {
             isClosable: true,
             status: "success",
           });
+          navigate(from, { replace: true });
         })
         .catch((error) => {
           toast({
