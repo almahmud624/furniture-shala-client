@@ -25,6 +25,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 import axios from "axios";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import { setAuthToken } from "../../Utilities/JwtApi";
 
 const LoginSignUp = () => {
   const { createUser, updateUserProfile, userLogIn } = useContext(AuthContext);
@@ -46,6 +47,7 @@ const LoginSignUp = () => {
     if (isLogin) {
       userLogIn(user?.email, user?.password)
         .then((data) => {
+          setAuthToken(user);
           toastIdRef.current = toast({
             title: `Login Successfull`,
             position: "top",
@@ -85,6 +87,7 @@ const LoginSignUp = () => {
               })
               .then((res) => {
                 if (res.data.acknowledged === true) {
+                  setAuthToken(user);
                   toastIdRef.current = toast({
                     title: `Registration Successfull`,
                     position: "top",
@@ -107,18 +110,6 @@ const LoginSignUp = () => {
           });
         });
     }
-    // return new Promise((resolve) => {
-    //   setTimeout(() => {
-    //     toastIdRef.current = toast({
-    //       title: `Registration Successfully`,
-    //       position: "top",
-    //       isClosable: true,
-    //       status: "success",
-    //     });
-    //     navigate("/");
-    //     resolve();
-    //   }, 3000);
-    // });
   }
   return (
     <div>
@@ -218,7 +209,6 @@ const LoginSignUp = () => {
                 </FormControl>
                 <Stack spacing={10} pt={2}>
                   <Button
-                    loadingText="Submitting"
                     isLoading={isSubmitting}
                     size="lg"
                     bg={"blue.400"}

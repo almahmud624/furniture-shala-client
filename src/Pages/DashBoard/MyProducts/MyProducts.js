@@ -22,7 +22,7 @@ import Loader from "../../../Component/Loader";
 
 const MyProducts = () => {
   // const { sellerProducts } = useContext(DataStoreContext);
-  const { user } = useContext(AuthContext);
+  const { user, userSignOut } = useContext(AuthContext);
   const toast = useToast();
 
   const {
@@ -55,9 +55,16 @@ const MyProducts = () => {
           : {
               advertisement: true,
               updateSet: "advertisement",
-            }
+            },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("furniture-token")}`,
+          },
+        }
       )
       .then((res) => {
+        console.log(res);
+
         if (res.data.modifiedCount > 0) {
           if (!product.advertisement) {
             toast({
@@ -75,6 +82,12 @@ const MyProducts = () => {
             });
           }
           refetch();
+        }
+      })
+      .catch((error) => {
+        console.log(error.response);
+        if (error.response.status === 401 || error.response.status === 403) {
+          return userSignOut();
         }
       });
   };

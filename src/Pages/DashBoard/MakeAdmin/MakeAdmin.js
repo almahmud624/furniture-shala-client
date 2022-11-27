@@ -13,28 +13,26 @@ import {
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useContext } from "react";
+import React from "react";
 import Loader from "../../../Component/Loader";
-import { DataStoreContext } from "../../../Context/DataProvider";
 
 const MakeAdmin = () => {
   const toast = useToast();
-  const { users, refetch, isLoading } = useContext(DataStoreContext);
-  // const {
-  //   data: users = [],
-  //   refetch,
-  //   isLoading,
-  // } = useQuery({
-  //   queryKey: ["users"],
-  //   queryFn: async () => {
-  //     try {
-  //       const { data } = await axios.get("http://localhost:4000/user");
-  //       return data;
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   },
-  // });
+  const {
+    data: users = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get("http://localhost:4000/user");
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
 
   // make admin
   const handleMakeAdmin = (user) => {

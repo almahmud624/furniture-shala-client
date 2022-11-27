@@ -5,6 +5,7 @@ import { Button, Center, Stack, Text, useToast } from "@chakra-ui/react";
 import { AuthContext } from "../../Context/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { setAuthToken } from "../../Utilities/JwtApi";
 
 const SocialLogin = () => {
   const { googleSignIn } = useContext(AuthContext);
@@ -23,20 +24,18 @@ const SocialLogin = () => {
               email: data.user.email,
               role: "user",
             })
-            .then((res) => {
-              if (res.data.acknowledged === true) {
-                toast({
-                  title: `Registration Successfull`,
-                  position: "top",
-                  isClosable: true,
-                  status: "success",
-                });
-                navigate(from, { replace: true });
-              }
-            });
+            .then((res) => {});
         } catch (error) {
           console.log(error);
         }
+        setAuthToken(data.user);
+        toast({
+          title: `Login Successfull`,
+          position: "top",
+          isClosable: true,
+          status: "success",
+        });
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         toast({

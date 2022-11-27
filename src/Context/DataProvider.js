@@ -21,19 +21,7 @@ const DataProvider = ({ children }) => {
         console.log(error);
       }
     },
-    refetchInterval: 1000,
-  });
-
-  const { data: users = [], refetch } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      try {
-        const { data } = await axios.get("http://localhost:4000/user");
-        return data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    // refetchInterval: 1000,
   });
 
   if (isLoading) {
@@ -63,8 +51,6 @@ const DataProvider = ({ children }) => {
     reportedItems,
     setReportedItems,
     products,
-    users,
-    refetch,
     isLoading,
   };
 

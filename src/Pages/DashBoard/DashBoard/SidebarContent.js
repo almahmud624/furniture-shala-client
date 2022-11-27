@@ -101,14 +101,14 @@ const SidebarContent = ({ onClose, ...rest }) => {
               My Products
             </NavItem>
 
-            <NavItem
+            {/* <NavItem
               key={Math.random()}
               icon={FiCompass}
               path="/dashboard/my-buyers"
               onClose={onClose}
             >
               My Buyers
-            </NavItem>
+            </NavItem> */}
           </>
         )}
 

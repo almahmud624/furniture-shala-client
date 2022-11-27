@@ -38,11 +38,13 @@ const AuthProvider = ({ children }) => {
 
   // google sign in
   const googleSignIn = () => {
+    setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
   // user sign out
   const userSignOut = () => {
+    localStorage.removeItem("furniture-token");
     return signOut(auth);
   };
   useEffect(() => {

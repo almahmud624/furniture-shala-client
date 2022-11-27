@@ -21,16 +21,30 @@ import Loader from "../../../Component/Loader";
 
 const MyOrders = () => {
   const { products } = useContext(DataStoreContext);
-  const { user } = useContext(AuthContext);
+  const { user, userSignOut } = useContext(AuthContext);
 
   // get orders by email
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ["orders", user?.email],
     queryFn: async () => {
-      const { data } = await axios.get(
-        `http://localhost:4000/orders/${user?.email}`
-      );
-      return data;
+      try {
+        const { data } = await axios.get(
+          `http://localhost:4000/orders/${user?.email}`,
+          // sent token by headers for authorization
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem(
+                "furniture-token"
+              )}`,
+            },
+          }
+        );
+        return data;
+      } catch (error) {
+        if (error.response.status === 401 || error.response.status === 403) {
+          return userSignOut();
+        }
+      }
     },
   });
 
