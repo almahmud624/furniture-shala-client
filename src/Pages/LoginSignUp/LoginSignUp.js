@@ -24,6 +24,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 import axios from "axios";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 const LoginSignUp = () => {
   const { createUser, updateUserProfile, userLogIn } = useContext(AuthContext);
@@ -45,14 +46,20 @@ const LoginSignUp = () => {
     if (isLogin) {
       userLogIn(user?.email, user?.password)
         .then((data) => {
+          toastIdRef.current = toast({
+            title: `Login Successfull`,
+            position: "top",
+            isClosable: true,
+            status: "success",
+          });
           navigate(from, { replace: true });
         })
         .catch((error) => {
           toast({
-            title: `${error.code}`,
+            title: `${error.code.split("/")[1].split("-").join(" ")}`,
             position: "top",
             isClosable: true,
-            status: "success",
+            status: "error",
           });
         });
     } else {
@@ -61,7 +68,12 @@ const LoginSignUp = () => {
           updateUserProfile({ displayName: user.name })
             .then((data) => {})
             .catch((error) => {
-              console.log(error.code);
+              toast({
+                title: `${error.code.split("/")[1].split("-").join(" ")}`,
+                position: "top",
+                isClosable: true,
+                status: "error",
+              });
             });
           // store user data on server
           try {
@@ -73,7 +85,7 @@ const LoginSignUp = () => {
               })
               .then((res) => {
                 if (res.data.acknowledged === true) {
-                  toast({
+                  toastIdRef.current = toast({
                     title: `Registration Successfull`,
                     position: "top",
                     isClosable: true,
@@ -219,6 +231,7 @@ const LoginSignUp = () => {
                     {isLogin ? "Login" : "Register"}
                   </Button>
                 </Stack>
+                <SocialLogin />
                 <Stack pt={6}>
                   {!isLogin ? (
                     <Text align={"center"}>

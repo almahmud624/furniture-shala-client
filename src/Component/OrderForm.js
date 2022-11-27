@@ -17,9 +17,10 @@ import {
 import { useContext, useRef } from "react";
 import { DataStoreContext } from "../Context/DataProvider";
 import moment from "moment";
+import axios from "axios";
 
 export default function OrderForm({ user, productInfo, onClose }) {
-  const { setFormData, setOrders, orders } = useContext(DataStoreContext);
+  const { setOrders, orders } = useContext(DataStoreContext);
   const toast = useToast();
   const toastIdRef = useRef();
 
@@ -29,25 +30,23 @@ export default function OrderForm({ user, productInfo, onClose }) {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  function onSubmit(order) {
+  async function onSubmit(order) {
     order.productId = productInfo?._id;
     order.orderdAt = moment().format("ll");
-    console.log(order);
 
-    const newOrders = [order, ...orders];
-    setOrders(newOrders);
-
-    return new Promise((resolve) => {
-      setTimeout(() => {
+    try {
+      const { data } = await axios.post("http://localhost:4000/orders", order);
+      if (data.acknowledged === true) {
         toastIdRef.current = toast({
-          title: `Data Submitted`,
+          title: `Order Successfull, Check My Orders!`,
           position: "top",
           isClosable: true,
         });
         onClose();
-        resolve();
-      }, 3000);
-    });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

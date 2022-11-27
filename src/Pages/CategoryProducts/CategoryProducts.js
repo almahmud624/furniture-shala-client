@@ -38,8 +38,7 @@ import Loader from "../../Component/Loader";
 
 const CategoryProducts = () => {
   const { category } = useParams();
-  const { sellerProducts, setReportedItems, reportedItems } =
-    useContext(DataStoreContext);
+  const { setReportedItems, reportedItems } = useContext(DataStoreContext);
   const { user } = useContext(AuthContext);
   const toast = useToast();
   const [liked, setLiked] = useState(false);
@@ -53,11 +52,7 @@ const CategoryProducts = () => {
   } = useForm();
 
   // get all category base data
-  const {
-    data: products = [],
-    refetch,
-    isLoading,
-  } = useQuery({
+  const { data: products = [], isLoading } = useQuery({
     queryKey: ["products", category],
     queryFn: async () => {
       try {
@@ -71,39 +66,47 @@ const CategoryProducts = () => {
     },
   });
 
+  // get wishlist item
+  const { data: wishlist = [], refetch } = useQuery({
+    queryKey: ["products", "wishlist", user?.email],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get(
+          `http://localhost:4000/products/wishlist/${user?.email}`
+        );
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+
+  let list = {};
+  wishlist.map((i) => {
+    return (list.id = i.productId);
+  });
+
+  // send wishlisted product
   const handleWishList = (product) => {
+    const findListedItem = wishlist.find(
+      (item) => item.productId === product?._id
+    );
+    if (findListedItem) {
+      setLiked(true);
+    } else {
+      setLiked(false);
+    }
+
+    const wishListItem = {
+      productId: product._id,
+      productName: product.productName,
+      userEmail: user.email,
+    };
     axios
-      .patch(
-        `http://localhost:4000/products/${product?._id}`,
-        product.wishListed
-          ? {
-              wishListed: false,
-              updateSet: "wishListed",
-            }
-          : {
-              wishListed: true,
-              updateSet: "wishListed",
-            }
-      )
+      .post(`http://localhost:4000/products/wishlist`, wishListItem)
       .then((res) => {
-        if (res.data.modifiedCount > 0) {
-          if (!product.wishListed) {
-            toast({
-              title: `Product added on wishlist`,
-              position: "top",
-              isClosable: true,
-              status: "success",
-            });
-          } else {
-            toast({
-              title: `Product remove from wishlist`,
-              position: "top",
-              isClosable: true,
-              status: "success",
-            });
-          }
-          refetch();
-        }
+        console.log(res.data);
+        refetch();
       });
 
     // if (!liked) {
@@ -296,10 +299,10 @@ const CategoryProducts = () => {
                   cursor="pointer"
                   onClick={() => {
                     handleWishList(product);
-                    setLiked(!liked);
+                    // setLiked(!liked);
                   }}
                 >
-                  {product?.wishListed ? (
+                  {list.id === product?._id ? (
                     <BsHeartFill fill="red" fontSize={"24px"} />
                   ) : (
                     <BsHeart fontSize={"24px"} />

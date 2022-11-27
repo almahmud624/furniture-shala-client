@@ -14,10 +14,27 @@ import {
   Button,
   Box,
 } from "@chakra-ui/react";
+import { AuthContext } from "../../../Context/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import Loader from "../../../Component/Loader";
 
 const MyOrders = () => {
-  const { orders, sellerProducts } = useContext(DataStoreContext);
-  const filterOrdersProducts = sellerProducts.map((product) => {
+  const { products } = useContext(DataStoreContext);
+  const { user } = useContext(AuthContext);
+
+  // get orders by email
+  const { data: orders = [], isLoading } = useQuery({
+    queryKey: ["orders", user?.email],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `http://localhost:4000/orders/${user?.email}`
+      );
+      return data;
+    },
+  });
+
+  const filterOrdersProducts = products.map((product) => {
     const matchdProducts = orders.filter(
       (order) => order.productId === product._id
     );
@@ -42,6 +59,9 @@ const MyOrders = () => {
     (orderProduct) => orderProduct !== undefined
   );
 
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <div>
       <Heading
