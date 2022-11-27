@@ -9,28 +9,64 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React from "react";
+import React, { useContext } from "react";
 import Loader from "../../../Component/Loader";
+import { DataStoreContext } from "../../../Context/DataProvider";
 
 const MakeAdmin = () => {
-  const {
-    data: users = [],
-    refetch,
-    isLoading,
-  } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      try {
-        const { data } = await axios.get("http://localhost:4000/user");
-        return data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  });
+  const toast = useToast();
+  const { users, refetch, isLoading } = useContext(DataStoreContext);
+  // const {
+  //   data: users = [],
+  //   refetch,
+  //   isLoading,
+  // } = useQuery({
+  //   queryKey: ["users"],
+  //   queryFn: async () => {
+  //     try {
+  //       const { data } = await axios.get("http://localhost:4000/user");
+  //       return data;
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   },
+  // });
+
+  // make admin
+  const handleMakeAdmin = (user) => {
+    axios
+      .patch(
+        `http://localhost:4000/user/role/${user?._id}`,
+        user.role === "admin"
+          ? { role: user?.previousRole, previousRole: null }
+          : { role: "admin", previousRole: user?.role }
+      )
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          if (user?.role !== "admin") {
+            toast({
+              title: `Admin Role successfully Set on ${user?.name}`,
+              position: "top",
+              isClosable: true,
+              status: "success",
+            });
+          } else {
+            toast({
+              title: `Admin Role successfully Remove from ${user?.name}`,
+              position: "top",
+              isClosable: true,
+              status: "success",
+            });
+          }
+          refetch();
+        }
+      });
+  };
+  console.log(users);
 
   if (isLoading) {
     return <Loader />;
@@ -62,16 +98,19 @@ const MakeAdmin = () => {
                   <Td>{user?.name}</Td>
                   <Td>{user?.email}</Td>
                   <Td color="green.600" style={{ textTransform: "capitalize" }}>
-                    {user?.role}
+                    {user?.role === "admin" ? "Admin" : user?.role}
                   </Td>
 
                   <Td>
                     <Button
                       bg="teal.600"
                       size="sm"
-                      // onClick={() => handleAdvertisement(product)}
+                      onClick={() => handleMakeAdmin(user)}
+                      disabled={user?.email === "furnitureshala@gmail.com"}
                     >
-                      {user.isAdmin ? "Remove Admin Role" : "Make Admin"}
+                      {user.role === "admin"
+                        ? "Remove Admin Role"
+                        : "Make Admin"}
                     </Button>
                   </Td>
                 </Tr>

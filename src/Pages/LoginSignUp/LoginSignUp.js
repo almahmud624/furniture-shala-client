@@ -135,13 +135,14 @@ const LoginSignUp = () => {
               <Stack spacing={4}>
                 {!isLogin && (
                   <>
-                    <FormControl id="firstName" isRequired>
-                      <FormLabel>First Name</FormLabel>
+                    <FormControl id="name" isRequired>
+                      <FormLabel>Your Name</FormLabel>
                       <Input
                         type="text"
                         {...register("name", {
                           required: "This is required",
                         })}
+                        style={{ textTransform: "capitalize" }}
                       />
                     </FormControl>
                     <FormControl isRequired>

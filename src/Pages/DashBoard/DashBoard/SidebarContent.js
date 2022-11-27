@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Box,
   CloseButton,
   Flex,
   useColorModeValue,
   Text,
+  Icon,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -14,27 +15,16 @@ import {
   FiSettings,
 } from "react-icons/fi";
 import NavItem from "./NavItem ";
+import { AuthContext } from "../../../Context/AuthProvider";
+import useRoleCheck from "../../../Hooks/useRoleCheck";
+import useAdminCheck from "../../../Hooks/useAdminCheck";
 
-const LinkItems = [
-  { name: "All Buyers", icon: FiHome, path: "/dashboard/all-buyers" },
-  { name: "All Sellers", icon: FiTrendingUp, path: "/dashboard/all-sellers" },
-  { name: "Add Product", icon: FiCompass, path: "/dashboard/add-product" },
-  { name: "My Products", icon: FiCompass, path: "/dashboard/my-products" },
-  { name: "My Buyers", icon: FiCompass, path: "/dashboard/my-buyers" },
-  { name: "My Orders", icon: FiCompass, path: "/dashboard/my-orders" },
-  { name: "My WishList", icon: FiCompass, path: "/dashboard/my-wishlist" },
-  {
-    name: "Make Admin",
-    icon: FiCompass,
-    path: "/dashboard/make-admin",
-  },
-  {
-    name: "Reported Items",
-    icon: FiCompass,
-    path: "/dashboard/reported-items",
-  },
-];
 const SidebarContent = ({ onClose, ...rest }) => {
+  const { user } = useContext(AuthContext);
+  const [role] = useRoleCheck(user?.email);
+  const [admin] = useAdminCheck(user?.email);
+  console.log(role);
+
   return (
     <div>
       <Box
@@ -55,16 +45,93 @@ const SidebarContent = ({ onClose, ...rest }) => {
             onClick={onClose}
           />
         </Flex>
-        {LinkItems.map((link) => (
-          <NavItem
-            key={Math.random()}
-            icon={link.icon}
-            path={link?.path}
-            onClose={onClose}
-          >
-            {link.name}
-          </NavItem>
-        ))}
+        {admin && (
+          <>
+            <NavItem
+              key={Math.random()}
+              icon={FiCompass}
+              path="/dashboard/all-sellers"
+              onClose={onClose}
+            >
+              All Selleres
+            </NavItem>
+            <NavItem
+              key={Math.random()}
+              icon={FiCompass}
+              path="/dashboard/all-buyers"
+              onClose={onClose}
+            >
+              All Buyers
+            </NavItem>
+            <NavItem
+              key={Math.random()}
+              icon={FiCompass}
+              path="/dashboard/make-admin"
+              onClose={onClose}
+            >
+              Make Admin
+            </NavItem>
+
+            <NavItem
+              key={Math.random()}
+              icon={FiCompass}
+              path="/dashboard/reported-items"
+              onClose={onClose}
+            >
+              Reported Items
+            </NavItem>
+          </>
+        )}
+        {role === "seller" && (
+          <>
+            <NavItem
+              key={Math.random()}
+              icon={FiCompass}
+              path="/dashboard/add-product"
+              onClose={onClose}
+            >
+              Add Product
+            </NavItem>
+            <NavItem
+              key={Math.random()}
+              icon={FiCompass}
+              path="/dashboard/my-products"
+              onClose={onClose}
+            >
+              My Products
+            </NavItem>
+
+            <NavItem
+              key={Math.random()}
+              icon={FiCompass}
+              path="/dashboard/my-buyers"
+              onClose={onClose}
+            >
+              My Buyers
+            </NavItem>
+          </>
+        )}
+
+        {role === "user" && (
+          <>
+            <NavItem
+              key={Math.random()}
+              icon={FiCompass}
+              path="/dashboard/my-orders"
+              onClose={onClose}
+            >
+              My Orders
+            </NavItem>
+            <NavItem
+              key={Math.random()}
+              icon={FiCompass}
+              path="/dashboard/my-wishlist"
+              onClose={onClose}
+            >
+              My WishList
+            </NavItem>
+          </>
+        )}
       </Box>
     </div>
   );

@@ -14,7 +14,9 @@ import MyWishlist from "../Pages/DashBoard/MyWishlist/MyWishlist";
 import ReportedItems from "../Pages/DashBoard/ReportedItems/ReportedItems";
 import Home from "../Pages/Home/Home";
 import LoginSignUp from "../Pages/LoginSignUp/LoginSignUp";
+import PrivateAdminRoute from "../Pages/Route/PrivateAdminRoute";
 import PrivateRoute from "../Pages/Route/PrivateRoute";
+import PrivateSellerRoute from "../Pages/Route/PrivateSellerRoute";
 import ErrorPage from "../Pages/Shared/ErrorPage";
 
 export const routes = createBrowserRouter([
@@ -42,15 +44,64 @@ export const routes = createBrowserRouter([
     ),
     children: [
       { index: true, element: <AllBuyers /> },
-      { path: "/dashboard/all-buyers", element: <AllBuyers /> },
-      { path: "/dashboard/all-sellers", element: <AllSellers /> },
-      { path: "/dashboard/add-product", element: <AddProduct /> },
-      { path: "/dashboard/my-products", element: <MyProducts /> },
-      { path: "/dashboard/my-buyers", element: <MyBuyers /> },
+      {
+        path: "/dashboard/all-buyers",
+        element: (
+          <PrivateAdminRoute>
+            <AllBuyers />
+          </PrivateAdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/all-sellers",
+        element: (
+          <PrivateAdminRoute>
+            <AllSellers />
+          </PrivateAdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/add-product",
+        element: (
+          <PrivateSellerRoute>
+            <AddProduct />
+          </PrivateSellerRoute>
+        ),
+      },
+      {
+        path: "/dashboard/my-products",
+        element: (
+          <PrivateSellerRoute>
+            <MyProducts />
+          </PrivateSellerRoute>
+        ),
+      },
+      {
+        path: "/dashboard/my-buyers",
+        element: (
+          <PrivateSellerRoute>
+            <MyBuyers />
+          </PrivateSellerRoute>
+        ),
+      },
       { path: "/dashboard/my-orders", element: <MyOrders /> },
       { path: "/dashboard/my-wishlist", element: <MyWishlist /> },
-      { path: "/dashboard/reported-items", element: <ReportedItems /> },
-      { path: "/dashboard/make-admin", element: <MakeAdmin /> },
+      {
+        path: "/dashboard/reported-items",
+        element: (
+          <PrivateAdminRoute>
+            <ReportedItems />
+          </PrivateAdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/make-admin",
+        element: (
+          <PrivateAdminRoute>
+            <MakeAdmin />
+          </PrivateAdminRoute>
+        ),
+      },
     ],
   },
 ]);
