@@ -17,10 +17,8 @@ import { CloseIcon } from "@chakra-ui/icons";
 import { DataStoreContext } from "../../../Context/DataProvider";
 
 const MyWishlist = () => {
-  const { sellerProducts } = useContext(DataStoreContext);
-  const wishList = sellerProducts.filter(
-    (product) => product?.wishListed === true
-  );
+  const { products } = useContext(DataStoreContext);
+  const wishList = products.filter((product) => product?.wishListed === true);
 
   const handleRemoveWishItem = (product) => {
     product.wishListed = false;

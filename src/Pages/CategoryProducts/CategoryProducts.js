@@ -30,12 +30,14 @@ import { BsHeartFill, BsHeart } from "react-icons/bs";
 import FormModal from "../../Component/FormModal";
 import { AuthContext } from "../../Context/AuthProvider";
 import OrderForm from "../../Component/OrderForm";
-import { useLoaderData } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import Loader from "../../Component/Loader";
 
 const CategoryProducts = () => {
-  const products = useLoaderData();
-
+  const { category } = useParams();
   const { sellerProducts, setReportedItems, reportedItems } =
     useContext(DataStoreContext);
   const { user } = useContext(AuthContext);
@@ -50,26 +52,77 @@ const CategoryProducts = () => {
     formState: { isSubmitting },
   } = useForm();
 
-  const handleWishList = (id) => {
-    const item = sellerProducts.find((prod) => prod?._id === id);
+  // get all category base data
+  const {
+    data: products = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["products", category],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get(
+          `http://localhost:4000/products?category=${category}`
+        );
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
 
-    if (!liked) {
-      item.wishListed = true;
-      toast({
-        title: `Product Add on WishList`,
-        position: "top",
-        isClosable: true,
-        status: "success",
+  const handleWishList = (product) => {
+    axios
+      .patch(
+        `http://localhost:4000/products/${product?._id}`,
+        product.wishListed
+          ? {
+              wishListed: false,
+              updateSet: "wishListed",
+            }
+          : {
+              wishListed: true,
+              updateSet: "wishListed",
+            }
+      )
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          if (!product.wishListed) {
+            toast({
+              title: `Product added on wishlist`,
+              position: "top",
+              isClosable: true,
+              status: "success",
+            });
+          } else {
+            toast({
+              title: `Product remove from wishlist`,
+              position: "top",
+              isClosable: true,
+              status: "success",
+            });
+          }
+          refetch();
+        }
       });
-    } else {
-      item.wishListed = false;
-      toast({
-        title: `Product remove from WishList`,
-        position: "top",
-        isClosable: true,
-        status: "success",
-      });
-    }
+
+    // if (!liked) {
+    //   item.wishListed = true;
+    //   toast({
+    //     title: `Product Add on WishList`,
+    //     position: "top",
+    //     isClosable: true,
+    //     status: "success",
+    //   });
+    // } else {
+    //   item.wishListed = false;
+    //   toast({
+    //     title: `Product remove from WishList`,
+    //     position: "top",
+    //     isClosable: true,
+    //     status: "success",
+    //   });
+    // }
   };
 
   function handleReportedItem(reportItem) {
@@ -88,7 +141,9 @@ const CategoryProducts = () => {
       status: "success",
     });
   }
-
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <Box maxW={"container.lg"} mx={"auto"}>
       <Grid
@@ -240,7 +295,7 @@ const CategoryProducts = () => {
                   borderLeft={"1px"}
                   cursor="pointer"
                   onClick={() => {
-                    handleWishList(product?._id);
+                    handleWishList(product);
                     setLiked(!liked);
                   }}
                 >

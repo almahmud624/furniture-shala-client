@@ -50,9 +50,11 @@ const MyProducts = () => {
         product.advertisement
           ? {
               advertisement: false,
+              updateSet: "advertisement",
             }
           : {
               advertisement: true,
+              updateSet: "advertisement",
             }
       )
       .then((res) => {
