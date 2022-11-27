@@ -24,7 +24,7 @@ const MyProducts = () => {
   const { user } = useContext(AuthContext);
   const toast = useToast();
 
-  const { data: sellerProducts = [] } = useQuery({
+  const { data: sellerProducts = [], refetch } = useQuery({
     queryKey: ["products", user?.email],
     queryFn: async () => {
       try {
@@ -39,25 +39,38 @@ const MyProducts = () => {
   });
 
   const handleAdvertisement = (product) => {
-    if (!product?.advertisement) {
-      product.advertisement = true;
-      toast({
-        title: `Advertisement added`,
-        position: "top",
-        isClosable: true,
-        status: "success",
+    axios
+      .patch(
+        `http://localhost:4000/products/${product?._id}`,
+        product.advertisement
+          ? {
+              advertisement: false,
+            }
+          : {
+              advertisement: true,
+            }
+      )
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          if (!product.advertisement) {
+            toast({
+              title: `Advertisement added`,
+              position: "top",
+              isClosable: true,
+              status: "success",
+            });
+          } else {
+            toast({
+              title: `Advertisement removed`,
+              position: "top",
+              isClosable: true,
+              status: "success",
+            });
+          }
+          refetch();
+        }
       });
-    } else {
-      product.advertisement = false;
-      toast({
-        title: `Advertisement removed`,
-        position: "top",
-        isClosable: true,
-        status: "success",
-      });
-    }
   };
-  // console.log(sellerProducts);
 
   return (
     <div>

@@ -97,7 +97,7 @@ const CategoryProducts = () => {
       <Grid
         templateColumns={["repeat(1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]}
       >
-        {products?.map((product, i) => (
+        {products?.map((product) => (
           <Center py={6} key={Math.random()}>
             <Box
               w="full"

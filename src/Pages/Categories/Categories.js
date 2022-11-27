@@ -1,22 +1,11 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  Text,
-  Stack,
-  Container,
-  Avatar,
-  useColorModeValue,
-  Grid,
-  SimpleGrid,
-} from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { DataStoreContext } from "../../Context/DataProvider";
 
 const Categories = () => {
-  const { sellerProducts } = useContext(DataStoreContext);
-  const duplicateCategories = sellerProducts.map((i) => i.categories);
+  const { products } = useContext(DataStoreContext);
+  const duplicateCategories = products.map((i) => i.categories);
   const categories = duplicateCategories.filter(
     (v, i) => duplicateCategories.indexOf(v) === i
   );

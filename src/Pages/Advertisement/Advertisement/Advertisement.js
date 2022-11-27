@@ -4,10 +4,12 @@ import { DataStoreContext } from "../../../Context/DataProvider";
 import AdvertismentCarousel from "../AdvertismentCarousel/AdvertismentCarousel";
 
 const Advertisement = () => {
-  const { sellerProducts } = useContext(DataStoreContext);
-  const advertiseItems = sellerProducts.filter(
+  const { products } = useContext(DataStoreContext);
+  const advertiseItems = products?.filter(
     (product) => product?.advertisement === true
   );
+  console.log(advertiseItems);
+
   return (
     <div>
       {advertiseItems.length > 0 && (
