@@ -23,6 +23,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
+import axios from "axios";
 
 const LoginSignUp = () => {
   const { createUser, updateUserProfile, userLogIn } = useContext(AuthContext);
@@ -62,13 +63,28 @@ const LoginSignUp = () => {
             .catch((error) => {
               console.log(error.code);
             });
-          toast({
-            title: `Registration Successfull`,
-            position: "top",
-            isClosable: true,
-            status: "success",
-          });
-          navigate(from, { replace: true });
+          // store user data on server
+          try {
+            axios
+              .post("http://localhost:4000/user", {
+                name: user.name,
+                email: user.email,
+                role: user.role,
+              })
+              .then((res) => {
+                if (res.data.acknowledged === true) {
+                  toast({
+                    title: `Registration Successfull`,
+                    position: "top",
+                    isClosable: true,
+                    status: "success",
+                  });
+                  navigate(from, { replace: true });
+                }
+              });
+          } catch (error) {
+            console.log(error);
+          }
         })
         .catch((error) => {
           toast({
