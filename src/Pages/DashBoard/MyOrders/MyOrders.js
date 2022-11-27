@@ -58,6 +58,7 @@ const MyOrders = () => {
       matchdProducts[0]?.productName &&
       matchdProducts[0]?.productPrice &&
       matchdProducts[0]?.orderdAt &&
+      matchdProducts[0]?._id &&
       product?.productImg
     ) {
       matchProduct = {
@@ -65,7 +66,9 @@ const MyOrders = () => {
         title: matchdProducts[0]?.productName,
         price: matchdProducts[0]?.productPrice,
         date: matchdProducts[0]?.orderdAt,
+        paid: matchdProducts[0]?.paid,
         img: product?.productImg,
+        productId: matchdProducts[0]?.productId,
       };
     }
     return matchProduct;
@@ -122,7 +125,7 @@ const MyOrders = () => {
                 </Td>
                 {}
                 <Td color="green.600">{product?.date}</Td>
-                <Td color="green.600">unpaid</Td>
+                <Td color="green.600">{product?.paid ? "Paid" : "unpaid"}</Td>
                 <Td>
                   <NavItem
                     path={`/dashboard/payments/${product?._id}`}
@@ -131,6 +134,7 @@ const MyOrders = () => {
                     bg="teal.400"
                     color="gray.900"
                     fontWeight={"semibold"}
+                    disabled={product?.paid}
                   >
                     Pay
                   </NavItem>

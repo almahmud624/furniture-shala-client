@@ -137,7 +137,9 @@ const MyProducts = () => {
                   </Text>
                   ${product?.newPrice}
                 </Td>
-                <Td color="green.600">Available</Td>
+                <Td color="green.600" style={{ textTransform: "capitalize" }}>
+                  {product?.inStock}
+                </Td>
                 <Td>
                   <Button
                     bg="teal.600"

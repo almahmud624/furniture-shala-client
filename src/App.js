@@ -5,6 +5,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
 const stripePromise = loadStripe(`${process.env.REACT_APP_stripe_pk}`);
+
 function App() {
   return (
     <>

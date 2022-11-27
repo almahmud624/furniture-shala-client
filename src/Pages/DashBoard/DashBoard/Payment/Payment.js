@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   FormControl,
@@ -10,15 +10,19 @@ import {
   useToast,
   NumberInputField,
   NumberInput,
+  Text,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useLoaderData } from "react-router-dom";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import "./Payment.css";
+import axios from "axios";
 
 const Payment = () => {
   const order = useLoaderData();
   const { productName, productPrice, name, email } = order;
+  console.log(order);
+
   const {
     handleSubmit,
     register,
@@ -30,10 +34,15 @@ const Payment = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  async function onSubmit(payments) {
+  // payment intents state
+  const [clientSecret, setClientSecret] = useState("");
+
+  // payment confirm traxnId state
+  const [transectionId, setTransectionId] = useState("");
+
+  const onSubmit = async (orderedItem) => {
+    // getting stripe card data
     if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded.
       return;
     }
 
@@ -49,13 +58,78 @@ const Payment = () => {
     });
 
     if (error) {
-      console.log(error);
+      toast({
+        title: `${error.message}`,
+        position: "top",
+        isClosable: true,
+        status: "error",
+      });
+      return;
     } else {
-      console.log(paymentMethod);
+    }
+    // confirm stripe card payment
+    const { paymentIntent, confirmError } = await stripe.confirmCardPayment(
+      clientSecret,
+      {
+        payment_method: {
+          card: card,
+          billing_details: {
+            name: orderedItem?.buyerName,
+            email: orderedItem?.buyerEmail,
+            orderId: orderedItem?._id,
+          },
+        },
+      }
+    );
+
+    if (confirmError) {
+      toast({
+        title: `${confirmError}`,
+        position: "top",
+        isClosable: true,
+        status: "error",
+      });
+      return;
     }
 
-    console.log(card, order);
-  }
+    if (paymentIntent.status === "succeeded") {
+      setTransectionId(paymentIntent?.id);
+      // send payment details on database
+      const paymentInfo = {
+        email,
+        productPrice,
+        orderId: order?._id,
+        productId: order?.productId,
+        txnId: paymentIntent?.id,
+      };
+      const { data } = await axios.post(
+        "http://localhost:4000/payments",
+        paymentInfo
+      );
+      if (data.acknowledged) {
+        toast({
+          title: `${"Payment Successful"}`,
+          position: "top",
+          isClosable: true,
+          status: "success",
+        });
+      }
+    }
+  };
+  // stripe payment intents
+  useEffect(() => {
+    if (productPrice === 0) {
+      return;
+    }
+    fetch("http://localhost:4000/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ price: parseInt(productPrice) }),
+    })
+      .then((res) => res.json())
+      .then((data) => setClientSecret(data.clientSecret));
+  }, [productPrice]);
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -156,11 +230,39 @@ const Payment = () => {
                     colorScheme="green"
                     isLoading={isSubmitting}
                     type="submit"
+                    disabled={transectionId}
                   >
-                    Pay ${productPrice}
+                    {transectionId ? (
+                      "Payment Successful"
+                    ) : (
+                      <>Pay ${productPrice}</>
+                    )}
                   </Button>
                 </Stack>
               </Stack>
+            </Box>
+            <Box
+              bg={"green.700"}
+              p={3}
+              borderRadius={7}
+              fontWeight="semibold"
+              textAlign={"center"}
+            >
+              {transectionId ? (
+                <Text>
+                  <Text color={"gray.800"} display={"inline-block"}>
+                    Your TxN No:
+                  </Text>{" "}
+                  {transectionId}
+                </Text>
+              ) : (
+                <Text>
+                  <Text color={"gray.800"} display={"inline-block"}>
+                    Test Card No:
+                  </Text>{" "}
+                  378282246310005
+                </Text>
+              )}
             </Box>
           </Stack>
         </Box>
