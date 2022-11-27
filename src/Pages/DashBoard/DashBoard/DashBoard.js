@@ -45,7 +45,6 @@ const DashBoard = ({ children }) => {
           {/* here all dashboard content */}
           {children} <Outlet />
         </Box>
-        <Footer />
       </Box>
     </div>
   );

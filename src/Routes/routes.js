@@ -6,6 +6,7 @@ import AddProduct from "../Pages/DashBoard/AddProduct/AddProduct";
 import AllBuyers from "../Pages/DashBoard/AllBuyers/AllBuyers";
 import AllSellers from "../Pages/DashBoard/AllSellers/AllSellers";
 import DashBoard from "../Pages/DashBoard/DashBoard/DashBoard";
+import Payment from "../Pages/DashBoard/DashBoard/Payment/Payment";
 import MakeAdmin from "../Pages/DashBoard/MakeAdmin/MakeAdmin";
 import MyBuyers from "../Pages/DashBoard/MyBuyers/MyBuyers";
 import MyOrders from "../Pages/DashBoard/MyOrders/MyOrders";
@@ -29,7 +30,11 @@ export const routes = createBrowserRouter([
       { path: "/home", element: <Home /> },
       {
         path: "/categories/:category",
-        element: <CategoryProducts />,
+        element: (
+          <PrivateRoute>
+            <CategoryProducts />
+          </PrivateRoute>
+        ),
       },
       { path: "/login", element: <LoginSignUp /> },
       { path: "/blogs", element: <Blog /> },
@@ -86,6 +91,12 @@ export const routes = createBrowserRouter([
       },
       { path: "/dashboard/my-orders", element: <MyOrders /> },
       { path: "/dashboard/my-wishlist", element: <MyWishlist /> },
+      {
+        path: "/dashboard/payments/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:4000/orders/payment/${params.id}`),
+        element: <Payment />,
+      },
       {
         path: "/dashboard/reported-items",
         element: (

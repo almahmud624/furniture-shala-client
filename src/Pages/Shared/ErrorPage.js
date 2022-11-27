@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Heading, Text, Button, Flex } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const ErrorPage = () => {
   return (
@@ -27,7 +28,7 @@ const ErrorPage = () => {
           color="white"
           variant="solid"
         >
-          Go to Home
+          <Link to="/">Go to Home</Link>
         </Button>
       </Box>
     </Flex>

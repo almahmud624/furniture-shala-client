@@ -18,6 +18,7 @@ import { AuthContext } from "../../../Context/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loader from "../../../Component/Loader";
+import NavItem from "../DashBoard/NavItem ";
 
 const MyOrders = () => {
   const { products } = useContext(DataStoreContext);
@@ -60,6 +61,7 @@ const MyOrders = () => {
       product?.productImg
     ) {
       matchProduct = {
+        _id: matchdProducts[0]?._id,
         title: matchdProducts[0]?.productName,
         price: matchdProducts[0]?.productPrice,
         date: matchdProducts[0]?.orderdAt,
@@ -72,6 +74,8 @@ const MyOrders = () => {
   const orderProducts = filterOrdersProducts.filter(
     (orderProduct) => orderProduct !== undefined
   );
+  console.log(orders);
+  console.log(orderProducts);
 
   if (isLoading) {
     return <Loader />;
@@ -120,9 +124,16 @@ const MyOrders = () => {
                 <Td color="green.600">{product?.date}</Td>
                 <Td color="green.600">unpaid</Td>
                 <Td>
-                  <Button bg="teal.600" size="sm">
+                  <NavItem
+                    path={`/dashboard/payments/${product?._id}`}
+                    display={"inline-block"}
+                    py={1}
+                    bg="teal.400"
+                    color="gray.900"
+                    fontWeight={"semibold"}
+                  >
                     Pay
-                  </Button>
+                  </NavItem>
                 </Td>
               </Tr>
             ))}
