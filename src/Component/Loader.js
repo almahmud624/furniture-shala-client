@@ -1,16 +1,20 @@
-import { Grid, Spinner } from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react";
 import React from "react";
+import { Rings } from "react-loader-spinner";
 
 const Loader = () => {
   return (
     <>
       <Grid placeItems={"center"} h="100vh">
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="xl"
+        <Rings
+          height="80"
+          width="80"
+          color="#4fa94d"
+          radius="6"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="rings-loading"
         />
       </Grid>
     </>

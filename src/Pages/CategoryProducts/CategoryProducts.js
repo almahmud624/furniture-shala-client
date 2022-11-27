@@ -30,27 +30,25 @@ import { BsHeartFill, BsHeart } from "react-icons/bs";
 import FormModal from "../../Component/FormModal";
 import { AuthContext } from "../../Context/AuthProvider";
 import OrderForm from "../../Component/OrderForm";
-import { useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 const CategoryProducts = () => {
+  const products = useLoaderData();
+
   const { sellerProducts, setReportedItems, reportedItems } =
     useContext(DataStoreContext);
   const { user } = useContext(AuthContext);
   const toast = useToast();
-  const toastIdRef = useRef();
   const [liked, setLiked] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [productInfo, setProductInfo] = useState();
-  const category = useParams();
+
   const {
     handleSubmit,
     register,
     formState: { isSubmitting },
   } = useForm();
-  const products = sellerProducts.filter(
-    (sellerProduct) => sellerProduct?.categories === category.category
-  );
 
   const handleWishList = (id) => {
     const item = sellerProducts.find((prod) => prod?._id === id);
@@ -90,7 +88,6 @@ const CategoryProducts = () => {
       status: "success",
     });
   }
-  console.log(reportedItems);
 
   return (
     <Box maxW={"container.lg"} mx={"auto"}>

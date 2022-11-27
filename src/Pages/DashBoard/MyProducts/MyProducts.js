@@ -18,13 +18,18 @@ import { DataStoreContext } from "../../../Context/DataProvider";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../Context/AuthProvider";
 import axios from "axios";
+import Loader from "../../../Component/Loader";
 
 const MyProducts = () => {
   // const { sellerProducts } = useContext(DataStoreContext);
   const { user } = useContext(AuthContext);
   const toast = useToast();
 
-  const { data: sellerProducts = [], refetch } = useQuery({
+  const {
+    data: sellerProducts = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["products", user?.email],
     queryFn: async () => {
       try {
@@ -71,7 +76,9 @@ const MyProducts = () => {
         }
       });
   };
-
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <div>
       <Heading
