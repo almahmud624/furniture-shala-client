@@ -19,3 +19,6 @@ On this site has 2 Account System -> Buyer and Seller Account. A seller can sell
 - Tanstack Query
 - Chakra UI
 - React Icon
+
+adminEmail: furnitureshala@gmail.com
+adminPassword: 123456
