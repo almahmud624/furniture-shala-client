@@ -23,7 +23,6 @@ const SidebarContent = ({ onClose, ...rest }) => {
   const { user } = useContext(AuthContext);
   const [role] = useRoleCheck(user?.email);
   const [admin] = useAdminCheck(user?.email);
-  console.log(role);
 
   return (
     <div>

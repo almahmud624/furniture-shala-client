@@ -126,19 +126,25 @@ const MyOrders = () => {
                 {}
                 <Td color="green.600">{product?.date}</Td>
                 <Td color="green.600">{product?.paid ? "Paid" : "unpaid"}</Td>
-                <Td>
-                  <NavItem
-                    path={`/dashboard/payments/${product?._id}`}
-                    display={"inline-block"}
-                    py={1}
-                    bg="teal.400"
-                    color="gray.900"
-                    fontWeight={"semibold"}
-                    disabled={product?.paid}
-                  >
-                    Pay
-                  </NavItem>
-                </Td>
+                {product?.paid ? (
+                  <>
+                    <Td color="green.600">Order Placed</Td>
+                  </>
+                ) : (
+                  <Td>
+                    <NavItem
+                      path={`/dashboard/payments/${product?._id}`}
+                      display={"inline-block"}
+                      py={1}
+                      bg="teal.400"
+                      color="gray.900"
+                      fontWeight={"semibold"}
+                      disabled={product?.paid}
+                    >
+                      Pay
+                    </NavItem>
+                  </Td>
+                )}
               </Tr>
             ))}
           </Tbody>

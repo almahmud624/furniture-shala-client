@@ -11,11 +11,16 @@ const DataProvider = ({ children }) => {
   const [reportedItems, setReportedItems] = useState([]);
 
   // get all products
-  const { data: products = [], isLoading } = useQuery({
+  const {
+    data: products = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
       try {
         const { data } = await axios.get("http://localhost:4000/products");
+        refetch();
         return data;
       } catch (error) {
         console.log(error);

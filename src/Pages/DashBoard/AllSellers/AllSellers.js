@@ -72,7 +72,7 @@ const AllSellers = () => {
         marginBottom={"5"}
         noOfLines={1}
       >
-        Make Admin
+        All Sellers
       </Heading>
       <TableContainer>
         <Table variant="simple" bg={"gray.300"} _dark={{ bg: "gray.800" }}>
@@ -118,7 +118,6 @@ const AllSellers = () => {
                     size="sm"
                     onClick={() => handleSellerDelete(seller?._id)}
                   >
-                    {/* {user.role === "admin" ? "Remove Admin Role" : "Make Admin"} */}
                     Delete Seller
                   </Button>
                 </Td>
