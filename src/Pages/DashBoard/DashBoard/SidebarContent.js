@@ -70,15 +70,6 @@ const SidebarContent = ({ onClose, ...rest }) => {
             >
               Make Admin
             </NavItem>
-
-            <NavItem
-              key={Math.random()}
-              icon={FiCompass}
-              path="/dashboard/reported-items"
-              onClose={onClose}
-            >
-              Reported Items
-            </NavItem>
           </>
         )}
         {role === "seller" && (

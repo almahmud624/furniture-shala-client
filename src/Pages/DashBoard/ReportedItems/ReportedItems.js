@@ -15,12 +15,30 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
-import { DataStoreContext } from "../../../Context/DataProvider";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import Loader from "../../../Component/Loader";
 
 const ReportedItems = () => {
-  const { reportedItems } = useContext(DataStoreContext);
+  // const { reportedItems } = useContext(DataStoreContext);
+  const { data: reportedItems = [], isLoading } = useQuery({
+    queryKey: ["reportedItems"],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get(
+          `http://localhost:4000/products/reportedProduct`
+        );
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
   console.log(reportedItems);
 
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <div>
       <Heading

@@ -67,85 +67,30 @@ const CategoryProducts = () => {
       }
     },
   });
-
-  // get wishlist item
-  const { data: wishlist = [], refetch } = useQuery({
-    queryKey: ["products", "wishlist", user?.email],
-    queryFn: async () => {
-      try {
-        const { data } = await axios.get(
-          `http://localhost:4000/products/wishlist/${user?.email}`
-        );
-        return data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  });
-
-  let list = {};
-  wishlist.map((i) => {
-    return (list.id = i.productId);
-  });
+  console.log(products);
 
   // send wishlisted product
   const handleWishList = (product) => {
-    const findListedItem = wishlist.find(
-      (item) => item.productId === product?._id
-    );
-    if (findListedItem) {
-      setLiked(true);
-    } else {
-      setLiked(false);
-    }
-
     const wishListItem = {
       productId: product._id,
       productName: product.productName,
       userEmail: user.email,
+      productImg: product?.productImg,
     };
     axios
       .post(`http://localhost:4000/products/wishlist`, wishListItem)
       .then((res) => {
-        console.log(res.data);
-        refetch();
+        if (res.data.acknowledged) {
+          toast({
+            title: `Product Added on My Wishlist!`,
+            position: "top",
+            isClosable: true,
+            status: "success",
+          });
+        }
       });
-
-    // if (!liked) {
-    //   item.wishListed = true;
-    //   toast({
-    //     title: `Product Add on WishList`,
-    //     position: "top",
-    //     isClosable: true,
-    //     status: "success",
-    //   });
-    // } else {
-    //   item.wishListed = false;
-    //   toast({
-    //     title: `Product remove from WishList`,
-    //     position: "top",
-    //     isClosable: true,
-    //     status: "success",
-    //   });
-    // }
   };
 
-  function handleReportedItem(reportItem) {
-    const reportedItem = {
-      productId: reportItem.productId,
-      productName: reportItem.productName,
-      reason1: reportItem.reason1 ? "Spammer" : null,
-      reason2: reportItem.reason2 ? "Fraud" : null,
-      reporterEmail: user.email,
-    };
-    setReportedItems([reportedItem, ...reportedItems]);
-    toast({
-      title: `Report successfully done!`,
-      position: "top",
-      isClosable: true,
-      status: "success",
-    });
-  }
   if (isLoading) {
     return <Loader />;
   }
@@ -280,75 +225,6 @@ const CategoryProducts = () => {
                   >
                     Purchase Now
                   </Text>
-                  <Popover>
-                    <PopoverTrigger>
-                      <Button
-                        bg={"red.300"}
-                        size={"xs"}
-                        _hover={{
-                          bg: "red.400",
-                        }}
-                        disabled={product?.reported}
-                      >
-                        {product?.reported ? "Reported" : "Report"}
-                      </Button>
-                    </PopoverTrigger>
-
-                    <Portal>
-                      <PopoverContent>
-                        <PopoverArrow />
-                        <PopoverCloseButton />
-                        <form onSubmit={handleSubmit(handleReportedItem)}>
-                          <PopoverBody>
-                            <Text mb={4} fontWeight={"semibold"}>
-                              Why you want to report this seller?
-                            </Text>
-                            <VisuallyHidden>
-                              <Input
-                                type="tel"
-                                focusBorderColor="teal.400"
-                                rounded="md"
-                                {...register("productId")}
-                                defaultValue={product?._id}
-                                readOnly
-                              />
-                            </VisuallyHidden>
-                            <VisuallyHidden>
-                              <Input
-                                type="text"
-                                focusBorderColor="teal.400"
-                                rounded="md"
-                                {...register("productName")}
-                                defaultValue={product?.productName}
-                                readOnly
-                              />
-                            </VisuallyHidden>
-                            <CheckboxGroup colorScheme="green">
-                              <Stack spacing={[1, 5]} direction={["column"]}>
-                                <Checkbox {...register("reason1")}>
-                                  Spammer
-                                </Checkbox>
-                                <Checkbox {...register("reason2")}>
-                                  Fraud
-                                </Checkbox>
-                              </Stack>
-                            </CheckboxGroup>
-                          </PopoverBody>
-                          <PopoverFooter textAlign={"right"}>
-                            <Button
-                              size={"sm"}
-                              colorScheme="teal"
-                              type="submit"
-                              isLoading={isSubmitting}
-                              // onClick={() => handleReportedItem(product?._id)}
-                            >
-                              Reported
-                            </Button>
-                          </PopoverFooter>
-                        </form>
-                      </PopoverContent>
-                    </Portal>
-                  </Popover>
                 </Flex>
                 <Flex
                   p={4}
@@ -362,11 +238,7 @@ const CategoryProducts = () => {
                     // setLiked(!liked);
                   }}
                 >
-                  {list.id === product?._id ? (
-                    <BsHeartFill fill="red" fontSize={"24px"} />
-                  ) : (
-                    <BsHeart fontSize={"24px"} />
-                  )}
+                  <BsHeart fontSize={"24px"} />
                 </Flex>
               </HStack>
             </Box>

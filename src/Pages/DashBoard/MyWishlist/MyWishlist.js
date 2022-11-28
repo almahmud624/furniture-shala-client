@@ -15,15 +15,36 @@ import {
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 import { DataStoreContext } from "../../../Context/DataProvider";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../../../Context/AuthProvider";
+import Loader from "../../../Component/Loader";
+import { Link } from "react-router-dom";
 
 const MyWishlist = () => {
-  const { products } = useContext(DataStoreContext);
-  const wishList = products.filter((product) => product?.wishListed === true);
+  const { user } = useContext(AuthContext);
 
-  const handleRemoveWishItem = (product) => {
-    product.wishListed = false;
-  };
+  const {
+    data: wishList = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["products", "wishlist", user?.email],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get(
+          `http://localhost:4000/products/wishlist/${user?.email}`
+        );
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
 
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <div>
       <Heading
@@ -75,17 +96,6 @@ const MyWishlist = () => {
                 </CardBody>
               </Stack>
             </Flex>
-            <Box alignItems={"center"}>
-              <Text>
-                <CloseIcon
-                  fontSize={"xs"}
-                  mr={"2"}
-                  color={"gray.500"}
-                  onClick={() => handleRemoveWishItem(product)}
-                  cursor={"pointer"}
-                />
-              </Text>
-            </Box>
           </Card>
         ))}
       </SimpleGrid>

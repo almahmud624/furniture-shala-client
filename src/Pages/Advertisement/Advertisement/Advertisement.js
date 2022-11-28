@@ -8,7 +8,6 @@ const Advertisement = () => {
   const advertiseItems = products?.filter(
     (product) => product?.advertisement === true
   );
-  console.log(advertiseItems);
 
   return (
     <div>

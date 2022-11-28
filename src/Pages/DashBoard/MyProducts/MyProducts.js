@@ -20,7 +20,6 @@ import axios from "axios";
 import Loader from "../../../Component/Loader";
 
 const MyProducts = () => {
-  // const { sellerProducts } = useContext(DataStoreContext);
   const { user, userSignOut } = useContext(AuthContext);
   const toast = useToast();
 

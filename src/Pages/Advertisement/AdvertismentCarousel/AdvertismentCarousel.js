@@ -7,10 +7,15 @@ import {
   Stack,
   useBreakpointValue,
   Text,
+  Button,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 import Slider from "react-slick";
 import "./AdvertismentCarousel.css";
+import OrderForm from "../../../Component/OrderForm";
+import FormModal from "../../../Component/FormModal";
+import { AuthContext } from "../../../Context/AuthProvider";
 
 const settings = {
   dots: true,
@@ -26,7 +31,9 @@ const settings = {
 };
 const AdvertismentCarousel = ({ advertiseItems }) => {
   const [slider, setSlider] = useState();
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { user } = useContext(AuthContext);
+  const [productInfo, setProductInfo] = useState();
   const top = useBreakpointValue({ base: "90%", md: "50%" });
   const side = useBreakpointValue({ base: "30%", md: "10px" });
 
@@ -99,18 +106,38 @@ const AdvertismentCarousel = ({ advertiseItems }) => {
                   position="absolute"
                   top="50%"
                   transform="translate(0, -50%)"
+                  backdropFilter="auto"
+                  backdropInvert="80%"
+                  backdropBlur="2px"
+                  backdropBrightness={"30"}
+                  borderRadius={2}
                 >
-                  {/* <Heading fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}>
-                    {card.title}
+                  <Heading
+                    fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
+                    textAlign={"center"}
+                    pt={2}
+                  >
+                    {card.productName}
                   </Heading>
-                  <Text fontSize={{ base: "md", lg: "lg" }} color="GrayText">
-                    {card.text}
-                  </Text> */}
+                  <Button
+                    fontSize={{ base: "md", lg: "lg" }}
+                    color="GrayText"
+                    display={"inline-block"}
+                    onClick={() => {
+                      setProductInfo(card);
+                      onOpen();
+                    }}
+                  >
+                    Buy Now
+                  </Button>
                 </Stack>
               </Container>
             </Box>
           ))}
         </Slider>
+        <FormModal isOpen={isOpen} onClose={onClose} modalTitle={"demo"}>
+          <OrderForm user={user} productInfo={productInfo} onClose={onClose} />
+        </FormModal>
       </Box>
     </div>
   );

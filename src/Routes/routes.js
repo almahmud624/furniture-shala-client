@@ -6,6 +6,7 @@ import AddProduct from "../Pages/DashBoard/AddProduct/AddProduct";
 import AllBuyers from "../Pages/DashBoard/AllBuyers/AllBuyers";
 import AllSellers from "../Pages/DashBoard/AllSellers/AllSellers";
 import DashBoard from "../Pages/DashBoard/DashBoard/DashBoard";
+import DashBoardIndex from "../Pages/DashBoard/DashBoard/DashBoardIndex";
 import Payment from "../Pages/DashBoard/DashBoard/Payment/Payment";
 import MakeAdmin from "../Pages/DashBoard/MakeAdmin/MakeAdmin";
 import MyBuyers from "../Pages/DashBoard/MyBuyers/MyBuyers";
@@ -48,7 +49,7 @@ export const routes = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      { index: true, element: <AllBuyers /> },
+      { index: true, element: <DashBoardIndex /> },
       {
         path: "/dashboard/all-buyers",
         element: (

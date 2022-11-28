@@ -21,7 +21,6 @@ import axios from "axios";
 const Payment = () => {
   const order = useLoaderData();
   const { productName, productPrice, name, email } = order;
-  console.log(order);
 
   const {
     handleSubmit,

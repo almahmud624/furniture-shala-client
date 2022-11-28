@@ -41,8 +41,6 @@ const AllBuyers = () => {
     console.log(id);
 
     axios.delete(`http://localhost:4000/user/buyers/${id}`).then((res) => {
-      console.log(res.data);
-
       if (res.data.deletedCount > 0) {
         toast({
           title: `Buyer Succfully Removed`,

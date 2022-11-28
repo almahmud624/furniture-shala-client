@@ -14,8 +14,10 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loader from "../../../Component/Loader";
+import { AuthContext } from "../../../Context/AuthProvider";
 
 const AllSellers = () => {
+  const { userSignOut } = useContext(AuthContext);
   const {
     data: users = [],
     refetch,
@@ -48,17 +50,29 @@ const AllSellers = () => {
   };
 
   const handleVerifySeller = (email) => {
-    axios.patch(`http://localhost:4000/user/seller/${email}`).then((res) => {
-      if (res.data.modifiedCount > 0) {
-        toast({
-          title: `Seller Succfully Verifed`,
-          position: "top",
-          isClosable: true,
-          status: "success",
-        });
-        refetch();
-      }
-    });
+    fetch(`http://localhost:4000/user/seller/${email}`, {
+      method: "PATCH",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("furniture-token")}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 401 || res.status === 403) {
+          return userSignOut();
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          toast({
+            title: `Seller Succfully Verifed`,
+            position: "top",
+            isClosable: true,
+            status: "success",
+          });
+          refetch();
+        }
+      });
   };
 
   if (isLoading) {
