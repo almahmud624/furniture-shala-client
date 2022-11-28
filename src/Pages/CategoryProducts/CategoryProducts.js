@@ -1,4 +1,5 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
+import { TiTickOutline } from "react-icons/ti";
 import { DataStoreContext } from "../../Context/DataProvider";
 import {
   Box,
@@ -25,6 +26,7 @@ import {
   Stack,
   VisuallyHidden,
   Input,
+  chakra,
 } from "@chakra-ui/react";
 import { BsHeartFill, BsHeart } from "react-icons/bs";
 import FormModal from "../../Component/FormModal";
@@ -148,7 +150,31 @@ const CategoryProducts = () => {
     return <Loader />;
   }
   return (
-    <Box maxW={"container.lg"} mx={"auto"}>
+    <Box maxW={"container.lg"} mx={"auto"} px={4} py={24}>
+      <Box>
+        <chakra.h2
+          fontSize={{
+            base: "2xl",
+            md: "4xl",
+          }}
+          fontWeight="semibold"
+          letterSpacing="tight"
+          textAlign={{
+            base: "center",
+            md: "left",
+          }}
+          color="gray.900"
+          _dark={{
+            color: "gray.400",
+          }}
+          lineHeight={{
+            md: "shorter",
+          }}
+          textShadow="2px 0 currentcolor"
+        >
+          Best Products For You
+        </chakra.h2>
+      </Box>
       <Grid
         templateColumns={["repeat(1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]}
       >
@@ -164,7 +190,7 @@ const CategoryProducts = () => {
               border={"1px"}
               borderColor="black"
               boxShadow={"6px 6px 0 black"}
-              _dark={{ boxShadow: "6px 6px 0 cyan" }}
+              _dark={{ boxShadow: "6px 6px 0 green" }}
             >
               <Box h={"200px"} borderBottom={"1px"} borderColor="black">
                 <Img
@@ -200,7 +226,37 @@ const CategoryProducts = () => {
                   {product?.productName}
                 </Heading>
                 <Text color={"gray.500"} noOfLines={2}>
-                  {product?.sellarName}
+                  <Text display={"inline-block"} fontWeight={"medium"}>
+                    Seller:{" "}
+                  </Text>{" "}
+                  {product?.sellerName}
+                  <TiTickOutline
+                    style={{
+                      display: "inline",
+                      color: "white",
+                      background: "#26A9E2",
+                      borderRadius: "50%",
+                      marginLeft: "2px",
+                    }}
+                  />
+                </Text>
+                <Text color={"gray.500"} noOfLines={2}>
+                  <Text display={"inline-block"} fontWeight={"medium"}>
+                    Year of use:{" "}
+                  </Text>{" "}
+                  {product?.yearsOfUse} year
+                </Text>
+                <Text color={"gray.500"} noOfLines={2}>
+                  <Text display={"inline-block"} fontWeight={"medium"}>
+                    Location:{" "}
+                  </Text>{" "}
+                  {product?.location}
+                </Text>
+                <Text color={"gray.500"} noOfLines={2}>
+                  <Text display={"inline-block"} fontWeight={"medium"}>
+                    Posted On:{" "}
+                  </Text>{" "}
+                  {product?.createdAt}
                 </Text>
               </Box>
               <HStack borderTop={"1px"} color="black">

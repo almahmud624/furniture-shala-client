@@ -14,7 +14,6 @@ import {
   useToast,
   Box,
 } from "@chakra-ui/react";
-import { DataStoreContext } from "../../../Context/DataProvider";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../Context/AuthProvider";
 import axios from "axios";

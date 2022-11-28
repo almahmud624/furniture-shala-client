@@ -27,21 +27,6 @@ const DataProvider = ({ children }) => {
   if (isLoading) {
     return <Loader />;
   }
-  // useEffect(() => {
-  //   const getAllProducts = async () => {
-  //     try {
-  //       const { data } = await axios.get("http://localhost:4000/products");
-  //       setSellerProducts(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   getAllProducts();
-  // }, []);
-
-  // if (!sellerProducts || sellerProducts.length <= 0) {
-  //   return;
-  // }
 
   const dataStore = {
     sellerProducts,
