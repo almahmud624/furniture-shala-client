@@ -230,15 +230,17 @@ const CategoryProducts = () => {
                     Seller:{" "}
                   </Text>{" "}
                   {product?.sellerName}
-                  <TiTickOutline
-                    style={{
-                      display: "inline",
-                      color: "white",
-                      background: "#26A9E2",
-                      borderRadius: "50%",
-                      marginLeft: "2px",
-                    }}
-                  />
+                  {product?.sellerVerify && (
+                    <TiTickOutline
+                      style={{
+                        display: "inline",
+                        color: "white",
+                        background: "#26A9E2",
+                        borderRadius: "50%",
+                        marginLeft: "2px",
+                      }}
+                    />
+                  )}
                 </Text>
                 <Text color={"gray.500"} noOfLines={2}>
                   <Text display={"inline-block"} fontWeight={"medium"}>

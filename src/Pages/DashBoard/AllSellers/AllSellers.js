@@ -25,8 +25,6 @@ const AllSellers = () => {
     queryFn: async () => {
       try {
         const { data } = await axios.get(`http://localhost:4000/user/seller`);
-        console.log(data);
-
         return data;
       } catch (error) {
         console.log(error);
@@ -40,6 +38,20 @@ const AllSellers = () => {
       if (res.data.deletedCount > 0) {
         toast({
           title: `Seller Succfully Removed`,
+          position: "top",
+          isClosable: true,
+          status: "success",
+        });
+        refetch();
+      }
+    });
+  };
+
+  const handleVerifySeller = (email) => {
+    axios.patch(`http://localhost:4000/user/seller/${email}`).then((res) => {
+      if (res.data.modifiedCount > 0) {
+        toast({
+          title: `Seller Succfully Verifed`,
           position: "top",
           isClosable: true,
           status: "success",
@@ -77,12 +89,28 @@ const AllSellers = () => {
               <Tr key={Math.random()}>
                 <Td>{seller?.name}</Td>
                 <Td>{seller?.email}</Td>
-                <Td style={{ textTransform: "capitalize" }}>
-                  <Button bg="teal.600" size="sm">
-                    {/* {user.role === "admin" ? "Remove Admin Role" : "Make Admin"} */}
-                    Verfiy Seller
-                  </Button>
-                </Td>
+                {seller?.verfiedSeller ? (
+                  <>
+                    <Td
+                      color="green.600"
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      Verified
+                    </Td>
+                  </>
+                ) : (
+                  <Td style={{ textTransform: "capitalize" }}>
+                    <Button
+                      bg="teal.600"
+                      size="sm"
+                      onClick={() => {
+                        handleVerifySeller(seller?.email);
+                      }}
+                    >
+                      Verfiy Seller
+                    </Button>
+                  </Td>
+                )}
 
                 <Td>
                   <Button
