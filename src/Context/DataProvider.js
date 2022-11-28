@@ -19,7 +19,9 @@ const DataProvider = ({ children }) => {
     queryKey: ["products"],
     queryFn: async () => {
       try {
-        const { data } = await axios.get("http://localhost:4000/products");
+        const { data } = await axios.get(
+          "https://furniture-shala-server.vercel.app/products"
+        );
         refetch();
         return data;
       } catch (error) {

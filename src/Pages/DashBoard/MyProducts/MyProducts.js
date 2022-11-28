@@ -32,7 +32,7 @@ const MyProducts = () => {
     queryFn: async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:4000/products/${user?.email}`
+          `https://furniture-shala-server.vercel.app/products/${user?.email}`
         );
         return data;
       } catch (error) {
@@ -44,7 +44,7 @@ const MyProducts = () => {
   const handleAdvertisement = (product) => {
     axios
       .patch(
-        `http://localhost:4000/products/${product?._id}`,
+        `https://furniture-shala-server.vercel.app/products/${product?._id}`,
         product.advertisement
           ? {
               advertisement: false,

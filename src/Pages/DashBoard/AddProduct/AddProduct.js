@@ -77,7 +77,7 @@ const AddProduct = () => {
         // store new product
         try {
           const { data } = await axios.post(
-            "http://localhost:4000/products",
+            "https://furniture-shala-server.vercel.app/products",
             product
           );
           if (data.acknowledged) {

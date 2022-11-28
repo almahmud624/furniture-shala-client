@@ -35,7 +35,10 @@ export default function OrderForm({ user, productInfo, onClose }) {
     order.orderdAt = moment().format("ll");
 
     try {
-      const { data } = await axios.post("http://localhost:4000/orders", order);
+      const { data } = await axios.post(
+        "https://furniture-shala-server.vercel.app/orders",
+        order
+      );
       if (data.acknowledged === true) {
         toastIdRef.current = toast({
           title: `Order Successfull, Check My Orders!`,

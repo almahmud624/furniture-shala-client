@@ -26,7 +26,9 @@ const MakeAdmin = () => {
     queryKey: ["user"],
     queryFn: async () => {
       try {
-        const { data } = await axios.get("http://localhost:4000/user");
+        const { data } = await axios.get(
+          "https://furniture-shala-server.vercel.app/user"
+        );
         return data;
       } catch (error) {
         console.log(error);
@@ -38,7 +40,7 @@ const MakeAdmin = () => {
   const handleMakeAdmin = (user) => {
     axios
       .patch(
-        `http://localhost:4000/user/role/${user?._id}`,
+        `https://furniture-shala-server.vercel.app/user/role/${user?._id}`,
         user.role === "admin"
           ? { role: user?.previousRole, previousRole: null }
           : { role: "admin", previousRole: user?.role }

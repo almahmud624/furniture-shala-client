@@ -95,7 +95,9 @@ export const routes = createBrowserRouter([
       {
         path: "/dashboard/payments/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:4000/orders/payment/${params.id}`),
+          fetch(
+            `https://furniture-shala-server.vercel.app/orders/payment/${params.id}`
+          ),
         element: <Payment />,
       },
       {

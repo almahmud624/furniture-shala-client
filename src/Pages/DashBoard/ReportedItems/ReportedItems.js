@@ -26,7 +26,7 @@ const ReportedItems = () => {
     queryFn: async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:4000/products/reportedProduct`
+          `https://furniture-shala-server.vercel.app/products/reportedProduct`
         );
         return data;
       } catch (error) {

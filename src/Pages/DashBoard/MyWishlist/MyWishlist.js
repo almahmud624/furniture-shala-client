@@ -33,7 +33,7 @@ const MyWishlist = () => {
     queryFn: async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:4000/products/wishlist/${user?.email}`
+          `https://furniture-shala-server.vercel.app/products/wishlist/${user?.email}`
         );
         return data;
       } catch (error) {

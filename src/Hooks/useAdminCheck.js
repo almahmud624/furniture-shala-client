@@ -8,7 +8,7 @@ const useAdminCheck = (email) => {
     const checkSeller = async () => {
       if (email) {
         const { data } = await axios.get(
-          `http://localhost:4000/user/admin/${email}`
+          `https://furniture-shala-server.vercel.app/user/admin/${email}`
         );
         setAdmin(data.isAdmin);
         setAdminLoading(false);

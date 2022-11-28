@@ -8,7 +8,7 @@ const useRoleCheck = (email) => {
     const checkSeller = async () => {
       if (email) {
         const { data } = await axios.get(
-          `http://localhost:4000/user/role/${email}`
+          `https://furniture-shala-server.vercel.app/user/role/${email}`
         );
         setRole(data.role);
         setRoleLoading(false);

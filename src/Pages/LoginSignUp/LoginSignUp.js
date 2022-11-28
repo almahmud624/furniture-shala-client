@@ -80,7 +80,7 @@ const LoginSignUp = () => {
           // store user data on server
           try {
             axios
-              .post("http://localhost:4000/user", {
+              .post("https://furniture-shala-server.vercel.app/user", {
                 name: user.name,
                 email: user.email,
                 role: user.role,

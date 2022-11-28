@@ -102,7 +102,7 @@ const Payment = () => {
         txnId: paymentIntent?.id,
       };
       const { data } = await axios.post(
-        "http://localhost:4000/payments",
+        "https://furniture-shala-server.vercel.app/payments",
         paymentInfo
       );
       if (data.acknowledged) {
@@ -120,7 +120,7 @@ const Payment = () => {
     if (productPrice === 0) {
       return;
     }
-    fetch("http://localhost:4000/create-payment-intent", {
+    fetch("https://furniture-shala-server.vercel.app/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ price: parseInt(productPrice) }),

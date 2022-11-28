@@ -59,7 +59,7 @@ const CategoryProducts = () => {
     queryFn: async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:4000/products?category=${category}`
+          `https://furniture-shala-server.vercel.app/products?category=${category}`
         );
         return data;
       } catch (error) {
@@ -78,7 +78,10 @@ const CategoryProducts = () => {
       productImg: product?.productImg,
     };
     axios
-      .post(`http://localhost:4000/products/wishlist`, wishListItem)
+      .post(
+        `https://furniture-shala-server.vercel.app/products/wishlist`,
+        wishListItem
+      )
       .then((res) => {
         if (res.data.acknowledged) {
           toast({

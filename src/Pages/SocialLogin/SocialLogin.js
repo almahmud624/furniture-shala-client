@@ -19,7 +19,7 @@ const SocialLogin = () => {
         // store user data on server
         try {
           axios
-            .post("http://localhost:4000/user", {
+            .post("https://furniture-shala-server.vercel.app/user", {
               name: data.user.displayName,
               email: data.user.email,
               role: "user",

@@ -28,7 +28,9 @@ const AllBuyers = () => {
     queryKey: ["user", "buyers"],
     queryFn: async () => {
       try {
-        const { data } = await axios.get(`http://localhost:4000/user/buyers`);
+        const { data } = await axios.get(
+          `https://furniture-shala-server.vercel.app/user/buyers`
+        );
         return data;
       } catch (error) {
         console.log(error);
@@ -40,18 +42,20 @@ const AllBuyers = () => {
   const handleBuyersDelete = (id) => {
     console.log(id);
 
-    axios.delete(`http://localhost:4000/user/buyers/${id}`).then((res) => {
-      if (res.data.deletedCount > 0) {
-        toast({
-          title: `Buyer Succfully Removed`,
-          position: "top",
-          isClosable: true,
-          status: "success",
-        });
-        refetch();
-        onClose();
-      }
-    });
+    axios
+      .delete(`https://furniture-shala-server.vercel.app/user/buyers/${id}`)
+      .then((res) => {
+        if (res.data.deletedCount > 0) {
+          toast({
+            title: `Buyer Succfully Removed`,
+            position: "top",
+            isClosable: true,
+            status: "success",
+          });
+          refetch();
+          onClose();
+        }
+      });
   };
 
   if (isLoading) {

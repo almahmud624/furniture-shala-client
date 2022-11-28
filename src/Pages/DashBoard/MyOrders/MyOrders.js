@@ -30,7 +30,7 @@ const MyOrders = () => {
     queryFn: async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:4000/orders/${user?.email}`,
+          `https://furniture-shala-server.vercel.app/orders/${user?.email}`,
           // sent token by headers for authorization
           {
             headers: {
