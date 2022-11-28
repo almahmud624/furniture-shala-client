@@ -22,7 +22,6 @@ const Advertisement = () => {
           w="full"
         >
           <Box
-            shadow="xl"
             bg="white"
             _dark={{
               bg: "gray.800",
@@ -69,7 +68,7 @@ const Advertisement = () => {
                   }}
                   textShadow="2px 0 currentcolor"
                 >
-                  Clear overview for efficient tracking
+                  Here some exciting offer for your
                 </chakra.h2>
                 <chakra.p
                   mb={5}
@@ -85,10 +84,9 @@ const Advertisement = () => {
                     md: "lg",
                   }}
                 >
-                  Handle your subscriptions and transactions efficiently with
-                  the clear overview in Dashboard. Features like the smart
-                  search option allow you to quickly find any data you’re
-                  looking for.
+                  Super Sale is Live @ 50 % off, Keep Moving... and Buy things.
+                  Massive Savings! Less Spending. Exclusive Sale For special
+                  Season
                 </chakra.p>
                 <Button
                   w={{
@@ -96,20 +94,20 @@ const Advertisement = () => {
                     sm: "auto",
                   }}
                   size="lg"
-                  bg="gray.900"
+                  bg="green.600"
                   _dark={{
-                    bg: "gray.700",
+                    bg: "green.700",
                   }}
                   _hover={{
-                    bg: "gray.700",
+                    bg: "green.800",
                     _dark: {
-                      bg: "gray.600",
+                      bg: "green.600",
                     },
                   }}
                   color="gray.100"
                   as="a"
                 >
-                  Learn More
+                  Explore More
                 </Button>
               </Box>
               <Box

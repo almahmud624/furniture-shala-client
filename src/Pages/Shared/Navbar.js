@@ -15,10 +15,13 @@ import {
   useColorModeValue,
   useColorMode,
   Stack,
+  Text,
+  Image,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
+import logo from "../../Assets/logo.png";
 
 const Navbar = () => {
   const { user, userSignOut } = useContext(AuthContext);
@@ -81,7 +84,30 @@ const Navbar = () => {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={"center"}>
-            <Box>Logo</Box>
+            <Stack spacing={{ base: "6", md: "8" }} align="start">
+              <Link to="/">
+                {" "}
+                <Text
+                  display={"flex"}
+                  alignItems={"center"}
+                  fontSize={"xl"}
+                  fontWeight={"bold"}
+                  color={"green.600"}
+                >
+                  Furniture
+                  <Box
+                    h={8}
+                    w={8}
+                    style={{ filter: "contrast(80%)" }}
+                    display={"inline-block"}
+                    mx={1}
+                  >
+                    <Image src={logo} h={"full"} w={"full"}></Image>
+                  </Box>
+                  Shala
+                </Text>
+              </Link>
+            </Stack>
             <HStack
               as={"nav"}
               spacing={4}

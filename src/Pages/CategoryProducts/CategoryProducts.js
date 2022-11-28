@@ -163,7 +163,6 @@ const CategoryProducts = () => {
               bg="white"
               border={"1px"}
               borderColor="black"
-              // boxShadow={useColorModeValue("6px 6px 0 black", "6px 6px 0 cyan")}
               boxShadow={"6px 6px 0 black"}
               _dark={{ boxShadow: "6px 6px 0 cyan" }}
             >
@@ -191,14 +190,17 @@ const CategoryProducts = () => {
                     fontWeight="medium"
                     texttransform={"capitalize"}
                   >
-                    {product?.categories}
+                    <Text as="del" fontSize={"xs"} color="red.600" pr={1}>
+                      ${product?.oldPrice}
+                    </Text>
+                    ${product?.newPrice}
                   </Text>
                 </Box>
                 <Heading color={"black"} fontSize={"2xl"} noOfLines={1}>
                   {product?.productName}
                 </Heading>
                 <Text color={"gray.500"} noOfLines={2}>
-                  {product?.description}
+                  {product?.sellarName}
                 </Text>
               </Box>
               <HStack borderTop={"1px"} color="black">

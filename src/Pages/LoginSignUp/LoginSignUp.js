@@ -122,11 +122,8 @@ const LoginSignUp = () => {
         <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6} w={"3xl"}>
           <Stack align={"center"}>
             <Heading fontSize={"4xl"} textAlign={"center"}>
-              Sign up
+              {!isLogin ? "Registration" : "Login"}
             </Heading>
-            <Text fontSize={"lg"} color={"gray.600"}>
-              to enjoy all of our cool features ✌️
-            </Text>
           </Stack>
           <Box
             rounded={"lg"}
@@ -211,10 +208,10 @@ const LoginSignUp = () => {
                   <Button
                     isLoading={isSubmitting}
                     size="lg"
-                    bg={"blue.400"}
+                    bg={"green.600"}
                     color={"white"}
                     _hover={{
-                      bg: "blue.500",
+                      bg: "green.700",
                     }}
                     type="submit"
                   >

@@ -37,7 +37,7 @@ export const routes = createBrowserRouter([
         ),
       },
       { path: "/login", element: <LoginSignUp /> },
-      { path: "/blogs", element: <Blog /> },
+      { path: "/blog", element: <Blog /> },
     ],
   },
   {

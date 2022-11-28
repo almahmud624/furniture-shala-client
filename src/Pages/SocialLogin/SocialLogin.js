@@ -48,14 +48,8 @@ const SocialLogin = () => {
   };
   return (
     <div>
-      <Center p={8}>
+      <Center>
         <Stack spacing={2} align={"center"} maxW={"md"} w={"full"}>
-          <Button w={"full"} colorScheme={"facebook"} leftIcon={<FaFacebook />}>
-            <Center>
-              <Text>Continue with Facebook</Text>
-            </Center>
-          </Button>
-
           <Button
             w={"full"}
             variant={"outline"}
