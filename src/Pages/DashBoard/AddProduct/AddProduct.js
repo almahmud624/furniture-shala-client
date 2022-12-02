@@ -66,7 +66,7 @@ const AddProduct = () => {
     // host img on imgbb
     try {
       const { data } = await axios.post(
-        `https://api.imgbb.com/1/upload?expiration=600&key=${process.env.REACT_APP_imgbb_hostkey}`,
+        `https://api.imgbb.com/1/upload?&key=${process.env.REACT_APP_imgbb_hostkey}`,
         formData
       );
       console.log(data);
