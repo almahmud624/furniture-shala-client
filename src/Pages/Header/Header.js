@@ -5,7 +5,6 @@ import {
   Stack,
   HStack,
   Text,
-  useColorModeValue,
   Image,
   Skeleton,
   Box,
@@ -14,7 +13,12 @@ import {
 const Header = () => {
   return (
     <div>
-      <Container maxW="7xl" px={{ base: 6, md: 3 }} my={[16, 36]} mb={[72, 36]}>
+      <Container
+        maxW="7xl"
+        px={{ base: 6, md: 3 }}
+        my={[16, 26, 36]}
+        mb={[72, 96, 36]}
+      >
         <Stack
           direction={{ base: "column", md: "row" }}
           justifyContent="center"
@@ -76,41 +80,7 @@ const Header = () => {
               height="full"
               maxW="700px"
               zIndex={-1}
-            >
-              <svg
-                color={useColorModeValue(
-                  "rgba(55,65,81, 0.1)",
-                  "rgba(55,65,81, 0.7)"
-                )}
-                width="350"
-                height="420"
-                fill="none"
-              >
-                <defs>
-                  <pattern
-                    id="5d0dd344-b041-4d26-bec4-8d33ea57ec9b"
-                    x="0"
-                    y="0"
-                    width="20"
-                    height="20"
-                    patternUnits="userSpaceOnUse"
-                  >
-                    <rect
-                      x="0"
-                      y="0"
-                      width="4"
-                      height="4"
-                      fill="currentColor"
-                    ></rect>
-                  </pattern>
-                </defs>
-                <rect
-                  width="404"
-                  height="404"
-                  fill="url(#5d0dd344-b041-4d26-bec4-8d33ea57ec9b)"
-                ></rect>
-              </svg>
-            </Box>
+            ></Box>
             <Image
               w="100%"
               h="100%"

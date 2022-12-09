@@ -6,7 +6,6 @@ import {
   IconButton,
   Stack,
   useBreakpointValue,
-  Text,
   Button,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -68,6 +67,17 @@ const AdvertismentCarousel = ({ advertiseItems }) => {
           top={top}
           transform={"translate(0%, -50%)"}
           zIndex={2}
+          bg="green.600"
+          _dark={{
+            bg: "green.700",
+          }}
+          _hover={{
+            bg: "green.800",
+            _dark: {
+              bg: "green.600",
+            },
+          }}
+          color={"#ccc"}
           onClick={() => slider?.slickPrev()}
         >
           <BiLeftArrowAlt />
@@ -82,6 +92,17 @@ const AdvertismentCarousel = ({ advertiseItems }) => {
           top={top}
           transform={"translate(0%, -50%)"}
           zIndex={2}
+          bg="green.600"
+          _dark={{
+            bg: "green.700",
+          }}
+          _hover={{
+            bg: "green.800",
+            _dark: {
+              bg: "green.600",
+            },
+          }}
+          color={"#ccc"}
           onClick={() => slider?.slickNext()}
         >
           <BiRightArrowAlt />
@@ -101,28 +122,41 @@ const AdvertismentCarousel = ({ advertiseItems }) => {
               <Container size="container.lg" height="600px" position="relative">
                 <Stack
                   spacing={6}
-                  w={"full"}
-                  maxW={"lg"}
+                  w={"sm"}
+                  maxW={"md"}
                   position="absolute"
                   top="50%"
-                  transform="translate(0, -50%)"
+                  left={"50%"}
+                  transform="translate(-50%, -50%)"
                   backdropFilter="auto"
                   backdropInvert="80%"
                   backdropBlur="2px"
                   backdropBrightness={"30"}
-                  borderRadius={2}
                 >
                   <Heading
                     fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
                     textAlign={"center"}
                     pt={2}
+                    color={"#cccccc"}
+                    mt={2}
                   >
                     {card.productName}
                   </Heading>
                   <Button
                     fontSize={{ base: "md", lg: "lg" }}
-                    color="GrayText"
+                    color="#ccc"
+                    bg="green.600"
+                    _dark={{
+                      bg: "green.700",
+                    }}
+                    _hover={{
+                      bg: "green.800",
+                      _dark: {
+                        bg: "green.600",
+                      },
+                    }}
                     display={"inline-block"}
+                    borderRadius={"none"}
                     onClick={() => {
                       setProductInfo(card);
                       onOpen();

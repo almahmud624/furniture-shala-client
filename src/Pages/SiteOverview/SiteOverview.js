@@ -8,6 +8,8 @@ import {
   Stack,
   chakra,
 } from "@chakra-ui/react";
+import clientImg from "../../Assets/client.jpg";
+
 const statData = [
   {
     id: 1,
@@ -37,11 +39,7 @@ const SiteOverview = () => {
     >
       <Flex flex={1}>
         <Box w={"xl"} mx={"auto"}>
-          <Image
-            alt="Cover image"
-            objectFit="cover"
-            src="https://bit.ly/2k1H1t6"
-          />
+          <Image alt="Cover image" objectFit="cover" src={clientImg} />
         </Box>
       </Flex>
       <Flex p={1} flex={1} align="center" justify="center">
@@ -53,8 +51,7 @@ const SiteOverview = () => {
                 base: "2xl",
                 md: "4xl",
               }}
-              fontWeight="semibold"
-              letterSpacing="tight"
+              fontWeight="bold"
               textAlign={{
                 base: "center",
                 md: "left",
@@ -66,7 +63,6 @@ const SiteOverview = () => {
               lineHeight={{
                 md: "shorter",
               }}
-              textShadow="2px 0 currentcolor"
             >
               Trusted by Our Clients
             </chakra.h2>
@@ -74,7 +70,7 @@ const SiteOverview = () => {
               mb={5}
               textAlign={{
                 base: "center",
-                sm: "left",
+                sm: "center",
               }}
               color="gray.600"
               _dark={{
@@ -90,8 +86,10 @@ const SiteOverview = () => {
           <SimpleGrid
             columns={{ base: 2, sm: 3, md: 3 }}
             spacing={1}
-            mt={12}
+            mt={0}
             mb={4}
+            border={"1px solid #303640"}
+            borderRadius={3}
           >
             {statData.map((data) => (
               <Box key={data.id} p={{ base: 2, sm: 5 }} textAlign="center">

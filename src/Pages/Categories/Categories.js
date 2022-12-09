@@ -19,29 +19,17 @@ const Categories = () => {
             base: "2xl",
             md: "4xl",
           }}
-          fontWeight="semibold"
-          letterSpacing="tight"
-          textAlign={{
-            base: "center",
-            md: "left",
-          }}
-          color="gray.900"
-          _dark={{
-            color: "gray.400",
-          }}
+          fontWeight="bold"
+          textAlign={"left"}
           lineHeight={{
             md: "shorter",
           }}
-          textShadow="2px 0 currentcolor"
         >
           All Products Category
         </chakra.h2>
         <chakra.p
           mb={5}
-          textAlign={{
-            base: "center",
-            sm: "left",
-          }}
+          textAlign={"left"}
           color="gray.600"
           _dark={{
             color: "gray.400",
@@ -71,12 +59,20 @@ const Categories = () => {
                   style={{ textTransform: "capitalize" }}
                   p={10}
                   cursor={"pointer"}
-                  bg="gray.600"
+                  bg="transparent"
+                  border={"2px solid #1A202C"}
                   _dark={{
                     bg: "green.700",
+                    _hover: {
+                      bg: "transparent",
+                      border: "2px solid #276749",
+                    },
                   }}
                   borderRadius={"md"}
-                  _hover={{ bg: "gray.900" }}
+                  _hover={{
+                    bg: "gray.900",
+                    color: "#fff",
+                  }}
                 >
                   {category} Furniture
                 </Heading>

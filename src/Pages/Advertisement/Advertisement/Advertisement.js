@@ -52,29 +52,17 @@ const Advertisement = () => {
                     base: "2xl",
                     md: "4xl",
                   }}
-                  fontWeight="semibold"
-                  letterSpacing="tight"
-                  textAlign={{
-                    base: "center",
-                    md: "left",
-                  }}
-                  color="gray.900"
-                  _dark={{
-                    color: "gray.400",
-                  }}
+                  fontWeight="bold"
+                  textAlign={"left"}
                   lineHeight={{
                     md: "shorter",
                   }}
-                  textShadow="2px 0 currentcolor"
                 >
-                  Here some exciting offer for your
+                  Here some exciting offer for you
                 </chakra.h2>
                 <chakra.p
                   mb={5}
-                  textAlign={{
-                    base: "center",
-                    sm: "left",
-                  }}
+                  textAlign={"left"}
                   color="gray.600"
                   _dark={{
                     color: "gray.400",
