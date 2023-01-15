@@ -106,7 +106,11 @@ const MakeAdmin = () => {
                       bg="teal.600"
                       size="sm"
                       onClick={() => handleMakeAdmin(user)}
-                      disabled={user?.email === "furnitureshala@gmail.com"}
+                      disabled={[
+                        "furnitureshala@gmail.com",
+                        "seller@gmail.com",
+                        "user@gmail.com",
+                      ].find((each) => each === user?.email)}
                     >
                       {user.role === "admin"
                         ? "Remove Admin Role"

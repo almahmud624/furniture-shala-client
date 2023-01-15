@@ -135,6 +135,7 @@ const AllSellers = () => {
                     bg="teal.600"
                     size="sm"
                     onClick={() => handleSellerDelete(seller?._id)}
+                    disabled={"seller@gmail.com" === seller?.email}
                   >
                     Delete Seller
                   </Button>

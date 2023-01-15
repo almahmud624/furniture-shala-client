@@ -105,8 +105,8 @@ const CategoryProducts = () => {
             base: "2xl",
             md: "4xl",
           }}
-          fontWeight="semibold"
-          letterSpacing="tight"
+          fontWeight="medium"
+          // letterSpacing="tight"
           textAlign={{
             base: "center",
             md: "left",
@@ -118,9 +118,16 @@ const CategoryProducts = () => {
           lineHeight={{
             md: "shorter",
           }}
-          textShadow="2px 0 currentcolor"
         >
-          Best Products For You
+          Best{" "}
+          <Text
+            display={"inline-block"}
+            textTransform={"capitalize"}
+            textColor={"#276749"}
+          >
+            {category}
+          </Text>{" "}
+          furniture For You
         </chakra.h2>
       </Box>
       <Grid

@@ -1,14 +1,22 @@
-import { Box, Heading, SimpleGrid, chakra } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import { Box, Heading, SimpleGrid, chakra, Image } from "@chakra-ui/react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { DataStoreContext } from "../../Context/DataProvider";
 
 const Categories = () => {
-  const { products } = useContext(DataStoreContext);
-  const duplicateCategories = products.map((i) => i.categories);
-  const categories = duplicateCategories.filter(
-    (v, i) => duplicateCategories.indexOf(v) === i
-  );
+  const categories = [
+    {
+      categoryName: "restaurent",
+      categoryImg: "https://i.ibb.co/cDR15bZ/image.png",
+    },
+    {
+      categoryName: "home",
+      categoryImg: "https://i.ibb.co/XDHQV18/image.png",
+    },
+    {
+      categoryName: "office",
+      categoryImg: "https://i.ibb.co/yg7hKgB/image.png",
+    },
+  ];
 
   return (
     <Box maxW={"container.xl"} mx={"auto"} px={4} mt={[20, 8]}>
@@ -42,39 +50,60 @@ const Categories = () => {
         </chakra.p>
       </Box>
 
-      <SimpleGrid
-        alignItems="center"
-        justifyContent="center"
-        columns={[1, 2, 3]}
-        gap={5}
-        py={8}
-      >
+      <SimpleGrid placeItems={"center"} columns={[1, 2, 3]} spacing={20} py={8}>
         {categories?.map((category) => (
-          <Box>
+          <Box role="group">
             <SimpleGrid placeItems={"center"}>
-              <Link to={`/categories/${category}`}>
+              <Link to={`/categories/${category?.categoryName}`}>
+                <Box>
+                  <Image
+                    src={category?.categoryImg}
+                    alt="Green double couch with wooden legs"
+                    borderRadius="73% 27% 79% 21% / 29% 72% 28% 71% "
+                    transition={".3s"}
+                    // _hover={{
+                    //   borderRadius: "5px",
+                    // }}
+                    // _groupHover={{
+                    //   background: "red",
+                    // }}
+                    className="category-img"
+                    _hover={{
+                      borderRadius: "5px 5px 0px 0px",
+                    }}
+                    _groupHover={{
+                      borderRadius: "5px 5px 0px 0px",
+                    }}
+                  />
+                </Box>
                 <Heading
                   as={"h3"}
                   fontSize={"xl"}
-                  style={{ textTransform: "capitalize" }}
-                  p={10}
+                  style={{
+                    textTransform: "capitalize",
+                    // transform: "rotate(-5deg)",
+                  }}
+                  transform="rotate(-5deg)"
+                  textAlign={"center"}
+                  py={5}
                   cursor={"pointer"}
                   bg="transparent"
-                  border={"2px solid #1A202C"}
-                  _dark={{
-                    bg: "green.700",
-                    _hover: {
-                      bg: "transparent",
-                      border: "2px solid #276749",
-                    },
-                  }}
-                  borderRadius={"md"}
+                  transition={".3s"}
+                  border={"1px solid #276749"}
+                  borderRadius="73% 27% 79% 21% / 29% 72% 28% 71% "
                   _hover={{
-                    bg: "gray.900",
-                    color: "#fff",
+                    transform: "rotate(0deg)",
+                    borderRadius: "0px 0px 5px 5px",
+                    borderTop: "none",
                   }}
+                  _groupHover={{
+                    transform: "rotate(0deg)",
+                    borderRadius: "0px 0px 5px 5px",
+                    borderTop: "none",
+                  }}
+                  fontWeight={"normal"}
                 >
-                  {category} Furniture
+                  {category?.categoryName} Furniture
                 </Heading>
               </Link>
             </SimpleGrid>

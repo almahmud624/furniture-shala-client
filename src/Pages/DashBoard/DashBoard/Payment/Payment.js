@@ -13,7 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import "./Payment.css";
 import axios from "axios";
@@ -21,7 +21,7 @@ import axios from "axios";
 const Payment = () => {
   const order = useLoaderData();
   const { productName, productPrice, name, email } = order;
-
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -106,6 +106,7 @@ const Payment = () => {
         paymentInfo
       );
       if (data.acknowledged) {
+        // navigate("/dashboard/my-orders");
         toast({
           title: `${"Payment Successful"}`,
           position: "top",

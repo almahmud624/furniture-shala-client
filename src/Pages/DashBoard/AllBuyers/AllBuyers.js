@@ -99,6 +99,7 @@ const AllBuyers = () => {
                     }}
                     bg="teal.600"
                     size={"sm"}
+                    disabled={"user@gmail.com" === buyer?.email}
                   >
                     Delete Buyer
                   </Button>

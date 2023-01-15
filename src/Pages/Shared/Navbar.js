@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import {
   Box,
   Flex,
@@ -17,19 +17,57 @@ import {
   Stack,
   Text,
   Image,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverHeader,
+  PopoverBody,
+  useToast,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 import logo from "../../Assets/logo.png";
+import { setAuthToken } from "../../Utilities/JwtApi";
 
 const Navbar = () => {
   const { user, userSignOut } = useContext(AuthContext);
-
+  const { userLogIn } = useContext(AuthContext);
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+  const toastIdRef = useRef();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
   const linkItems = (
     <>
+      <Stack spacing={{ base: "6", md: "8" }} align="start">
+        <Link to="/">
+          {" "}
+          <Text
+            display={{ sm: "flex", md: "none" }}
+            alignItems={"center"}
+            fontSize={"xl"}
+            fontWeight={"bold"}
+            color={"green.600"}
+          >
+            Furniture
+            <Box
+              h={8}
+              w={8}
+              style={{ filter: "contrast(80%)" }}
+              display={"inline-block"}
+              mx={1}
+            >
+              <Image src={logo} h={"full"} w={"full"}></Image>
+            </Box>
+            Shala
+          </Text>
+        </Link>
+      </Stack>
       <Link
         px={2}
         py={1}
@@ -72,6 +110,37 @@ const Navbar = () => {
     </>
   );
 
+  const handleDirctLogin = (role) => {
+    let email;
+    let password = 123456;
+    if (role === "admin") {
+      email = "furnitureshala@gmail.com";
+    } else if (role === "seller") {
+      email = "seller@gmail.com";
+    } else {
+      email = "user@gmail.com";
+    }
+    const user = { email, password };
+    userLogIn(email, password)
+      .then((data) => {
+        setAuthToken(user);
+        toastIdRef.current = toast({
+          title: `Login Successfull`,
+          position: "top",
+          isClosable: true,
+          status: "success",
+        });
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        toast({
+          title: `${error.code.split("/")[1].split("-").join(" ")}`,
+          position: "top",
+          isClosable: true,
+          status: "error",
+        });
+      });
+  };
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -88,7 +157,7 @@ const Navbar = () => {
               <Link to="/">
                 {" "}
                 <Text
-                  display={"flex"}
+                  display={{ sm: "none", md: "flex" }}
                   alignItems={"center"}
                   fontSize={"xl"}
                   fontWeight={"bold"}
@@ -119,18 +188,72 @@ const Navbar = () => {
           <Flex alignItems={"center"}>
             <Stack direction={"row"} alignItems={"center"}>
               {!user?.uid && (
-                <Link
-                  px={2}
-                  py={1}
-                  rounded={"md"}
-                  _hover={{
-                    textDecoration: "none",
-                    bg: ("gray.200", "gray.700"),
-                  }}
-                  to="/login"
-                >
-                  Login
-                </Link>
+                <HStack>
+                  <Link
+                    px={2}
+                    py={1}
+                    rounded={"md"}
+                    _hover={{
+                      textDecoration: "none",
+                      bg: ("gray.200", "gray.700"),
+                    }}
+                    to="/login"
+                  >
+                    Login
+                  </Link>
+                  <Popover>
+                    <PopoverTrigger>
+                      <Button>Direct Login</Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <PopoverArrow />
+                      <PopoverCloseButton />
+                      <PopoverHeader>
+                        Login As Admin or Seller or User!
+                      </PopoverHeader>
+                      <PopoverBody>
+                        <HStack>
+                          <Button
+                            size="sm"
+                            bg={"green.600"}
+                            color={"white"}
+                            _hover={{
+                              bg: "green.700",
+                            }}
+                            type="submit"
+                            onClick={() => handleDirctLogin("admin")}
+                          >
+                            Admin
+                          </Button>
+                          <Button
+                            size="sm"
+                            bg={"green.600"}
+                            color={"white"}
+                            _hover={{
+                              bg: "green.700",
+                            }}
+                            type="submit"
+                            onClick={() => handleDirctLogin("user")}
+                          >
+                            User
+                          </Button>
+                          <Button
+                            size="sm"
+                            bg={"green.600"}
+                            color={"white"}
+                            _hover={{
+                              bg: "green.700",
+                            }}
+                            type="submit"
+                            onClick={() => handleDirctLogin("seller")}
+                          >
+                            Seller
+                          </Button>
+                        </HStack>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
+                </HStack>
               )}
               <Button variant={"ghost"} onClick={toggleColorMode}>
                 {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
