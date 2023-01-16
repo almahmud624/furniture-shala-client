@@ -16,7 +16,7 @@ const Header = () => {
       <Container
         maxW="7xl"
         px={{ base: 6, md: 3 }}
-        my={[16, 26, 36]}
+        mt={[10, 15, 20]}
         mb={[72, 96, 36]}
       >
         <Stack

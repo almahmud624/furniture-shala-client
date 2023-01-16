@@ -15,6 +15,7 @@ import "./AdvertismentCarousel.css";
 import OrderForm from "../../../Component/OrderForm";
 import FormModal from "../../../Component/FormModal";
 import { AuthContext } from "../../../Context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const settings = {
   dots: true,
@@ -31,6 +32,7 @@ const settings = {
 const AdvertismentCarousel = ({ advertiseItems }) => {
   const [slider, setSlider] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const [productInfo, setProductInfo] = useState();
   const top = useBreakpointValue({ base: "90%", md: "50%" });
@@ -160,6 +162,7 @@ const AdvertismentCarousel = ({ advertiseItems }) => {
                     onClick={() => {
                       setProductInfo(card);
                       onOpen();
+                      !user?.uid && navigate("/login");
                     }}
                   >
                     Buy Now

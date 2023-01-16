@@ -3,6 +3,7 @@ import React from "react";
 import Advertisement from "../Advertisement/Advertisement/Advertisement";
 import Categories from "../Categories/Categories";
 import Header from "../Header/Header";
+import ProductSlider from "../ProductSlider/ProductSlider";
 import SiteOverview from "../SiteOverview/SiteOverview";
 
 const Home = () => {
@@ -10,6 +11,7 @@ const Home = () => {
     <>
       <Box maxWidth={"90%"} margin={"auto"}>
         <Header />
+        <ProductSlider />
         <Advertisement />
         <Categories />
         <SiteOverview />
