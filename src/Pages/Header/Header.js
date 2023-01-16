@@ -9,19 +9,19 @@ import {
   Skeleton,
   Box,
 } from "@chakra-ui/react";
-
 const Header = () => {
   return (
-    <div>
+    <>
       <Container
         maxW="7xl"
         px={{ base: 6, md: 3 }}
-        mt={[10, 15, 20]}
-        mb={[72, 96, 36]}
+        mt={[5, 10, 16]}
+        mb={[0, 0, 36]}
       >
         <Stack
           direction={{ base: "column", md: "row" }}
           justifyContent="center"
+          spacing={36}
         >
           <Stack
             direction="column"
@@ -30,16 +30,19 @@ const Header = () => {
             maxW="8xl"
           >
             <chakra.h1
-              fontSize={["3xl", "5xl"]}
-              lineHeight={1}
+              fontSize={["xl", "3xl", "5xl"]}
+              lineHeight={1.3}
               fontWeight="bold"
               textAlign="left"
             >
-              Resale your furniture with <br />
+              <chakra.span color="green.600">
+                Resale your furniture{" "}
+              </chakra.span>
+              with <br />
               <chakra.span color="green.600">Best Price</chakra.span>
             </chakra.h1>
             <Text
-              fontSize="1.2rem"
+              fontSize={["1em", "1em", "1.1em"]}
               textAlign="left"
               lineHeight="1.375"
               fontWeight="400"
@@ -73,27 +76,40 @@ const Header = () => {
             </HStack>
           </Stack>
           <Box ml={{ base: 0, md: 5 }} pos="relative">
-            <Box
+            {/* <Box
               position="absolute"
               left="-45px"
               top="-30px"
               height="full"
               maxW="700px"
               zIndex={-1}
-            ></Box>
-            <Image
-              w="100%"
-              h="100%"
-              minW={{ base: "auto", md: "30rem" }}
-              objectFit="cover"
-              src={`https://images.unsplash.com/photo-1561715276-a2d087060f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80`}
-              rounded="md"
-              fallback={<Skeleton />}
-            />
+            ></Box> */}
+            <Box
+              height={"500px"}
+              width={"90%"}
+              display={{ sm: "none", md: "none", lg: "block" }}
+              border={"1px solid #2D3748"}
+              borderRadius="64% 36% 53% 47% / 50% 33% 67% 50% "
+              boxShadow={"0px 0px 14px 0px rgba(0,0,0,0.45) "}
+              p={2}
+            >
+              <Image
+                w="100%"
+                h="100%"
+                // minW={{ base: "auto", md: "30rem" }}
+                objectFit="cover"
+                src={
+                  "https://images.unsplash.com/photo-1567016507665-356928ac6679?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
+                }
+                rounded="md"
+                borderRadius="64% 36% 53% 47% / 50% 33% 67% 50% "
+                fallback={<Skeleton />}
+              />
+            </Box>
           </Box>
         </Stack>
       </Container>
-    </div>
+    </>
   );
 };
 

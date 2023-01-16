@@ -70,11 +70,11 @@ const ProductSlider = () => {
 
   return (
     <div>
-      <div>
+      <Box mt={[0, 0, "18rem"]} mb={[0, 0, "2rem"]}>
         <Slider {...settings}>
           {products?.map((product) => (
             <div key={Math.random()}>
-              <Box px={2} py={20}>
+              <Box px={2}>
                 <Card
                   maxW="sm"
                   margin={"auto"}
@@ -129,7 +129,7 @@ const ProductSlider = () => {
         <FormModal isOpen={isOpen} onClose={onClose} modalTitle={"demo"}>
           <OrderForm user={user} productInfo={productInfo} onClose={onClose} />
         </FormModal>
-      </div>
+      </Box>
     </div>
   );
 };

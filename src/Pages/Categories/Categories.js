@@ -19,7 +19,7 @@ const Categories = () => {
   ];
 
   return (
-    <Box maxW={"container.xl"} mx={"auto"} px={4} mt={[20, 8]}>
+    <Box mx={"auto"} mt={[30, 20, 8]}>
       <Box>
         <chakra.h2
           mb={4}

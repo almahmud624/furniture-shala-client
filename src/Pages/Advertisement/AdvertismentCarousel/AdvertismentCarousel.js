@@ -46,6 +46,7 @@ const AdvertismentCarousel = ({ advertiseItems }) => {
         width={"full"}
         overflow={"hidden"}
         style={{ height: "300px !important" }}
+        borderRadius={5}
       >
         {/* CSS files for react-slick */}
         <link
@@ -134,6 +135,7 @@ const AdvertismentCarousel = ({ advertiseItems }) => {
                   backdropInvert="80%"
                   backdropBlur="2px"
                   backdropBrightness={"30"}
+                  borderRadius={5}
                 >
                   <Heading
                     fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
@@ -158,7 +160,7 @@ const AdvertismentCarousel = ({ advertiseItems }) => {
                       },
                     }}
                     display={"inline-block"}
-                    borderRadius={"none"}
+                    borderRadius={5}
                     onClick={() => {
                       setProductInfo(card);
                       onOpen();
