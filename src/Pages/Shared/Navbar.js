@@ -35,7 +35,7 @@ import { setAuthToken } from "../../Utilities/JwtApi";
 const Navbar = () => {
   const { user, userSignOut } = useContext(AuthContext);
   const { userLogIn } = useContext(AuthContext);
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode, toggleColorMode } = useColorMode("dark");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const toastIdRef = useRef();
