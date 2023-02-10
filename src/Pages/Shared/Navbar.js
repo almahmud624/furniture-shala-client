@@ -35,7 +35,7 @@ import { setAuthToken } from "../../Utilities/JwtApi";
 const Navbar = () => {
   const { user, userSignOut } = useContext(AuthContext);
   const { userLogIn } = useContext(AuthContext);
-  const { colorMode, toggleColorMode } = useColorMode("dark");
+  const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const toastIdRef = useRef();
@@ -141,19 +141,48 @@ const Navbar = () => {
         });
       });
   };
+
+  const RoleButton = ({ children }) => {
+    return (
+      <>
+        <Button
+          size="sm"
+          bg={"transparent"}
+          borderWidth={1}
+          borderColor={"green.500"}
+          color={"gray.700"}
+          _dark={{ color: "#fff" }}
+          _hover={{
+            bg: "green.700",
+            color: "#ffffff",
+          }}
+          borderRadius={2}
+          type="submit"
+          textTransform={"capitalize"}
+          onClick={() => handleDirctLogin(children)}
+        >
+          {children}
+        </Button>
+      </>
+    );
+  };
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
-            size={"md"}
+            size={["sm", "md"]}
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label={"Open Menu"}
             display={{ md: "none" }}
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={"center"}>
-            <Stack spacing={{ base: "6", md: "8" }} align="start">
+            <Stack
+              spacing={{ base: "6", md: "8" }}
+              align="start"
+              display={{ base: "none", md: "flex" }}
+            >
               <Link to="/">
                 {" "}
                 <Text
@@ -189,21 +218,41 @@ const Navbar = () => {
             <Stack direction={"row"} alignItems={"center"}>
               {!user?.uid && (
                 <HStack>
-                  <Link
-                    px={2}
+                  <Button
+                    as={Link}
+                    px={4}
                     py={1}
-                    rounded={"md"}
+                    borderWidth={1}
+                    borderColor={"green.500"}
+                    rounded={"sm"}
+                    bg={"green.700"}
                     _hover={{
                       textDecoration: "none",
-                      bg: ("gray.200", "gray.700"),
+                      bg: "transparent",
+                      color: "gray.700",
+                      _dark: {
+                        color: "#fff",
+                      },
                     }}
+                    color={"#fff"}
+                    size={["sm", "md"]}
                     to="/login"
                   >
                     Login
-                  </Link>
+                  </Button>
                   <Popover>
                     <PopoverTrigger>
-                      <Button>Direct Login</Button>
+                      <Button
+                        bg={"transparent"}
+                        borderWidth={1}
+                        borderColor={"green.500"}
+                        rounded={"sm"}
+                        color={"green.500"}
+                        _hover={{ color: "gray.700", _dark: { color: "#fff" } }}
+                        size={["sm", "md"]}
+                      >
+                        Direct Login
+                      </Button>
                     </PopoverTrigger>
                     <PopoverContent>
                       <PopoverArrow />
@@ -213,42 +262,9 @@ const Navbar = () => {
                       </PopoverHeader>
                       <PopoverBody>
                         <HStack>
-                          <Button
-                            size="sm"
-                            bg={"green.600"}
-                            color={"white"}
-                            _hover={{
-                              bg: "green.700",
-                            }}
-                            type="submit"
-                            onClick={() => handleDirctLogin("admin")}
-                          >
-                            Admin
-                          </Button>
-                          <Button
-                            size="sm"
-                            bg={"green.600"}
-                            color={"white"}
-                            _hover={{
-                              bg: "green.700",
-                            }}
-                            type="submit"
-                            onClick={() => handleDirctLogin("user")}
-                          >
-                            User
-                          </Button>
-                          <Button
-                            size="sm"
-                            bg={"green.600"}
-                            color={"white"}
-                            _hover={{
-                              bg: "green.700",
-                            }}
-                            type="submit"
-                            onClick={() => handleDirctLogin("seller")}
-                          >
-                            Seller
-                          </Button>
+                          <RoleButton>admin</RoleButton>
+                          <RoleButton>user</RoleButton>
+                          <RoleButton>seller</RoleButton>
                         </HStack>
                       </PopoverBody>
                     </PopoverContent>

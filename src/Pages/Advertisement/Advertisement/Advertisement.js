@@ -1,5 +1,6 @@
 import { Box, Button, Flex, SimpleGrid, chakra } from "@chakra-ui/react";
 import React, { useContext } from "react";
+import CustomGradientBtn from "../../../Component/CustomGradientBtn";
 import { DataStoreContext } from "../../../Context/DataProvider";
 import AdvertismentCarousel from "../AdvertismentCarousel/AdvertismentCarousel";
 
@@ -25,7 +26,7 @@ const Advertisement = () => {
             _dark={{
               bg: "gray.800",
             }}
-            px={8}
+            // px={8}
             py={20}
             mx="auto"
           >
@@ -53,7 +54,7 @@ const Advertisement = () => {
                     md: "4xl",
                   }}
                   fontWeight="bold"
-                  textAlign={"left"}
+                  textAlign={["center", "left"]}
                   lineHeight={{
                     md: "shorter",
                   }}
@@ -62,40 +63,22 @@ const Advertisement = () => {
                 </chakra.h2>
                 <chakra.p
                   mb={5}
-                  textAlign={"left"}
+                  textAlign={["center", "left"]}
                   color="gray.600"
                   _dark={{
                     color: "gray.400",
                   }}
-                  fontSize={{
-                    md: "lg",
-                  }}
+                  fontSize={"16px"}
                 >
-                  Super Sale is Live @ 50 % off, Keep Moving... and Buy things.
-                  Massive Savings! Less Spending. Exclusive Sale For special
-                  Season
+                  If you are in the market for new furniture, now is a great
+                  time to take advantage of an ecommerce furniture site's
+                  promotional offer of 20% off. With this offer, you can save
+                  big on high-quality furniture pieces for your home. Whether
+                  you're looking to furnish your living room, bedroom, dining
+                  room, or any other area of your home, this promotion makes it
+                  easy and affordable to find exactly what you need.
                 </chakra.p>
-                <Button
-                  w={{
-                    base: "full",
-                    sm: "auto",
-                  }}
-                  size="lg"
-                  bg="green.600"
-                  _dark={{
-                    bg: "green.700",
-                  }}
-                  _hover={{
-                    bg: "green.800",
-                    _dark: {
-                      bg: "green.600",
-                    },
-                  }}
-                  color="gray.100"
-                  as="a"
-                >
-                  Explore More
-                </Button>
+                <CustomGradientBtn>Explore more</CustomGradientBtn>
               </Box>
               <Box
                 w="full"
@@ -105,6 +88,7 @@ const Advertisement = () => {
                 _dark={{
                   bg: "gray.700",
                 }}
+                mb={[10, 0, 0]}
               >
                 <AdvertismentCarousel advertiseItems={advertiseItems} />
               </Box>

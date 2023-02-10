@@ -151,8 +151,9 @@ const AdvertismentCarousel = ({ advertiseItems }) => {
                     fontSize={{ base: "md", lg: "lg" }}
                     color="#ccc"
                     bg="green.600"
+                    borderTop={"1px solid gray"}
                     _dark={{
-                      bg: "green.700",
+                      bgGradient: "linear(to-b,#333333, #26745D)",
                     }}
                     _hover={{
                       bg: "green.800",

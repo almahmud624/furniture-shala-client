@@ -8,7 +8,7 @@ import {
   Stack,
   chakra,
 } from "@chakra-ui/react";
-import clientImg from "../../Assets/client.jpg";
+import clientImg from "../../Assets/client2.jpg";
 
 const statData = [
   {
@@ -32,16 +32,24 @@ const SiteOverview = () => {
   return (
     <Stack
       direction={{ base: "column", md: "row" }}
-      py={"24"}
+      my={"24"}
       maxW={"7xl"}
       mx={"auto"}
-      px={4}
+      bg={"#EEEFF0"}
+      _dark={{ bg: "#1E2532" }}
+      roundedRight={[0, 0, "md"]}
+      roundedBottom={["md", 0, 0]}
     >
-      <Flex flex={1}>
-        <Box w={"xl"} mx={"auto"}>
-          <Image alt="Cover image" objectFit="cover" src={clientImg} />
-        </Box>
-      </Flex>
+      <Box w={["full", "lg", "lg"]} mx={"auto"}>
+        <Image
+          alt="Cover image"
+          objectFit="cover"
+          src={clientImg}
+          roundedLeft={[[0, 0, "md"]]}
+          roundedTop={["md", 0, 0]}
+        />
+      </Box>
+
       <Flex p={1} flex={1} align="center" justify="center">
         <Flex direction="column">
           <Box>

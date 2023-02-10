@@ -10,6 +10,7 @@ import {
   Image,
   Stack,
   Text,
+  useColorMode,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
@@ -78,7 +79,8 @@ const ProductSlider = () => {
                 <Card
                   maxW="sm"
                   margin={"auto"}
-                  bgGradient="linear(to-b, #1A202C, #2D3748)"
+                  bgGradient="linear(to-b, #ffffff, #2D3748)"
+                  _dark={{ bgGradient: "linear(to-b, #1A202C, #2D3748)" }}
                 >
                   <CardBody>
                     <Box height={"150px"} width={"100%"}>
@@ -92,7 +94,13 @@ const ProductSlider = () => {
                       />
                     </Box>
                     <Stack mt="6" spacing="3">
-                      <Heading size="sm" fontWeight={"normal"} noOfLines={1}>
+                      <Heading
+                        size="sm"
+                        fontWeight={"normal"}
+                        noOfLines={1}
+                        color="gray.200"
+                        _dark={{ color: "gray.200" }}
+                      >
                         {product?.productName}
                       </Heading>
                     </Stack>

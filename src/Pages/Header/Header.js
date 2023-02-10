@@ -6,9 +6,10 @@ import {
   HStack,
   Text,
   Image,
-  Skeleton,
   Box,
 } from "@chakra-ui/react";
+import CustomGradientBtn from "../../Component/CustomGradientBtn";
+import sofa1 from "../../Assets/sofa1.png";
 const Header = () => {
   return (
     <>
@@ -56,23 +57,7 @@ const Header = () => {
               mb={{ base: "3rem !important", sm: 0 }}
               flexWrap="wrap"
             >
-              <chakra.button
-                w={{ base: "100%", sm: "auto" }}
-                h={12}
-                px={6}
-                color="white"
-                size="lg"
-                rounded="md"
-                mb={{ base: 2, sm: 0 }}
-                zIndex={5}
-                lineHeight={1}
-                bg={"green.600"}
-                _hover={{
-                  bg: "green.700",
-                }}
-              >
-                <chakra.span> Join as a Seller </chakra.span>
-              </chakra.button>
+              <CustomGradientBtn>Join as a Seller</CustomGradientBtn>
             </HStack>
           </Stack>
           <Box ml={{ base: 0, md: 5 }} pos="relative">
@@ -87,7 +72,7 @@ const Header = () => {
             <Box
               height={"500px"}
               width={"90%"}
-              display={{ sm: "none", md: "none", lg: "block" }}
+              display={["none", "none", "block"]}
               border={"1px solid #2D3748"}
               borderRadius="64% 36% 53% 47% / 50% 33% 67% 50% "
               boxShadow={"0px 0px 14px 0px rgba(0,0,0,0.45) "}
@@ -98,12 +83,10 @@ const Header = () => {
                 h="100%"
                 // minW={{ base: "auto", md: "30rem" }}
                 objectFit="cover"
-                src={
-                  "https://images.unsplash.com/photo-1567016507665-356928ac6679?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-                }
+                src={sofa1}
                 rounded="md"
                 borderRadius="64% 36% 53% 47% / 50% 33% 67% 50% "
-                fallback={<Skeleton />}
+                // fallback={<Skeleton />}
               />
             </Box>
           </Box>

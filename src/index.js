@@ -3,10 +3,11 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import DataProvider from "./Context/DataProvider";
 import AuthProvider from "./Context/AuthProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import theme from "./Component/theme";
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,7 +15,8 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <DataProvider>
-          <ChakraProvider>
+          <ChakraProvider theme={theme}>
+            <ColorModeScript initialColorMode={theme.config.initialColorMode} />
             <App />
           </ChakraProvider>
         </DataProvider>

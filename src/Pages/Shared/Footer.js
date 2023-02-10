@@ -4,11 +4,9 @@ import {
   Button,
   Divider,
   Image,
-  Input,
   Link,
   Stack,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import logo from "../../Assets/logo.png";
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
@@ -61,7 +59,11 @@ const Footer = () => {
               </Box>
               Shala
             </Text>
-            <Text fontSize="18" color={"green.100"}>
+            <Text
+              fontSize="18"
+              color={"gray.600"}
+              _dark={{ color: "green.100" }}
+            >
               Furniture that speaks to your unique style
             </Text>
             <Stack direction={"row"} spacing={6}>
