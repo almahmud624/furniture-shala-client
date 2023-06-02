@@ -1,10 +1,10 @@
 import React from "react";
 import { chakra } from "@chakra-ui/react";
-const CustomGradientBtn = ({ children }) => {
+import { Link } from "react-router-dom";
+const CustomGradientBtn = ({ children, link, customStyle }) => {
   return (
     <>
       <chakra.button
-        w={{ base: "100%", sm: "auto" }}
         h={12}
         px={6}
         color="#gray.800"
@@ -21,8 +21,9 @@ const CustomGradientBtn = ({ children }) => {
           bgGradient: "linear(to-l, #38A169, #0D6D61)",
           transition: "all 0.5s",
         }}
+        sx={customStyle}
       >
-        <chakra.span> {children} </chakra.span>
+        <Link to={link}> {children} </Link>
       </chakra.button>
     </>
   );

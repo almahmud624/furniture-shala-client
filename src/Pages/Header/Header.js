@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   Box,
+  Skeleton,
 } from "@chakra-ui/react";
 import CustomGradientBtn from "../../Component/CustomGradientBtn";
 import sofa1 from "../../Assets/sofa1.png";
@@ -57,21 +58,16 @@ const Header = () => {
               mb={{ base: "3rem !important", sm: 0 }}
               flexWrap="wrap"
             >
-              <CustomGradientBtn>Join as a Seller</CustomGradientBtn>
+              <CustomGradientBtn link={"/login?role=seller"}>
+                Join as a Seller
+              </CustomGradientBtn>
             </HStack>
           </Stack>
           <Box ml={{ base: 0, md: 5 }} pos="relative">
-            {/* <Box
-              position="absolute"
-              left="-45px"
-              top="-30px"
-              height="full"
-              maxW="700px"
-              zIndex={-1}
-            ></Box> */}
             <Box
               height={"500px"}
-              width={"90%"}
+              // width={"90%"}
+              width={"400px"}
               display={["none", "none", "block"]}
               border={"1px solid #2D3748"}
               borderRadius="64% 36% 53% 47% / 50% 33% 67% 50% "
@@ -86,7 +82,8 @@ const Header = () => {
                 src={sofa1}
                 rounded="md"
                 borderRadius="64% 36% 53% 47% / 50% 33% 67% 50% "
-                // fallback={<Skeleton />}
+                fallback={<Skeleton />}
+                loading="lazy"
               />
             </Box>
           </Box>

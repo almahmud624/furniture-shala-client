@@ -19,7 +19,7 @@ const Categories = () => {
   ];
 
   return (
-    <Box mx={"auto"} mt={[30, 20, 8]}>
+    <Box mx={"auto"} my={[30, 20, 8]}>
       <Box>
         <chakra.h2
           mb={4}
@@ -52,7 +52,7 @@ const Categories = () => {
 
       <SimpleGrid placeItems={"center"} columns={[1, 2, 3]} spacing={20} py={8}>
         {categories?.map((category) => (
-          <Box role="group">
+          <Box role="group" key={Math.random()}>
             <SimpleGrid placeItems={"center"}>
               <Link to={`/categories/${category?.categoryName}`}>
                 <Box>

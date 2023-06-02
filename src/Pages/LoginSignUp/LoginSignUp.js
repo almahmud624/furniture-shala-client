@@ -6,7 +6,6 @@ import {
   FormLabel,
   Input,
   InputGroup,
-  HStack,
   InputRightElement,
   Stack,
   Button,
@@ -21,17 +20,19 @@ import {
 import { useState, useContext } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 import axios from "axios";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import { setAuthToken } from "../../Utilities/JwtApi";
 
 const LoginSignUp = () => {
+  const [searchParams] = useSearchParams();
+  const queryRole = searchParams.get("role");
   const { createUser, updateUserProfile, userLogIn } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
-  const [role, setRole] = useState("user");
+  const [isLogin, setIsLogin] = useState(queryRole ? false : true);
+  const [role, setRole] = useState(queryRole ? queryRole : "user");
   const toast = useToast();
   const toastIdRef = useRef();
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ const LoginSignUp = () => {
         .then((data) => {
           setAuthToken(user);
           toastIdRef.current = toast({
-            title: `Login Successfull`,
+            title: `Login Successful`,
             position: "top",
             isClosable: true,
             status: "success",
@@ -131,6 +132,18 @@ const LoginSignUp = () => {
             boxShadow={"lg"}
             p={8}
           >
+            {role === "seller" && (
+              <Text
+                color={"green.500"}
+                textAlign={"center"}
+                mt={"-6"}
+                mb={2}
+                fontWeight={"semibold"}
+                fontSize={"xl"}
+              >
+                Join As Seller
+              </Text>
+            )}
             <form onSubmit={handleSubmit(onSubmit)}>
               <Stack spacing={4}>
                 {!isLogin && (
@@ -165,6 +178,7 @@ const LoginSignUp = () => {
                             {...register("role", {
                               required: "This is required",
                             })}
+                            defaultChecked={role === "seller"}
                           >
                             Seller account
                           </Radio>
