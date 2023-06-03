@@ -27,6 +27,7 @@ import SocialLogin from "../SocialLogin/SocialLogin";
 import { setAuthToken } from "../../Utilities/JwtApi";
 
 const LoginSignUp = () => {
+  const [state, setState] = useState("initial");
   const [searchParams] = useSearchParams();
   const queryRole = searchParams.get("role");
   const { createUser, updateUserProfile, userLogIn } = useContext(AuthContext);
@@ -45,6 +46,7 @@ const LoginSignUp = () => {
   } = useForm();
 
   function onSubmit(user) {
+    setState("submitting");
     if (isLogin) {
       userLogIn(user?.email, user?.password)
         .then((data) => {
@@ -55,6 +57,7 @@ const LoginSignUp = () => {
             isClosable: true,
             status: "success",
           });
+          setState("success");
           navigate(from, { replace: true });
         })
         .catch((error) => {
@@ -64,6 +67,7 @@ const LoginSignUp = () => {
             isClosable: true,
             status: "error",
           });
+          setState("error");
         });
     } else {
       createUser(user.email, user.password)
@@ -77,6 +81,7 @@ const LoginSignUp = () => {
                 isClosable: true,
                 status: "error",
               });
+              setState("error");
             });
           // store user data on server
           try {
@@ -90,16 +95,18 @@ const LoginSignUp = () => {
                 if (res.data.acknowledged === true) {
                   setAuthToken(user);
                   toastIdRef.current = toast({
-                    title: `Registration Successfull`,
+                    title: `Registration Successful`,
                     position: "top",
                     isClosable: true,
                     status: "success",
                   });
+                  setState("success");
                   navigate(from, { replace: true });
                 }
               });
           } catch (error) {
             console.log(error);
+            setState("error");
           }
         })
         .catch((error) => {
@@ -109,6 +116,7 @@ const LoginSignUp = () => {
             isClosable: true,
             status: "error",
           });
+          setState("error");
         });
     }
   }
@@ -228,6 +236,7 @@ const LoginSignUp = () => {
                       bg: "green.700",
                     }}
                     type="submit"
+                    _loading={state === "submitting"}
                   >
                     {isLogin ? "Login" : "Register"}
                   </Button>

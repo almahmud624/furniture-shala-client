@@ -10,7 +10,6 @@ const Main = () => {
       <Navbar />
       <CookieConfirmation />
       <Outlet />
-
       <Footer />
     </div>
   );

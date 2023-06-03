@@ -12,6 +12,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { DataStoreContext } from "../../Context/DataProvider";
 import CustomGradientBtn from "../CustomGradientBtn";
 
+const calculatePercentage = (oldPrice, newPrice) => {
+  return ((oldPrice - newPrice) / oldPrice) * 100;
+};
+
 const FeaturedProduct = () => {
   const { products } = useContext(DataStoreContext);
   const [randomProducts, setRandomProducts] = useState([]);
@@ -75,7 +79,7 @@ const FeaturedProduct = () => {
       <Stack direction={{ md: "column", lg: "row" }} spacing={10} mt={10}>
         {randomProducts?.map(
           ({ productName, newPrice, oldPrice, productImg }) => (
-            <Box key={Math.random()} bg={"gray.900"} w={"50%"} h={"64"}>
+            <Box key={Math.random()} bg={"gray.900"} w={"50%"} h={"56"}>
               <Flex justify={"space-between"} alignItems={"center"}>
                 <VStack align={"left"} pl={5} spacing={3} w={"full"}>
                   <Heading size={"lg"} fontWeight={"semibold"}>
@@ -91,13 +95,32 @@ const FeaturedProduct = () => {
                     </Text>
                     <Text display={"inline"}>${newPrice}</Text>
                   </HStack>
-                  <CustomGradientBtn
+                  <Text
+                    display={"inline"}
+                    bg={"gray.900"}
+                    fontFamily={"cursive"}
+                    color={"green.600"}
+                    fontSize={"lg"}
+                    w={"fit-content"}
+                    borderBottomWidth={1}
+                    borderBottomColor={"green.600"}
+                    cursor={"pointer"}
+                    transition={"all"}
+                    transitionDuration={"0.5s"}
+                    _hover={{
+                      color: "green.500",
+                      borderBottomColor: "green.700",
+                    }}
+                  >
+                    Save {calculatePercentage(oldPrice, newPrice).toFixed(2)}%
+                  </Text>
+                  {/* <CustomGradientBtn
                     customStyle={{ width: "fit-content !important" }}
                   >
                     Buy Now
-                  </CustomGradientBtn>
+                  </CustomGradientBtn> */}
                 </VStack>
-                <Box h={"64"} w={"72"} flexGrow={1}>
+                <Box h={"56"} w={"72"} flexGrow={1}>
                   <Image
                     src={productImg}
                     w={"full"}

@@ -43,7 +43,10 @@ const SiteFeature = () => {
           lg: "repeat(4,1fr)",
           "2xl": "repeat(4,1fr)",
         }}
-        bg={"gray.900"}
+        borderTopWidth={1}
+        borderBottomWidth={1}
+        borderBottomColor={"red.900"}
+        borderTopColor={"red.900"}
         py={10}
         gap={7}
         px={5}
@@ -54,13 +57,20 @@ const SiteFeature = () => {
             borderRightWidth={{ md: 0, lg: 1 }}
             borderRightColor={"red.900"}
             _last={{ borderWidth: "0" }}
+            role="group"
           >
             <HStack gap={2}>
               <Box>
                 <Icon as={icon} fontSize={"4xl"} color={"red.500"} />
               </Box>
               <Box>
-                <Heading size={"md"} fontWeight={"semibold"}>
+                <Heading
+                  size={"md"}
+                  fontWeight={"semibold"}
+                  _groupHover={{ color: "red.500" }}
+                  transition={"all"}
+                  transitionDuration={".3s"}
+                >
                   {title}
                 </Heading>
                 <Text>{subtitle}</Text>
