@@ -9,6 +9,7 @@ import SiteFeature from "./Sections/SiteFeature/SiteFeature";
 import FeaturedProduct from "./Sections/FeaturedProduct/FeaturedProduct";
 import TopSellingProduct from "./Sections/TopSellingProduct/TopSellingProduct";
 import SeasonSale from "./Sections/SeasonSale/SeasonSale";
+import ProductsGrid from "./Sections/ProductsGrid/ProductsGrid";
 const Home = () => {
   return (
     <>
@@ -16,6 +17,7 @@ const Home = () => {
         <Header />
         <ProductSlider />
         <SiteFeature />
+        <ProductsGrid />
         <Advertisement />
         <Categories />
         <FeaturedProduct />

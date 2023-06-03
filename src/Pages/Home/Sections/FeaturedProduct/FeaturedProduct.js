@@ -55,7 +55,6 @@ const FeaturedProduct = () => {
   useEffect(() => {
     selectRandomProducts();
   }, []);
-  console.log(randomProducts);
 
   return (
     <Box mt={16}>
@@ -113,11 +112,6 @@ const FeaturedProduct = () => {
                   >
                     Save {calculatePercentage(oldPrice, newPrice).toFixed(2)}%
                   </Text>
-                  {/* <CustomGradientBtn
-                    customStyle={{ width: "fit-content !important" }}
-                  >
-                    Buy Now
-                  </CustomGradientBtn> */}
                 </VStack>
                 <Box h={"56"} w={"72"} flexGrow={1}>
                   <Image

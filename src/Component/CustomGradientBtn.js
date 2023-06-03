@@ -1,7 +1,12 @@
 import React from "react";
 import { chakra } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-const CustomGradientBtn = ({ children, link, customStyle }) => {
+const CustomGradientBtn = ({
+  children,
+  link,
+  customStyle,
+  size = ["sm", "md", "lg"],
+}) => {
   return (
     <>
       <chakra.button
@@ -9,7 +14,7 @@ const CustomGradientBtn = ({ children, link, customStyle }) => {
         px={6}
         color="#gray.800"
         _dark={{ color: "#ffffff" }}
-        size={["sm", "md", "lg"]}
+        size={size}
         fontWeight={"semibold"}
         bgGradient="linear(to-r, #38A169, #0D6D61)"
         rounded="sm"
