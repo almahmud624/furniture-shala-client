@@ -1,7 +1,5 @@
 import {
   Box,
-  Container,
-  Divider,
   Grid,
   GridItem,
   HStack,

@@ -5,10 +5,10 @@ import Header from "../Header/Header";
 import Newsletter from "../Newsletter/Newsletter";
 import ProductSlider from "../ProductSlider/ProductSlider";
 import SiteOverview from "../SiteOverview/SiteOverview";
-import FeaturedProduct from "../../Component/FeaturedProduct/FeaturedProduct";
-import SiteFeature from "../../Component/SiteFeature/SiteFeature";
-import TopSellingProduct from "../../Component/TopSellingProduct/TopSellingProduct";
-
+import SiteFeature from "./Sections/SiteFeature/SiteFeature";
+import FeaturedProduct from "./Sections/FeaturedProduct/FeaturedProduct";
+import TopSellingProduct from "./Sections/TopSellingProduct/TopSellingProduct";
+import SeasonSale from "./Sections/SeasonSale/SeasonSale";
 const Home = () => {
   return (
     <>
@@ -19,6 +19,7 @@ const Home = () => {
         <Advertisement />
         <Categories />
         <FeaturedProduct />
+        <SeasonSale />
         <TopSellingProduct />
         <SiteOverview />
         <Newsletter />

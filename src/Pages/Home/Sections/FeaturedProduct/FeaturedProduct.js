@@ -9,8 +9,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
-import { DataStoreContext } from "../../Context/DataProvider";
-import CustomGradientBtn from "../CustomGradientBtn";
+import { DataStoreContext } from "../../../../Context/DataProvider";
 
 const calculatePercentage = (oldPrice, newPrice) => {
   return ((oldPrice - newPrice) / oldPrice) * 100;

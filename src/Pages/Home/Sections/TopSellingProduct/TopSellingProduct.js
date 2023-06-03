@@ -8,9 +8,9 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import CustomGradientBtn from "../CustomGradientBtn";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import CustomGradientBtn from "../../../../Component/CustomGradientBtn";
 
 const TopSellingProduct = () => {
   const { data: mostSoldProducts = [], isLoading } = useQuery({
