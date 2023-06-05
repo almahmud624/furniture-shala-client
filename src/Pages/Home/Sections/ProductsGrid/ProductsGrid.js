@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Grid,
   GridItem,
   HStack,
@@ -7,10 +8,13 @@ import {
   Image,
   Text,
   VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { DataStoreContext } from "../../../../Context/DataProvider";
 import CustomGradientBtn from "../../../../Component/CustomGradientBtn";
+import calculatePercentage from "../../../../Utilities/calculatePercentage";
+import ProductModal from "../../../../Component/ProductDetailsModal/ProductModal";
 
 const ProductsGrid = () => {
   return (
@@ -28,7 +32,7 @@ const ProductsGrid = () => {
               imageHeight={"md"}
               contentPosition={"auto"}
               bgGradientDir={"to-r"}
-              buttonText={"Shop Now"}
+              priceText={true}
             />
           </GridItem>
           <GridItem rowSpan={2} colSpan={2}>
@@ -37,7 +41,7 @@ const ProductsGrid = () => {
               imageHeight={"md"}
               contentPosition={"0"}
               bgGradientDir={"to-t"}
-              buttonText={"Discover Now"}
+              priceText={true}
             />
           </GridItem>
           <GridItem colSpan={2} h={""}>
@@ -46,7 +50,7 @@ const ProductsGrid = () => {
               imageHeight={"52"}
               contentPosition={"auto"}
               bgGradientDir={"to-r"}
-              buttonText={"Discover Now"}
+              pricePercentage={true}
             />
           </GridItem>
           <GridItem colSpan={2} h={""}>
@@ -55,7 +59,7 @@ const ProductsGrid = () => {
               imageHeight={"52"}
               contentPosition={"0"}
               bgGradientDir={"to-t"}
-              buttonText={"Shop Now"}
+              pricePercentage={"true"}
             />
           </GridItem>
         </Grid>
@@ -69,8 +73,11 @@ const ProductGridItem = ({
   imageHeight,
   contentPosition,
   bgGradientDir,
-  buttonText,
+  priceText,
+  pricePercentage,
 }) => {
+  const [selectedProduct, setSelectedProduct] = useState({});
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { products } = useContext(DataStoreContext);
   // get featured product from local db
   const featuredProduct = JSON.parse(
@@ -78,11 +85,15 @@ const ProductGridItem = ({
   );
   // remove featured product from main products list
   const restProducts = products?.filter(
-    ({ _id }) => !featuredProduct.some((item) => item?._id === _id)
+    ({ _id }) => !featuredProduct?.some((item) => item?._id === _id)
   );
-  const { productName, productImg, newPrice } =
+  const { productName, productImg, newPrice, oldPrice } =
     restProducts?.[prodcutIndex] || {};
 
+  const handleProduct = () => {
+    setSelectedProduct(restProducts?.[prodcutIndex] || {});
+    onOpen();
+  };
   return (
     <>
       <Box pos={"relative"} overflow={"hidden"} h={"full"}>
@@ -107,11 +118,21 @@ const ProductGridItem = ({
             left={0}
             p={2}
           >
-            <Heading size={"md"} fontWeight={"semibold"}>
+            <Heading size={"md"} fontSize={28} fontWeight={"semibold"}>
               {productName}
             </Heading>
-            <Text>${newPrice}</Text>
+            {priceText && (
+              <Text fontSize={20} fontWeight={"thin"}>
+                from ${newPrice}
+              </Text>
+            )}
+            {pricePercentage && (
+              <Text fontSize={20} fontWeight={"thin"}>
+                up to {calculatePercentage(oldPrice, newPrice)}% off
+              </Text>
+            )}
             <CustomGradientBtn
+              action={handleProduct}
               size={"md"}
               customStyle={{
                 h: 10,
@@ -119,11 +140,17 @@ const ProductGridItem = ({
                 w: "fit-content",
               }}
             >
-              {buttonText}
+              Discover Now
             </CustomGradientBtn>
           </VStack>
         </HStack>
       </Box>
+      <ProductModal
+        onClose={onClose}
+        onOpen={onOpen}
+        isOpen={isOpen}
+        product={selectedProduct}
+      />
     </>
   );
 };

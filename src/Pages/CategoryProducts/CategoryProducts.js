@@ -67,7 +67,6 @@ const CategoryProducts = () => {
       }
     },
   });
-  console.log(products);
 
   // send wishlisted product
   const handleWishList = (product) => {

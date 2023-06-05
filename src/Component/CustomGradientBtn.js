@@ -6,6 +6,7 @@ const CustomGradientBtn = ({
   link,
   customStyle,
   size = ["sm", "md", "lg"],
+  action,
 }) => {
   return (
     <>
@@ -27,6 +28,7 @@ const CustomGradientBtn = ({
           transition: "all 0.5s",
         }}
         sx={customStyle}
+        onClick={action}
       >
         <Link to={link}> {children} </Link>
       </chakra.button>

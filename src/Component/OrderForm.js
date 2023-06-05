@@ -14,13 +14,11 @@ import {
   NumberInput,
   Stack,
 } from "@chakra-ui/react";
-import { useContext, useRef } from "react";
-import { DataStoreContext } from "../Context/DataProvider";
+import { useRef } from "react";
 import moment from "moment";
 import axios from "axios";
 
-export default function OrderForm({ user, productInfo, onClose }) {
-  const { setOrders, orders } = useContext(DataStoreContext);
+export default function OrderForm({ user, productInfo, onClose, setIsOrder }) {
   const toast = useToast();
   const toastIdRef = useRef();
 
@@ -41,10 +39,11 @@ export default function OrderForm({ user, productInfo, onClose }) {
       );
       if (data.acknowledged === true) {
         toastIdRef.current = toast({
-          title: `Order Successfull, Check My Orders!`,
+          title: `Order Successful, Check My Orders!`,
           position: "top",
           isClosable: true,
         });
+        setIsOrder(false);
         onClose();
       }
     } catch (error) {

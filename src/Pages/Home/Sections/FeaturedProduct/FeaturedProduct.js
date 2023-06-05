@@ -10,10 +10,8 @@ import {
 } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import { DataStoreContext } from "../../../../Context/DataProvider";
-
-const calculatePercentage = (oldPrice, newPrice) => {
-  return ((oldPrice - newPrice) / oldPrice) * 100;
-};
+import calculatePercentage from "../../../../Utilities/calculatePercentage";
+import ProductCoupon from "../ProductCoupon/ProductCoupon";
 
 const FeaturedProduct = () => {
   const { products } = useContext(DataStoreContext);
@@ -52,6 +50,9 @@ const FeaturedProduct = () => {
     }
   };
 
+  const { productName, newPrice, oldPrice, productImg } =
+    randomProducts?.[0] || {};
+
   useEffect(() => {
     selectRandomProducts();
   }, []);
@@ -75,56 +76,53 @@ const FeaturedProduct = () => {
         </Heading>
       </Box>
       <Stack direction={{ md: "column", lg: "row" }} spacing={10} mt={10}>
-        {randomProducts?.map(
-          ({ productName, newPrice, oldPrice, productImg }) => (
-            <Box key={Math.random()} bg={"gray.900"} w={"50%"} h={"56"}>
-              <Flex justify={"space-between"} alignItems={"center"}>
-                <VStack align={"left"} pl={5} spacing={3} w={"full"}>
-                  <Heading size={"lg"} fontWeight={"semibold"}>
-                    {productName}
-                  </Heading>
-                  <HStack fontSize={"lg"}>
-                    <Text
-                      display={"inline"}
-                      textDecoration={"line-through"}
-                      color={"red.500"}
-                    >
-                      ${oldPrice}
-                    </Text>
-                    <Text display={"inline"}>${newPrice}</Text>
-                  </HStack>
-                  <Text
-                    display={"inline"}
-                    bg={"gray.900"}
-                    fontFamily={"cursive"}
-                    color={"green.600"}
-                    fontSize={"lg"}
-                    w={"fit-content"}
-                    borderBottomWidth={1}
-                    borderBottomColor={"green.600"}
-                    cursor={"pointer"}
-                    transition={"all"}
-                    transitionDuration={"0.5s"}
-                    _hover={{
-                      color: "green.500",
-                      borderBottomColor: "green.700",
-                    }}
-                  >
-                    Save {calculatePercentage(oldPrice, newPrice).toFixed(2)}%
-                  </Text>
-                </VStack>
-                <Box h={"56"} w={"72"} flexGrow={1}>
-                  <Image
-                    src={productImg}
-                    w={"full"}
-                    h={"full"}
-                    objectFit={"cover"}
-                  />
-                </Box>
-              </Flex>
+        <Box key={Math.random()} bg={"gray.900"} w={"50%"} h={"56"}>
+          <Flex justify={"space-between"} alignItems={"center"}>
+            <VStack align={"left"} pl={5} spacing={3} w={"full"}>
+              <Heading size={"lg"} fontWeight={"semibold"}>
+                {productName}
+              </Heading>
+              <HStack fontSize={"lg"}>
+                <Text
+                  display={"inline"}
+                  textDecoration={"line-through"}
+                  color={"red.500"}
+                >
+                  ${oldPrice}
+                </Text>
+                <Text display={"inline"}>${newPrice}</Text>
+              </HStack>
+              <Text
+                display={"inline"}
+                bg={"gray.900"}
+                fontFamily={"cursive"}
+                color={"green.600"}
+                fontSize={"lg"}
+                w={"fit-content"}
+                borderBottomWidth={1}
+                borderBottomColor={"green.600"}
+                cursor={"pointer"}
+                transition={"all"}
+                transitionDuration={"0.5s"}
+                _hover={{
+                  color: "green.500",
+                  borderBottomColor: "green.700",
+                }}
+              >
+                Save {calculatePercentage(oldPrice, newPrice)}%
+              </Text>
+            </VStack>
+            <Box h={"56"} w={"72"} flexGrow={1}>
+              <Image
+                src={productImg}
+                w={"full"}
+                h={"full"}
+                objectFit={"cover"}
+              />
             </Box>
-          )
-        )}
+          </Flex>
+        </Box>
+        <ProductCoupon product={randomProducts?.[1]} />
       </Stack>
     </Box>
   );
