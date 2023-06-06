@@ -2,22 +2,21 @@ import { Box, Heading, SimpleGrid, chakra, Image } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
 
+const categories = [
+  {
+    categoryName: "restaurent",
+    categoryImg: "https://i.ibb.co/cDR15bZ/image.png",
+  },
+  {
+    categoryName: "home",
+    categoryImg: "https://i.ibb.co/XDHQV18/image.png",
+  },
+  {
+    categoryName: "office",
+    categoryImg: "https://i.ibb.co/yg7hKgB/image.png",
+  },
+];
 const Categories = () => {
-  const categories = [
-    {
-      categoryName: "restaurent",
-      categoryImg: "https://i.ibb.co/cDR15bZ/image.png",
-    },
-    {
-      categoryName: "home",
-      categoryImg: "https://i.ibb.co/XDHQV18/image.png",
-    },
-    {
-      categoryName: "office",
-      categoryImg: "https://i.ibb.co/yg7hKgB/image.png",
-    },
-  ];
-
   return (
     <Box mx={"auto"} my={[30, 20, 8]}>
       <Box>

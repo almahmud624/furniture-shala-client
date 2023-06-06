@@ -20,6 +20,7 @@ import PrivateAdminRoute from "../Pages/Route/PrivateAdminRoute";
 import PrivateRoute from "../Pages/Route/PrivateRoute";
 import PrivateSellerRoute from "../Pages/Route/PrivateSellerRoute";
 import ErrorPage from "../Pages/Shared/ErrorPage";
+import Shop from "../Pages/Shop/Shop";
 
 export const routes = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ export const routes = createBrowserRouter([
       },
       { path: "/login", element: <LoginSignUp /> },
       { path: "/blog", element: <Blog /> },
+      { path: "/shop", element: <Shop /> },
     ],
   },
   {
