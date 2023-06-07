@@ -7,7 +7,7 @@ const Shop = () => {
   return (
     <>
       <Box maxWidth={"90%"} margin={"auto"} my={10} pos={"relative"}>
-        <Flex justifyContent={"space-between"} align={"center"} gap={5}>
+        <Flex justifyContent={"space-between"} gap={5}>
           <Box w={"20%"}>
             <Box>
               <ShopSidebar />

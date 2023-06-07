@@ -2,19 +2,24 @@ import { Box, Button, Flex, HStack, Text } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import PriceRangeSlider from "../../../../Component/PriceRangeSlider/PriceRangeSlider";
 import { DataStoreContext } from "../../../../Context/DataProvider";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SidebarCategories from "../../../../Component/SidebarCategories/SidebarCategories";
 import Discount from "../../../../Component/Discount/Discount";
+import SiderbarSeller from "../../../../Component/SiderbarSellerFilter/SiderbarSeller";
+import useGetQueryValue from "../../../../Hooks/useGetQueryValue";
 
 const ShopSidebar = () => {
   const { products } = useContext(DataStoreContext);
   const navigate = useNavigate();
   const [queryLoad, setQueryLoad] = useState(false);
-  const [searchParams] = useSearchParams();
-  const queryMaxPrice = parseInt(searchParams.get("maxPrice"));
-  const queryMinPrice = parseInt(searchParams.get("minPrice"));
-  const queryCategory = searchParams.get("_category");
-  const queryDiscount = searchParams.get("_discount");
+  const [
+    queryCategory,
+    queryDiscount,
+    querySeller,
+    queryMaxPrice,
+    queryMinPrice,
+  ] = useGetQueryValue();
+
   // find maximum and minimum price of product
   const maximumPrice = Math.max(...products?.map((obj) => obj.newPrice));
   const minimumPrice = Math.min(...products?.map((obj) => obj.newPrice));
@@ -25,18 +30,20 @@ const ShopSidebar = () => {
     minVal: minimumPrice,
     category: "",
     discount: "",
+    seller: "",
   };
 
   const [filterInfo, setFilterInfo] = useState(initialFilterState);
 
   // generate filter query path
   const generateQueryPath = (values) => {
-    const { maxVal, minVal, category, discount } = values || {};
+    const { maxVal, minVal, category, discount, seller } = values || {};
     const params = new URLSearchParams({
       maxPrice: maxVal,
       minPrice: minVal,
       _category: category,
       _discount: discount,
+      _seller: seller,
     });
     const url = `/shop?${params}`;
     navigate(url);
@@ -51,13 +58,20 @@ const ShopSidebar = () => {
   // set query value in filter state, when the page load
   useEffect(() => {
     if (queryLoad) return;
-    if (queryMaxPrice || queryMinPrice || queryCategory || queryDiscount) {
+    if (
+      queryMaxPrice ||
+      queryMinPrice ||
+      queryCategory ||
+      queryDiscount ||
+      querySeller
+    ) {
       setFilterInfo({
         ...filterInfo,
         maxVal: queryMaxPrice,
         minVal: queryMinPrice,
         category: queryCategory,
         discount: queryDiscount,
+        seller: querySeller,
       });
       setQueryLoad(true);
     }
@@ -69,6 +83,7 @@ const ShopSidebar = () => {
     queryMinPrice,
     queryCategory,
     queryDiscount,
+    querySeller,
   ]);
 
   return (
@@ -96,6 +111,11 @@ const ShopSidebar = () => {
             filterInfo={filterInfo}
           />
           <Discount
+            setFilterInfo={setFilterInfo}
+            filterInfo={filterInfo}
+            generateQueryPath={generateQueryPath}
+          />
+          <SiderbarSeller
             setFilterInfo={setFilterInfo}
             filterInfo={filterInfo}
             generateQueryPath={generateQueryPath}

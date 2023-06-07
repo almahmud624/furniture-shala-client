@@ -8,10 +8,7 @@ const SidebarCategories = ({
   setFilterInfo,
   filterInfo,
 }) => {
-  const [searchParams] = useSearchParams();
-  const queryCategory = searchParams.get("_category");
   const { products } = useContext(DataStoreContext);
-  const [queryCategoryLoad, setQueryCategoryLoad] = useState(false);
   // Create an object to store the count of products per category
   const categoryCounts = {};
   // Count the products in each category
@@ -30,7 +27,7 @@ const SidebarCategories = ({
     <>
       <Box>
         <Text fontSize={"lg"} fontWeight={"semibold"}>
-          Products
+          Furniture
         </Text>
         <VStack align={"left"} mt={2}>
           {Object.entries(categoryCounts).map(([categoryName, count]) => (

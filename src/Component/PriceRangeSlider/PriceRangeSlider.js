@@ -74,7 +74,6 @@ const PriceRangeSlider = ({
   };
 
   const handleQueryPath = debounceHandler(doQuery, 1000);
-
   return (
     <div>
       <div className="container">
@@ -118,9 +117,9 @@ const PriceRangeSlider = ({
         </div>
       </div>
       <div className="slider_value">
-        <div className="slider__left-value">{filterInfo?.minVal}</div>
+        <div className="slider__left-value">${filterInfo?.minVal}</div>
         <div className="slider_value_divider">-</div>
-        <div className="slider__right-value">{filterInfo?.maxVal}</div>
+        <div className="slider__right-value">${filterInfo?.maxVal}</div>
       </div>
     </div>
   );

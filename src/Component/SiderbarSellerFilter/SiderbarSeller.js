@@ -9,20 +9,22 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useContext } from "react";
+import { DataStoreContext } from "../../Context/DataProvider";
 
-const data = [
-  { title: "10% or more", value: "10_or_more" },
-  { title: "20% or more", value: "20_or_more" },
-  { title: "30% or more", value: "30_or_more" },
-  { title: "40% or more", value: "40_or_more" },
-  { title: "50% or more", value: "50_or_more" },
-];
-const Discount = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
-  const handleDiscount = (value) => {
-    setFilterInfo({ ...filterInfo, discount: value });
-    generateQueryPath({ ...filterInfo, discount: value });
+const removeDuplicate = (products) => {
+  const sellers = products?.map((product) => product?.sellerName);
+  const removeDuplicateSeller = sellers?.filter(
+    (v, i) => sellers.indexOf(v) === i
+  );
+  return removeDuplicateSeller;
+};
+
+const SiderbarSeller = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
+  const { products } = useContext(DataStoreContext);
+  const handleSeller = (value) => {
+    setFilterInfo({ ...filterInfo, seller: value });
+    generateQueryPath({ ...filterInfo, seller: value });
   };
 
   return (
@@ -38,15 +40,22 @@ const Discount = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
                 fontSize={"lg"}
                 fontWeight={"semibold"}
               >
-                Discounts
+                Seller
               </Box>
               <AccordionIcon />
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4} px={0}>
-            <VStack align={"left"} mt={2}>
-              {data.map(({ title, value }) => (
+            <VStack
+              align={"left"}
+              mt={2}
+              h={52}
+              overflowY={"auto"}
+              id="scrollbar"
+            >
+              {removeDuplicate(products)?.map((sellerName) => (
                 <HStack
+                  key={Math.random()}
                   justify={"space-between"}
                   bg={"gray.900"}
                   pl={2}
@@ -58,15 +67,15 @@ const Discount = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
                     borderColor: "teal.600",
                   }}
                   borderColor={
-                    value === filterInfo?.discount ? "teal.600" : "gray.700"
+                    sellerName === filterInfo?.seller ? "teal.600" : "gray.700"
                   }
                   role="group"
                   transition={"all"}
                   transitionDuration={".3s"}
-                  onClick={() => handleDiscount(value)}
+                  onClick={() => handleSeller(sellerName)}
                 >
                   <Text key={Math.random()} textTransform={"capitalize"}>
-                    {title}
+                    {sellerName}
                   </Text>
                 </HStack>
               ))}
@@ -78,4 +87,4 @@ const Discount = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
   );
 };
 
-export default Discount;
+export default SiderbarSeller;

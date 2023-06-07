@@ -12,16 +12,18 @@ import {
 import CustomGradientBtn from "../../../../Component/CustomGradientBtn";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useSearchParams } from "react-router-dom";
 import displayProductCount from "../../../../Utilities/displayItemCount";
 import calculatePercentage from "../../../../Utilities/calculatePercentage";
+import useGetQueryValue from "../../../../Hooks/useGetQueryValue";
 
 const ShopProduct = () => {
-  const [searchParams] = useSearchParams();
-  const minPrice = parseInt(searchParams.get("minPrice"));
-  const maxPrice = parseInt(searchParams.get("maxPrice"));
-  const category = searchParams.get("_category");
-  const discount = searchParams.get("_discount");
+  const [
+    queryCategory,
+    queryDiscount,
+    querySeller,
+    queryMaxPrice,
+    queryMinPrice,
+  ] = useGetQueryValue();
 
   // get data by inifinite scrolling
   const {
@@ -59,14 +61,14 @@ const ShopProduct = () => {
   const filteredProducts = products
     ?.filter((product) => {
       const price = parseInt(product?.newPrice);
-      if (minPrice || maxPrice) {
-        return price >= minPrice && price <= maxPrice;
+      if (queryMinPrice || queryMaxPrice) {
+        return price >= queryMinPrice && price <= queryMaxPrice;
       }
       return products;
     })
     ?.filter((product) => {
-      if (category) {
-        return category === product.categories;
+      if (queryCategory) {
+        return queryCategory === product.categories;
       }
       return products;
     })
@@ -74,7 +76,7 @@ const ShopProduct = () => {
       const productPercentage = parseInt(
         calculatePercentage(product?.oldPrice, product?.newPrice)
       );
-      switch (discount) {
+      switch (queryDiscount) {
         case "10_or_more":
           return productPercentage >= 10 && productPercentage < 20;
         case "20_or_more":
@@ -88,6 +90,13 @@ const ShopProduct = () => {
         default:
           return products;
       }
+    })
+    ?.filter((product) => {
+      const { sellerName } = product;
+      if (querySeller) {
+        return querySeller === sellerName;
+      }
+      return products;
     });
 
   return (
