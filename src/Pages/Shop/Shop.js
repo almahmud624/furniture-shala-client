@@ -9,7 +9,7 @@ const Shop = () => {
       <Box maxWidth={"90%"} margin={"auto"} my={10} pos={"relative"}>
         <Flex justifyContent={"space-between"} align={"center"} gap={5}>
           <Box w={"20%"}>
-            <Box pos={"fixed"} top={20} left={10}>
+            <Box>
               <ShopSidebar />
             </Box>
           </Box>

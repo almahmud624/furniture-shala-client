@@ -14,12 +14,14 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import displayProductCount from "../../../../Utilities/displayItemCount";
+import calculatePercentage from "../../../../Utilities/calculatePercentage";
 
 const ShopProduct = () => {
   const [searchParams] = useSearchParams();
   const minPrice = parseInt(searchParams.get("minPrice"));
   const maxPrice = parseInt(searchParams.get("maxPrice"));
   const category = searchParams.get("_category");
+  const discount = searchParams.get("_discount");
 
   // get data by inifinite scrolling
   const {
@@ -67,6 +69,25 @@ const ShopProduct = () => {
         return category === product.categories;
       }
       return products;
+    })
+    ?.filter((product) => {
+      const productPercentage = parseInt(
+        calculatePercentage(product?.oldPrice, product?.newPrice)
+      );
+      switch (discount) {
+        case "10_or_more":
+          return productPercentage >= 10 && productPercentage < 20;
+        case "20_or_more":
+          return productPercentage >= 20 && productPercentage < 30;
+        case "30_or_more":
+          return productPercentage >= 30 && productPercentage < 40;
+        case "40_or_more":
+          return productPercentage >= 40 && productPercentage < 50;
+        case "50_or_more":
+          return productPercentage >= 50;
+        default:
+          return products;
+      }
     });
 
   return (

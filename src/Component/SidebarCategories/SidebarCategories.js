@@ -1,15 +1,17 @@
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataStoreContext } from "../../Context/DataProvider";
+import { useSearchParams } from "react-router-dom";
 
 const SidebarCategories = ({
-  category,
-  setCategory,
   generateQueryPath,
-  minVal,
-  maxVal,
+  setFilterInfo,
+  filterInfo,
 }) => {
+  const [searchParams] = useSearchParams();
+  const queryCategory = searchParams.get("_category");
   const { products } = useContext(DataStoreContext);
+  const [queryCategoryLoad, setQueryCategoryLoad] = useState(false);
   // Create an object to store the count of products per category
   const categoryCounts = {};
   // Count the products in each category
@@ -20,8 +22,8 @@ const SidebarCategories = ({
 
   // set category on state
   const handleCategory = (categoryName) => {
-    setCategory(categoryName);
-    generateQueryPath({ max: maxVal, min: minVal, category: categoryName });
+    setFilterInfo({ ...filterInfo, category: categoryName });
+    generateQueryPath({ ...filterInfo, category: categoryName });
   };
 
   return (
@@ -37,7 +39,9 @@ const SidebarCategories = ({
               bg={"gray.900"}
               pl={2}
               rounded={"lg"}
-              borderColor={category === categoryName ? "teal.600" : "gray.700"}
+              borderColor={
+                filterInfo.category === categoryName ? "teal.600" : "gray.700"
+              }
               borderWidth={2}
               cursor={"pointer"}
               _hover={{
@@ -58,7 +62,9 @@ const SidebarCategories = ({
                 rounded={"md"}
                 p={1}
                 borderColor={
-                  category === categoryName ? "teal.500" : "gray.600"
+                  filterInfo?.category === categoryName
+                    ? "teal.500"
+                    : "gray.600"
                 }
                 _groupHover={{ borderLeftColor: "teal.500" }}
                 transition={"all"}

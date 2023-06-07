@@ -1,17 +1,16 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import "./PriceRangeSlider.css";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { Box, Text } from "@chakra-ui/react";
+import { useSearchParams } from "react-router-dom";
 
 const PriceRangeSlider = ({
   min = 0,
   max,
-  minVal,
-  maxVal,
   setMinVal,
   setMaxVal,
   generateQueryPath,
   category,
+  filterInfo,
+  setFilterInfo,
 }) => {
   const [searchParams] = useSearchParams();
   const [maxPrice, setMaxPrice] = useState(
@@ -20,7 +19,6 @@ const PriceRangeSlider = ({
   const [minPrice, setMinPrice] = useState(
     parseInt(searchParams.get("minPrice"))
   );
-  const [priceQueryPathLoad, setPriceQueryPathLoad] = useState(false);
 
   const minValRef = useRef(min);
   const maxValRef = useRef(max);
@@ -34,43 +32,33 @@ const PriceRangeSlider = ({
 
   // Set width of the range to decrease from the left side
   useEffect(() => {
-    const minPercent = getPercent(minVal);
+    const minPercent = getPercent(filterInfo?.minVal);
     if (maxPrice) {
       maxValRef.current = maxPrice;
     }
-    let maxPercent = getPercent((maxValRef.current = maxVal));
+    let maxPercent = getPercent((maxValRef.current = filterInfo?.maxVal));
     if (range.current) {
       range.current.style.left = `${minPercent}%`;
       range.current.style.width = `${maxPercent - minPercent}%`;
     }
     setMaxPrice(null);
-  }, [minVal, getPercent, maxPrice, maxVal]);
+  }, [filterInfo, getPercent, maxPrice]);
 
   // Set width of the range to decrease from the right side
   useEffect(() => {
     if (minPrice) {
       minValRef.current = minPrice;
     }
-    let minPercent = getPercent((minValRef.current = minVal));
-    const maxPercent = getPercent(maxVal);
+    let minPercent = getPercent((minValRef.current = filterInfo?.minVal));
+    const maxPercent = getPercent(filterInfo?.maxVal);
 
     if (range.current) {
       range.current.style.width = `${maxPercent - minPercent}%`;
     }
     setMinPrice(null);
-  }, [maxVal, getPercent, minPrice, minVal]);
+  }, [getPercent, minPrice, filterInfo]);
 
-  // set max and min price from query path, when the page load
-  useEffect(() => {
-    if (priceQueryPathLoad) return;
-    if (maxPrice || minPrice) {
-      setMaxVal(maxPrice);
-      setMinVal(minPrice);
-      setPriceQueryPathLoad(true);
-    }
-  }, [maxPrice, minPrice, priceQueryPathLoad, setMaxVal, setMinVal]);
-
-  // using debounc handler making some delay for set price range in query path
+  // using debounce handler making some delay for set price range in query path
   const debounceHandler = (fn, delay) => {
     let timeOutId;
     return (...args) => {
@@ -82,7 +70,7 @@ const PriceRangeSlider = ({
   };
 
   const doQuery = (values) => {
-    generateQueryPath({ ...values, category: category });
+    generateQueryPath({ ...values, ...filterInfo });
   };
 
   const handleQueryPath = debounceHandler(doQuery, 1000);
@@ -94,26 +82,32 @@ const PriceRangeSlider = ({
           type="range"
           min={min}
           max={max}
-          value={minVal}
+          value={filterInfo?.minVal}
           onChange={(event) => {
-            const value = Math.min(Number(event.target.value), maxVal - 1);
-            setMinVal(value);
+            const value = Math.min(
+              Number(event.target.value),
+              filterInfo?.maxVal - 1
+            );
+            setFilterInfo({ ...filterInfo, minVal: value });
             minValRef.current = value;
-            handleQueryPath({ max: maxVal, min: value });
+            handleQueryPath({ max: filterInfo?.maxVal, min: value });
           }}
           className="thumb thumb--left"
-          style={{ zIndex: minVal > max - 100 && "5" }}
+          style={{ zIndex: filterInfo?.minVal > max - 100 && "5" }}
         />
         <input
           type="range"
           min={min}
           max={max}
-          value={maxVal}
+          value={filterInfo?.maxVal}
           onChange={(event) => {
-            const value = Math.max(Number(event.target.value), minVal + 1);
-            setMaxVal(value);
+            const value = Math.max(
+              Number(event.target.value),
+              filterInfo?.minVal + 1
+            );
+            setFilterInfo({ ...filterInfo, maxVal: value });
             maxValRef.current = value;
-            handleQueryPath({ max: value, min: minVal });
+            handleQueryPath({ max: value, min: filterInfo?.minVal });
           }}
           className="thumb thumb--right"
         />
@@ -124,9 +118,9 @@ const PriceRangeSlider = ({
         </div>
       </div>
       <div className="slider_value">
-        <div className="slider__left-value">{minVal}</div>
+        <div className="slider__left-value">{filterInfo?.minVal}</div>
         <div className="slider_value_divider">-</div>
-        <div className="slider__right-value">{maxVal}</div>
+        <div className="slider__right-value">{filterInfo?.maxVal}</div>
       </div>
     </div>
   );
