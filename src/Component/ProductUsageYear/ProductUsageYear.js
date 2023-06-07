@@ -48,7 +48,13 @@ const ProductUsageYear = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4} px={0}>
-            <VStack align={"left"} mt={2}>
+            <VStack
+              align={"left"}
+              mt={2}
+              h={52}
+              overflowY={"auto"}
+              id="scrollbar"
+            >
               {removeDuplicate(products, "yearsOfUse")?.map((yearsOfUse) => (
                 <HStack
                   key={Math.random()}

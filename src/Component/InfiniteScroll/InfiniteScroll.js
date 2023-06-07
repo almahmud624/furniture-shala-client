@@ -10,7 +10,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import CustomGradientBtn from "../../../../Component/CustomGradientBtn";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import displayProductCount from "../../../../Utilities/displayItemCount";
 import calculatePercentage from "../../../../Utilities/calculatePercentage";
@@ -18,7 +18,7 @@ import useGetQueryValue from "../../../../Hooks/useGetQueryValue";
 import SortProducts from "../../../../Component/SortProducts/SortProducts";
 import { useState } from "react";
 
-const ShopProduct = () => {
+const InfiniteScroll = () => {
   const [sort, setSort] = useState("");
 
   // get filter query value
@@ -32,26 +32,37 @@ const ShopProduct = () => {
     locationQuery,
   ] = useGetQueryValue();
 
-  // pagination
-  const [page, setPage] = useState(1);
+  // get data by inifinite scrolling
   const {
-    isLoading,
-    isError,
+    status,
+    data,
     error,
-    data: products,
-    isFetching,
-  } = useQuery(
-    ["users", page],
-    async () => {
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery(
+    ["projects"],
+    async ({ pageParam = 1 }) => {
       const res = await axios.get(
-        `https://furniture-shala-server.vercel.app/products?_limit=6&_page=${page}`
+        `https://furniture-shala-server.vercel.app/products?_limit=3&_page=${pageParam}`
       );
 
       return res.data;
     },
-    { keepPreviousData: true }
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        const nextPage =
+          lastPage?.length === 0 ? undefined : allPages.length + 1;
+        return nextPage;
+      },
+    }
   );
 
+  // combine the prodcut array
+  let products;
+  if (data) {
+    products = [].concat(...data?.pages);
+  }
   // filter data by price range
 
   const filteredProducts = products
@@ -144,9 +155,9 @@ const ShopProduct = () => {
           }}
           gap={5}
         >
-          {isLoading ? (
+          {status === "loading" ? (
             <Text>Loading...</Text>
-          ) : isError ? (
+          ) : status === "error" ? (
             <Text>Error:{error.message}</Text>
           ) : (
             filteredProducts?.map(
@@ -208,25 +219,21 @@ const ShopProduct = () => {
             )
           )}
         </Grid>
-
-        <Flex justify={"center"} mt={5} gap={5} align={"center"}>
+        <Flex mt={7} justifyContent={"center"}>
           <Button
-            onClick={() => setPage((prevState) => Math.max(prevState - 1, 0))}
-            disabled={page === 1}
+            onClick={() => fetchNextPage()}
+            disabled={!hasNextPage || isFetchingNextPage}
           >
-            Prev Page
+            {isFetchingNextPage
+              ? "Loading more..."
+              : hasNextPage
+              ? "Load More"
+              : "You Reached The Limit"}
           </Button>
-
-          <Button onClick={() => setPage((prevState) => prevState + 1)}>
-            Next Page
-          </Button>
-          <Text fontWeight={"semibold"}>
-            {isFetching ? "Loading..." : null}
-          </Text>
         </Flex>
       </Box>
     </>
   );
 };
 
-export default ShopProduct;
+export default InfiniteScroll;

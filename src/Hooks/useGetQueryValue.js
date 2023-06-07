@@ -8,6 +8,7 @@ const useGetQueryValue = () => {
   const queryDiscount = searchParams.get("_discount");
   const querySeller = searchParams.get("_seller");
   const prodcutUsageQuery = searchParams.get("_years_of_use");
+  const locationQuery = searchParams.get("_location");
   return [
     queryCategory,
     queryDiscount,
@@ -15,6 +16,7 @@ const useGetQueryValue = () => {
     queryMaxPrice,
     queryMinPrice,
     prodcutUsageQuery,
+    locationQuery,
   ];
 };
 
