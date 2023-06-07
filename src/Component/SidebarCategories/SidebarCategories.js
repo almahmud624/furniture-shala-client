@@ -1,7 +1,6 @@
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { DataStoreContext } from "../../Context/DataProvider";
-import { useSearchParams } from "react-router-dom";
 
 const SidebarCategories = ({
   generateQueryPath,

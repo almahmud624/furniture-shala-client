@@ -7,12 +7,14 @@ const useGetQueryValue = () => {
   const queryCategory = searchParams.get("_category");
   const queryDiscount = searchParams.get("_discount");
   const querySeller = searchParams.get("_seller");
+  const prodcutUsageQuery = searchParams.get("_years_of_use");
   return [
     queryCategory,
     queryDiscount,
     querySeller,
     queryMaxPrice,
     queryMinPrice,
+    prodcutUsageQuery,
   ];
 };
 

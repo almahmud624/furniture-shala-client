@@ -7,6 +7,7 @@ import SidebarCategories from "../../../../Component/SidebarCategories/SidebarCa
 import Discount from "../../../../Component/Discount/Discount";
 import SiderbarSeller from "../../../../Component/SiderbarSellerFilter/SiderbarSeller";
 import useGetQueryValue from "../../../../Hooks/useGetQueryValue";
+import ProductUsageYear from "../../../../Component/ProductUsageYear/ProductUsageYear";
 
 const ShopSidebar = () => {
   const { products } = useContext(DataStoreContext);
@@ -18,6 +19,7 @@ const ShopSidebar = () => {
     querySeller,
     queryMaxPrice,
     queryMinPrice,
+    prodcutUsageQuery,
   ] = useGetQueryValue();
 
   // find maximum and minimum price of product
@@ -31,19 +33,22 @@ const ShopSidebar = () => {
     category: "",
     discount: "",
     seller: "",
+    yearsOfUse: "",
   };
 
   const [filterInfo, setFilterInfo] = useState(initialFilterState);
 
   // generate filter query path
   const generateQueryPath = (values) => {
-    const { maxVal, minVal, category, discount, seller } = values || {};
+    const { maxVal, minVal, category, discount, seller, yearsOfUse } =
+      values || {};
     const params = new URLSearchParams({
       maxPrice: maxVal,
       minPrice: minVal,
       _category: category,
       _discount: discount,
       _seller: seller,
+      _years_of_use: yearsOfUse,
     });
     const url = `/shop?${params}`;
     navigate(url);
@@ -63,7 +68,8 @@ const ShopSidebar = () => {
       queryMinPrice ||
       queryCategory ||
       queryDiscount ||
-      querySeller
+      querySeller ||
+      prodcutUsageQuery
     ) {
       setFilterInfo({
         ...filterInfo,
@@ -72,6 +78,7 @@ const ShopSidebar = () => {
         category: queryCategory,
         discount: queryDiscount,
         seller: querySeller,
+        yearsOfUse: prodcutUsageQuery,
       });
       setQueryLoad(true);
     }
@@ -84,6 +91,7 @@ const ShopSidebar = () => {
     queryCategory,
     queryDiscount,
     querySeller,
+    prodcutUsageQuery,
   ]);
 
   return (
@@ -116,6 +124,11 @@ const ShopSidebar = () => {
             generateQueryPath={generateQueryPath}
           />
           <SiderbarSeller
+            setFilterInfo={setFilterInfo}
+            filterInfo={filterInfo}
+            generateQueryPath={generateQueryPath}
+          />
+          <ProductUsageYear
             setFilterInfo={setFilterInfo}
             filterInfo={filterInfo}
             generateQueryPath={generateQueryPath}

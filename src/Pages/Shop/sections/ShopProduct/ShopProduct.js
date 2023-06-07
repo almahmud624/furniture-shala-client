@@ -23,6 +23,7 @@ const ShopProduct = () => {
     querySeller,
     queryMaxPrice,
     queryMinPrice,
+    prodcutUsageQuery,
   ] = useGetQueryValue();
 
   // get data by inifinite scrolling
@@ -95,6 +96,13 @@ const ShopProduct = () => {
       const { sellerName } = product;
       if (querySeller) {
         return querySeller === sellerName;
+      }
+      return products;
+    })
+    ?.filter((product) => {
+      const { yearsOfUse } = product;
+      if (prodcutUsageQuery) {
+        return prodcutUsageQuery === yearsOfUse;
       }
       return products;
     });
