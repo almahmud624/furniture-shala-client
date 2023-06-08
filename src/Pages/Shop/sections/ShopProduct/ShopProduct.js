@@ -10,7 +10,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import CustomGradientBtn from "../../../../Component/CustomGradientBtn";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import displayProductCount from "../../../../Utilities/displayItemCount";
 import calculatePercentage from "../../../../Utilities/calculatePercentage";

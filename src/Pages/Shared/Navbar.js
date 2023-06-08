@@ -26,7 +26,13 @@ import {
   PopoverBody,
   useToast,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import {
+  HamburgerIcon,
+  CloseIcon,
+  MoonIcon,
+  SunIcon,
+  Search2Icon,
+} from "@chakra-ui/icons";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 import logo from "../../Assets/logo.png";
@@ -283,6 +289,9 @@ const Navbar = () => {
                   </Popover>
                 </HStack>
               )}
+              <Link to={"/search"}>
+                <Search2Icon />
+              </Link>
               <Button variant={"ghost"} onClick={toggleColorMode}>
                 {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               </Button>
