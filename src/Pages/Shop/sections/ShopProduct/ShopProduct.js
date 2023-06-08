@@ -1,15 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  Image,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import CustomGradientBtn from "../../../../Component/CustomGradientBtn";
+import { Box, Button, Flex, Grid, Heading, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import displayProductCount from "../../../../Utilities/displayItemCount";
@@ -17,6 +6,7 @@ import calculatePercentage from "../../../../Utilities/calculatePercentage";
 import useGetQueryValue from "../../../../Hooks/useGetQueryValue";
 import SortProducts from "../../../../Component/SortProducts/SortProducts";
 import { useState } from "react";
+import GridItemCard from "../../../../Component/GridItemCard/GridItemCard";
 
 const ShopProduct = () => {
   const [sort, setSort] = useState("");
@@ -52,21 +42,20 @@ const ShopProduct = () => {
     { keepPreviousData: true }
   );
 
-  // filter data by price range
-
+  // filter prodcuts
   const filteredProducts = products
     ?.filter((product) => {
       const price = parseInt(product?.newPrice);
       if (queryMinPrice || queryMaxPrice) {
         return price >= queryMinPrice && price <= queryMaxPrice;
       }
-      return products;
+      return true;
     })
     ?.filter((product) => {
       if (queryCategory) {
         return queryCategory === product.categories;
       }
-      return products;
+      return true;
     })
     ?.filter((product) => {
       const productPercentage = parseInt(
@@ -84,7 +73,7 @@ const ShopProduct = () => {
         case "50_or_more":
           return productPercentage >= 50;
         default:
-          return products;
+          return true;
       }
     })
     ?.filter((product) => {
@@ -92,28 +81,28 @@ const ShopProduct = () => {
       if (querySeller) {
         return querySeller === sellerName;
       }
-      return products;
+      return true;
     })
     ?.filter((product) => {
       const { yearsOfUse } = product;
       if (prodcutUsageQuery) {
         return prodcutUsageQuery === yearsOfUse;
       }
-      return products;
+      return true;
     })
     ?.filter((product) => {
       const { location } = product;
       if (locationQuery) {
         return locationQuery === location;
       }
-      return products;
+      return true;
     })
     ?.sort((a, b) => {
       switch (sort) {
         case "to-low":
-          return a.newPrice - b.newPrice;
-        case "to-high":
           return b.newPrice - a.newPrice;
+        case "to-high":
+          return a.newPrice - b.newPrice;
         case "most-sold":
           return b.totalSelled - a.totalSelled;
         case "latest":
@@ -121,16 +110,17 @@ const ShopProduct = () => {
           const dateB = new Date(b.createdAt);
           return dateB - dateA;
         default:
-          return products;
+          return 0;
       }
     });
 
+  const { length: filteredProductsLength } = filteredProducts || [];
   return (
     <>
       <Box>
         <Flex justify={"space-between"} align={"center"} mb={5}>
           <Text mb={3} fontWeight={"thin"} fontSize={"lg"}>
-            {displayProductCount(filteredProducts?.length, "Prodcut")} Found!
+            {displayProductCount(filteredProductsLength, "Prodcut")} Found!
           </Text>
           <Box>
             <SortProducts setSort={setSort} sort={sort} />
@@ -149,81 +139,38 @@ const ShopProduct = () => {
           ) : isError ? (
             <Text>Error:{error.message}</Text>
           ) : (
-            filteredProducts?.map(
-              ({ productName, productImg, newPrice, categories }) => (
-                <GridItem
-                  key={Math.random()}
-                  overflow={"hidden"}
-                  borderBottomWidth={1}
-                  borderLeftWidth={1}
-                  borderRightWidth={1}
-                >
-                  <Flex
-                    flexDir={"column"}
-                    justifyContent={"space-between"}
-                    alignItems={"center"}
-                  >
-                    <Box w={"full"}>
-                      <Box w={"full"} h={"250px"}>
-                        <Image
-                          src={productImg}
-                          w={"full"}
-                          h={"full"}
-                          objectFit={"cover"}
-                        />
-                      </Box>
-                    </Box>
-                    <VStack gap={1} align={"left"} py={3} px={3}>
-                      <Text
-                        textTransform={"capitalize"}
-                        px={3}
-                        py={1}
-                        bg={"red.600"}
-                        display={"inline"}
-                        w={"fit-content"}
-                      >
-                        {categories}
-                      </Text>
-                      <Heading
-                        size={"lg"}
-                        fontSize={"xl"}
-                        fontWeight={"semibold"}
-                      >
-                        {productName}
-                      </Heading>
-                      <Text
-                        fontWeight={"thin"}
-                        fontSize={"xl"}
-                        fontFamily={"cursive"}
-                      >
-                        ${newPrice}
-                      </Text>
-                      <CustomGradientBtn customStyle={{ h: "10" }}>
-                        Order Now
-                      </CustomGradientBtn>
-                    </VStack>
-                  </Flex>
-                </GridItem>
-              )
-            )
+            filteredProducts?.map((product) => (
+              <GridItemCard key={product?._id} product={product} />
+            ))
           )}
         </Grid>
 
-        <Flex justify={"center"} mt={5} gap={5} align={"center"}>
-          <Button
-            onClick={() => setPage((prevState) => Math.max(prevState - 1, 0))}
-            disabled={page === 1}
+        {filteredProductsLength === 0 ? (
+          <Box
+            h={"md"}
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}
           >
-            Prev Page
-          </Button>
+            <Heading>No Products Found</Heading>
+          </Box>
+        ) : (
+          <Flex justify={"center"} mt={5} gap={5} align={"center"}>
+            <Button
+              onClick={() => setPage((prevState) => Math.max(prevState - 1, 0))}
+              disabled={page === 1}
+            >
+              Prev Page
+            </Button>
 
-          <Button onClick={() => setPage((prevState) => prevState + 1)}>
-            Next Page
-          </Button>
-          <Text fontWeight={"semibold"}>
-            {isFetching ? "Loading..." : null}
-          </Text>
-        </Flex>
+            <Button onClick={() => setPage((prevState) => prevState + 1)}>
+              Next Page
+            </Button>
+            <Text fontWeight={"semibold"}>
+              {isFetching ? "Loading..." : null}
+            </Text>
+          </Flex>
+        )}
       </Box>
     </>
   );

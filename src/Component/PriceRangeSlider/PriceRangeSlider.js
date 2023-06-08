@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import "./PriceRangeSlider.css";
 import { useSearchParams } from "react-router-dom";
+import SidebarFilterAccordion from "../SidebarFilterAccordion/SidebarFilterAccordion";
 
 const PriceRangeSlider = ({
   min = 0,
@@ -70,58 +71,72 @@ const PriceRangeSlider = ({
   };
 
   const doQuery = (values) => {
-    generateQueryPath({ ...values, ...filterInfo });
+    generateQueryPath({
+      ...filterInfo,
+      maxVal: values?.max,
+      minVal: values?.min,
+    });
   };
 
   const handleQueryPath = debounceHandler(doQuery, 1000);
   return (
-    <div>
-      <div className="container">
-        <input
-          type="range"
-          min={min}
-          max={max}
-          value={filterInfo?.minVal}
-          onChange={(event) => {
-            const value = Math.min(
-              Number(event.target.value),
-              filterInfo?.maxVal - 1
-            );
-            setFilterInfo({ ...filterInfo, minVal: value });
-            minValRef.current = value;
-            handleQueryPath({ max: filterInfo?.maxVal, min: value });
-          }}
-          className="thumb thumb--left"
-          style={{ zIndex: filterInfo?.minVal > max - 100 && "5" }}
-        />
-        <input
-          type="range"
-          min={min}
-          max={max}
-          value={filterInfo?.maxVal}
-          onChange={(event) => {
-            const value = Math.max(
-              Number(event.target.value),
-              filterInfo?.minVal + 1
-            );
-            setFilterInfo({ ...filterInfo, maxVal: value });
-            maxValRef.current = value;
-            handleQueryPath({ max: value, min: filterInfo?.minVal });
-          }}
-          className="thumb thumb--right"
-        />
+    <>
+      <SidebarFilterAccordion title={"Price"}>
+        <div>
+          <div className="container">
+            <input
+              type="range"
+              min={min}
+              max={max}
+              value={filterInfo?.minVal}
+              onChange={(event) => {
+                const value = Math.min(
+                  Number(event.target.value),
+                  filterInfo?.maxVal - 1
+                );
+                setFilterInfo((prevFilterInfo) => ({
+                  ...prevFilterInfo,
+                  minVal: value,
+                }));
+                minValRef.current = value;
+                handleQueryPath({ max: filterInfo?.maxVal, min: value });
+              }}
+              className="thumb thumb--left"
+              style={{ zIndex: filterInfo?.minVal > max - 100 && "5" }}
+            />
+            <input
+              type="range"
+              min={min}
+              max={max}
+              value={filterInfo?.maxVal}
+              onChange={(event) => {
+                const value = Math.max(
+                  Number(event.target.value),
+                  filterInfo?.minVal + 1
+                );
+                setFilterInfo((prevFilterInfo) => ({
+                  ...prevFilterInfo,
+                  maxVal: value,
+                }));
+                maxValRef.current = value;
+                handleQueryPath({ max: value, min: filterInfo?.minVal });
+              }}
+              className="thumb thumb--right"
+            />
 
-        <div className="slider">
-          <div className="slider__track" />
-          <div ref={range} className="slider__range" />
+            <div className="slider">
+              <div className="slider__track" />
+              <div ref={range} className="slider__range" />
+            </div>
+          </div>
+          <div className="slider_value">
+            <div className="slider__left-value">${filterInfo?.minVal}</div>
+            <div className="slider_value_divider">-</div>
+            <div className="slider__right-value">${filterInfo?.maxVal}</div>
+          </div>
         </div>
-      </div>
-      <div className="slider_value">
-        <div className="slider__left-value">${filterInfo?.minVal}</div>
-        <div className="slider_value_divider">-</div>
-        <div className="slider__right-value">${filterInfo?.maxVal}</div>
-      </div>
-    </div>
+      </SidebarFilterAccordion>
+    </>
   );
 };
 

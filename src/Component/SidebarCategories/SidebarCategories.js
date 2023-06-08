@@ -1,6 +1,7 @@
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { DataStoreContext } from "../../Context/DataProvider";
+import SidebarFilterAccordion from "../SidebarFilterAccordion/SidebarFilterAccordion";
 
 const SidebarCategories = ({
   generateQueryPath,
@@ -18,17 +19,17 @@ const SidebarCategories = ({
 
   // set category on state
   const handleCategory = (categoryName) => {
-    setFilterInfo({ ...filterInfo, category: categoryName });
+    setFilterInfo((prevFilterInfo) => ({
+      ...prevFilterInfo,
+      category: categoryName,
+    }));
     generateQueryPath({ ...filterInfo, category: categoryName });
   };
 
   return (
     <>
-      <Box>
-        <Text fontSize={"lg"} fontWeight={"semibold"}>
-          Furniture
-        </Text>
-        <VStack align={"left"} mt={2}>
+      <SidebarFilterAccordion title={"Furniture"}>
+        <VStack align={"left"}>
           {Object.entries(categoryCounts).map(([categoryName, count]) => (
             <HStack
               justify={"space-between"}
@@ -71,7 +72,7 @@ const SidebarCategories = ({
             </HStack>
           ))}
         </VStack>
-      </Box>
+      </SidebarFilterAccordion>
     </>
   );
 };

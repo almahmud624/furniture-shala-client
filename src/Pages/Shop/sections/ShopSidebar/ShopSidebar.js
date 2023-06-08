@@ -1,14 +1,26 @@
 import { Box, Button, Flex, HStack, Text } from "@chakra-ui/react";
-import React, { useContext, useEffect, useState } from "react";
-import PriceRangeSlider from "../../../../Component/PriceRangeSlider/PriceRangeSlider";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { DataStoreContext } from "../../../../Context/DataProvider";
 import { useNavigate } from "react-router-dom";
-import SidebarCategories from "../../../../Component/SidebarCategories/SidebarCategories";
-import Discount from "../../../../Component/Discount/Discount";
-import SiderbarSeller from "../../../../Component/SiderbarSellerFilter/SiderbarSeller";
 import useGetQueryValue from "../../../../Hooks/useGetQueryValue";
-import ProductUsageYear from "../../../../Component/ProductUsageYear/ProductUsageYear";
-import FilterByLocation from "../../../../Component/FilterByLocation/FilterByLocation";
+const PriceRangeSlider = React.lazy(() =>
+  import("../../../../Component/PriceRangeSlider/PriceRangeSlider")
+);
+const SidebarCategories = React.lazy(() =>
+  import("../../../../Component/SidebarCategories/SidebarCategories")
+);
+const Discount = React.lazy(() =>
+  import("../../../../Component/Discount/Discount")
+);
+const SiderbarSeller = React.lazy(() =>
+  import("../../../../Component/SiderbarSellerFilter/SiderbarSeller")
+);
+const ProductUsageYear = React.lazy(() =>
+  import("../../../../Component/ProductUsageYear/ProductUsageYear")
+);
+const FilterByLocation = React.lazy(() =>
+  import("../../../../Component/FilterByLocation/FilterByLocation")
+);
 
 const ShopSidebar = () => {
   const { products } = useContext(DataStoreContext);
@@ -25,8 +37,14 @@ const ShopSidebar = () => {
   ] = useGetQueryValue();
 
   // find maximum and minimum price of product
-  const maximumPrice = Math.max(...products?.map((obj) => obj.newPrice));
-  const minimumPrice = Math.min(...products?.map((obj) => obj.newPrice));
+  const maximumPrice = useMemo(
+    () => Math.max(...products?.map((obj) => obj.newPrice)),
+    [products]
+  );
+  const minimumPrice = useMemo(
+    () => Math.min(...products?.map((obj) => obj.newPrice)),
+    [products]
+  );
 
   // initial filter state
   const initialFilterState = {
@@ -67,25 +85,21 @@ const ShopSidebar = () => {
   // set query value in filter state, when the page load
   useEffect(() => {
     if (queryLoad) return;
-    if (
-      queryMaxPrice ||
-      queryMinPrice ||
-      queryCategory ||
-      queryDiscount ||
-      querySeller ||
-      prodcutUsageQuery ||
-      locationQuery
-    ) {
-      setFilterInfo({
-        ...filterInfo,
-        maxVal: queryMaxPrice,
-        minVal: queryMinPrice,
-        category: queryCategory,
-        discount: queryDiscount,
-        seller: querySeller,
-        yearsOfUse: prodcutUsageQuery,
-        location: locationQuery,
-      });
+    const filterValues = {
+      maxVal: queryMaxPrice,
+      minVal: queryMinPrice,
+      category: queryCategory,
+      discount: queryDiscount,
+      seller: querySeller,
+      yearsOfUse: prodcutUsageQuery,
+      location: locationQuery,
+    };
+    const hasFilterValues = Object.values(filterValues).some((value) => value);
+    if (hasFilterValues) {
+      setFilterInfo((prevFilterInfo) => ({
+        ...prevFilterInfo,
+        ...filterValues,
+      }));
       setQueryLoad(true);
     }
   }, [
@@ -101,6 +115,12 @@ const ShopSidebar = () => {
     locationQuery,
   ]);
 
+  // props object with common props
+  const commonProps = {
+    setFilterInfo,
+    filterInfo,
+    generateQueryPath,
+  };
   return (
     <>
       <Box>
@@ -113,38 +133,28 @@ const ShopSidebar = () => {
           </Button>
         </HStack>
         <Flex flexDir={"column"} gap={5}>
-          <PriceRangeSlider
-            max={maximumPrice}
-            min={minimumPrice}
-            setFilterInfo={setFilterInfo}
-            filterInfo={filterInfo}
-            generateQueryPath={generateQueryPath}
-          />
-          <SidebarCategories
-            generateQueryPath={generateQueryPath}
-            setFilterInfo={setFilterInfo}
-            filterInfo={filterInfo}
-          />
-          <Discount
-            setFilterInfo={setFilterInfo}
-            filterInfo={filterInfo}
-            generateQueryPath={generateQueryPath}
-          />
-          <SiderbarSeller
-            setFilterInfo={setFilterInfo}
-            filterInfo={filterInfo}
-            generateQueryPath={generateQueryPath}
-          />
-          <ProductUsageYear
-            setFilterInfo={setFilterInfo}
-            filterInfo={filterInfo}
-            generateQueryPath={generateQueryPath}
-          />
-          <FilterByLocation
-            setFilterInfo={setFilterInfo}
-            filterInfo={filterInfo}
-            generateQueryPath={generateQueryPath}
-          />
+          <React.Suspense fallback={<Text>Loading...</Text>}>
+            <PriceRangeSlider
+              max={maximumPrice}
+              min={minimumPrice}
+              {...commonProps}
+            />
+          </React.Suspense>
+          <React.Suspense fallback={<Text>Loading...</Text>}>
+            <SidebarCategories {...commonProps} />
+          </React.Suspense>
+          <React.Suspense fallback={<Text>Loading...</Text>}>
+            <Discount {...commonProps} />
+          </React.Suspense>
+          <React.Suspense fallback={<Text>Loading...</Text>}>
+            <SiderbarSeller {...commonProps} />
+          </React.Suspense>
+          <React.Suspense fallback={<Text>Loading...</Text>}>
+            <ProductUsageYear {...commonProps} />
+          </React.Suspense>
+          <React.Suspense fallback={<Text>Loading...</Text>}>
+            <FilterByLocation {...commonProps} />
+          </React.Suspense>
         </Flex>
       </Box>
     </>

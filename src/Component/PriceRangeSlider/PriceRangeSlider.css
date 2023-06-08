@@ -1,5 +1,4 @@
 .container {
-  margin-top: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,13 +21,13 @@
 }
 
 .slider__track {
-  background-color: rgb(131, 130, 214);
+  background-color: #779988;
   width: 100%;
   z-index: 1;
 }
 
 .slider__range {
-  background-color: rgb(64, 61, 202);
+  background-color: #2c7a7b;
   z-index: 2;
 }
 

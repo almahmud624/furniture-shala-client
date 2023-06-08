@@ -1,16 +1,5 @@
-import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  HStack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { HStack, Text, VStack } from "@chakra-ui/react";
+import SidebarFilterAccordion from "../SidebarFilterAccordion/SidebarFilterAccordion";
 
 const data = [
   { title: "10% or more", value: "10_or_more" },
@@ -21,59 +10,41 @@ const data = [
 ];
 const Discount = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
   const handleDiscount = (value) => {
-    setFilterInfo({ ...filterInfo, discount: value });
+    setFilterInfo((prevFilterInfo) => ({ ...prevFilterInfo, discount: value }));
     generateQueryPath({ ...filterInfo, discount: value });
   };
 
   return (
     <>
-      <Accordion allowMultiple>
-        <AccordionItem>
-          <h2>
-            <AccordionButton px={0}>
-              <Box
-                as="span"
-                flex="1"
-                textAlign="left"
-                fontSize={"lg"}
-                fontWeight={"semibold"}
-              >
-                Discounts
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4} px={0}>
-            <VStack align={"left"} mt={2}>
-              {data.map(({ title, value }) => (
-                <HStack
-                  justify={"space-between"}
-                  bg={"gray.900"}
-                  pl={2}
-                  py={1}
-                  rounded={"md"}
-                  borderWidth={2}
-                  cursor={"pointer"}
-                  _hover={{
-                    borderColor: "teal.600",
-                  }}
-                  borderColor={
-                    value === filterInfo?.discount ? "teal.600" : "gray.700"
-                  }
-                  role="group"
-                  transition={"all"}
-                  transitionDuration={".3s"}
-                  onClick={() => handleDiscount(value)}
-                >
-                  <Text key={Math.random()} textTransform={"capitalize"}>
-                    {title}
-                  </Text>
-                </HStack>
-              ))}
-            </VStack>
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
+      <SidebarFilterAccordion title={"Discounts"}>
+        <VStack align={"left"} mt={2}>
+          {data.map(({ title, value }) => (
+            <HStack
+              justify={"space-between"}
+              bg={"gray.900"}
+              pl={2}
+              py={1}
+              rounded={"md"}
+              borderWidth={2}
+              cursor={"pointer"}
+              _hover={{
+                borderColor: "teal.600",
+              }}
+              borderColor={
+                value === filterInfo?.discount ? "teal.600" : "gray.700"
+              }
+              role="group"
+              transition={"all"}
+              transitionDuration={".3s"}
+              onClick={() => handleDiscount(value)}
+            >
+              <Text key={Math.random()} textTransform={"capitalize"}>
+                {title}
+              </Text>
+            </HStack>
+          ))}
+        </VStack>
+      </SidebarFilterAccordion>
     </>
   );
 };
