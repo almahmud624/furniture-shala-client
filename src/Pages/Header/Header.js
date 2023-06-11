@@ -58,7 +58,10 @@ const Header = () => {
               mb={{ base: "3rem !important", sm: 0 }}
               flexWrap="wrap"
             >
-              <CustomGradientBtn link={"/login?role=seller"}>
+              <CustomGradientBtn
+                link={"/login?role=seller"}
+                customStyle={{ zIndex: "40" }}
+              >
                 Join as a Seller
               </CustomGradientBtn>
             </HStack>

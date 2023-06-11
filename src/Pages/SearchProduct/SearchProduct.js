@@ -14,10 +14,14 @@ import InfiniteScrollProduct from "../../Component/InfiniteScrollProduct/Infinit
 const SearchProduct = () => {
   const [searchParams] = useSearchParams();
   const paramQueryText = searchParams.get("_q");
+  const paramQueryTagText = searchParams.get("tag");
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState(
-    paramQueryText ? paramQueryText : ""
-  );
+
+  const initialQueryCondition =
+    paramQueryText || paramQueryTagText
+      ? paramQueryText || paramQueryTagText
+      : "";
+  const [searchQuery, setSearchQuery] = useState(initialQueryCondition);
   // using debounce handler making some delay for set price range in query path
   const debounceHandler = (fn, delay) => {
     let timeOutId;
@@ -48,7 +52,7 @@ const SearchProduct = () => {
     <Box py={20} maxWidth={"90%"} margin={"auto"}>
       <Heading>Search Product...</Heading>
       <HStack align={"center"} mt={5}>
-        <InputGroup>
+        <InputGroup zIndex={40}>
           <InputLeftElement pointerEvents="none">
             <Search2Icon color="gray.300" />
           </InputLeftElement>

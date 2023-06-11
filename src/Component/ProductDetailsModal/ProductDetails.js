@@ -2,14 +2,15 @@ import {
   Box,
   Divider,
   Flex,
+  HStack,
   Heading,
   Image,
   Text,
   VStack,
-  useDisclosure,
 } from "@chakra-ui/react";
 import CustomGradientBtn from "../CustomGradientBtn";
 import ReadMoreReadLess from "../ReadMoreReadLess";
+import { Link } from "react-router-dom";
 
 const ProductDetails = ({ product, setIsOrder }) => {
   const {
@@ -25,6 +26,10 @@ const ProductDetails = ({ product, setIsOrder }) => {
     createdAt,
     location,
   } = product;
+
+  // generate tags
+  const tags = productName.split(" ");
+  tags.push(categories);
 
   return (
     <>
@@ -99,6 +104,23 @@ const ProductDetails = ({ product, setIsOrder }) => {
             </CustomGradientBtn>
           </VStack>
         </Flex>
+        <HStack mt={5}>
+          <Text fontSize={"lg"} fontWeight={"semibold"}>
+            Tags:
+          </Text>
+          {tags?.map((tag, i) => (
+            <Text
+              key={Math.random()}
+              as="span"
+              textTransform={"lowercase"}
+              textDecoration={"underline"}
+              _hover={{ textDecor: "none" }}
+            >
+              <Link to={`/search?tag=${tag.toLowerCase()}`}>{tag}</Link>
+              <Text as={"span"}>,</Text>
+            </Text>
+          ))}
+        </HStack>
       </Box>
     </>
   );

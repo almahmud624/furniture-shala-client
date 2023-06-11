@@ -12,6 +12,7 @@ import CustomGradientBtn from "../CustomGradientBtn";
 
 const GridItemCard = ({ product }) => {
   const { productName, productImg, newPrice, categories } = product || {};
+
   return (
     <>
       <GridItem

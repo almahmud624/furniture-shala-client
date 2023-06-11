@@ -25,6 +25,7 @@ import { AuthContext } from "../../Context/AuthProvider";
 import axios from "axios";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import { setAuthToken } from "../../Utilities/JwtApi";
+import DirectLogin from "../../Component/DirectLogin/DirectLogin";
 
 const LoginSignUp = () => {
   const [state, setState] = useState("initial");
@@ -242,6 +243,7 @@ const LoginSignUp = () => {
                   </Button>
                 </Stack>
                 <SocialLogin />
+                <DirectLogin />
                 <Stack pt={6}>
                   {!isLogin ? (
                     <Text align={"center"}>

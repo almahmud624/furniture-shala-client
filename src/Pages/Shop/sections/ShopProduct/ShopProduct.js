@@ -7,6 +7,7 @@ import useGetQueryValue from "../../../../Hooks/useGetQueryValue";
 import SortProducts from "../../../../Component/SortProducts/SortProducts";
 import { useState } from "react";
 import GridItemCard from "../../../../Component/GridItemCard/GridItemCard";
+import Loader from "../../../../Component/Loader";
 
 const ShopProduct = () => {
   const [sort, setSort] = useState("");
@@ -127,17 +128,30 @@ const ShopProduct = () => {
           </Box>
         </Flex>
         <Grid
-          templateColumns={{
-            base: "1fr",
-            md: "repeat(2,1fr)",
-            lg: "repeat(3,1fr)",
-          }}
+          templateColumns={
+            filteredProductsLength === 0
+              ? "1fr"
+              : {
+                  base: "1fr",
+                  md: "repeat(2,1fr)",
+                  lg: "repeat(3,1fr)",
+                }
+          }
           gap={5}
         >
           {isLoading ? (
-            <Text>Loading...</Text>
+            <Loader />
           ) : isError ? (
             <Text>Error:{error.message}</Text>
+          ) : filteredProductsLength === 0 ? (
+            <Box
+              h={"md"}
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              <Heading>No Products Found</Heading>
+            </Box>
           ) : (
             filteredProducts?.map((product) => (
               <GridItemCard key={product?._id} product={product} />
@@ -145,16 +159,7 @@ const ShopProduct = () => {
           )}
         </Grid>
 
-        {filteredProductsLength === 0 ? (
-          <Box
-            h={"md"}
-            display={"flex"}
-            alignItems={"center"}
-            justifyContent={"center"}
-          >
-            <Heading>No Products Found</Heading>
-          </Box>
-        ) : (
+        {filteredProductsLength > 0 && (
           <Flex justify={"center"} mt={5} gap={5} align={"center"}>
             <Button
               onClick={() => setPage((prevState) => Math.max(prevState - 1, 0))}

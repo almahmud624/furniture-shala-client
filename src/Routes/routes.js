@@ -22,6 +22,7 @@ import PrivateSellerRoute from "../Pages/Route/PrivateSellerRoute";
 import ErrorPage from "../Pages/Shared/ErrorPage";
 import Shop from "../Pages/Shop/Shop";
 import SearchProduct from "../Pages/SearchProduct/SearchProduct";
+import BecomeASeller from "../Pages/BecomeASeller/BecomeASeller";
 
 export const routes = createBrowserRouter([
   {
@@ -43,6 +44,7 @@ export const routes = createBrowserRouter([
       { path: "/blog", element: <Blog /> },
       { path: "/shop", element: <Shop /> },
       { path: "/search", element: <SearchProduct /> },
+      { path: "/become-seller", element: <BecomeASeller /> },
     ],
   },
   {
