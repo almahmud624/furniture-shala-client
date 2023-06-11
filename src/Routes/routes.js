@@ -23,6 +23,7 @@ import ErrorPage from "../Pages/Shared/ErrorPage";
 import Shop from "../Pages/Shop/Shop";
 import SearchProduct from "../Pages/SearchProduct/SearchProduct";
 import BecomeASeller from "../Pages/BecomeASeller/BecomeASeller";
+import Support from "../Pages/Support/Support";
 
 export const routes = createBrowserRouter([
   {
@@ -45,6 +46,7 @@ export const routes = createBrowserRouter([
       { path: "/shop", element: <Shop /> },
       { path: "/search", element: <SearchProduct /> },
       { path: "/become-seller", element: <BecomeASeller /> },
+      { path: "/support", element: <Support /> },
     ],
   },
   {

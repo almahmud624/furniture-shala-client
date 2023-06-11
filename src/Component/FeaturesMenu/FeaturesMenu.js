@@ -29,7 +29,7 @@ const menus = [
     title: "connect",
     items: [
       { itemTitle: "blog", href: "/" },
-      { itemTitle: "support", href: "/" },
+      { itemTitle: "support", href: "/support" },
       { itemTitle: "instagram", href: "/" },
       { itemTitle: "facebook", href: "/" },
     ],
