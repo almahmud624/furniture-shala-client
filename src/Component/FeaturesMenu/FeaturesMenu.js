@@ -14,22 +14,22 @@ const menus = [
   {
     title: "About us",
     items: [
-      { itemTitle: "furniture shala", href: "/" },
+      { itemTitle: "furniture shala", href: "/about-us" },
       { itemTitle: "sell with us", href: "/become-seller" },
     ],
   },
   {
     title: "offer",
     items: [
-      { itemTitle: "flash sale", href: "/" },
-      { itemTitle: "coupon", href: "/" },
+      { itemTitle: "flash sale", href: "/flashsale" },
+      { itemTitle: "coupon", href: "/coupon" },
     ],
   },
   {
     title: "connect",
     items: [
-      { itemTitle: "blog", href: "/" },
-      { itemTitle: "support", href: "/support" },
+      { itemTitle: "blog", href: "/blog" },
+      { itemTitle: "contact", href: "/contact" },
       { itemTitle: "instagram", href: "/" },
       { itemTitle: "facebook", href: "/" },
     ],

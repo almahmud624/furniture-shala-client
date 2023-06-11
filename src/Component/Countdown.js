@@ -1,5 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export const Countdown = ({
   setCouponStatus,
@@ -7,7 +8,8 @@ export const Countdown = ({
   productId,
   couponStatus,
 }) => {
-  const [time, setTime] = useState(couponDuration); // 24 hours in seconds
+  const {pathname} = useLocation()
+  const [time, setTime] = useState(couponDuration);
 
   useEffect(() => {
     const startTime = localStorage.getItem("furniture_shala_coupon_timer");
@@ -42,11 +44,13 @@ export const Countdown = ({
   }, [time, productId, setCouponStatus]);
 
   const formatTime = (time) => {
-    const hours = Math.floor(time / 3600);
+    const day = Math.floor(time/(24*3600))
+    const hours = Math.floor((time % (24*3600)) / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
 
     return {
+      day:day.toString().padStart(2,"0"),
       hours: hours.toString().padStart(2, "0"),
       minutes: minutes.toString().padStart(2, "0"),
       seconds: seconds.toString().padStart(2, "0"),
@@ -56,6 +60,16 @@ export const Countdown = ({
   return (
     <Box mt={3}>
       <Box display="flex" justifyContent="space-between" gap={5}>
+        {pathname === '/flashsale'&&<Box
+          textAlign="center"
+          borderWidth={1}
+          borderColor={"gray.600"}
+          px={4}
+          rounded={"lg"}
+        >
+          <Text fontSize="xl">{formatTime(time).day}</Text>
+          <Text fontSize="lg">Day</Text>
+        </Box>}
         <Box
           textAlign="center"
           borderWidth={1}
