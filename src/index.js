@@ -8,6 +8,8 @@ import DataProvider from "./Context/DataProvider";
 import AuthProvider from "./Context/AuthProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import theme from "./Component/theme";
+import "react-lazy-load-image-component/src/effects/blur.css";
+
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

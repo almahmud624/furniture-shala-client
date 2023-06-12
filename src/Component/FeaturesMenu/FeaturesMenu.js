@@ -46,7 +46,7 @@ export default function FeaturesMenu({
       direction={{ base: "column", md: "row" }}
       pos={"absolute"}
       top={16}
-      zIndex={showFeaturesMenu ? 50 : 30}
+      zIndex={showFeaturesMenu ? 50 : 0}
       bg={"gray.900"}
       opacity={showFeaturesMenu ? "1" : "0"}
       transition={"all"}

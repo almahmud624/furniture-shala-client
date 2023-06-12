@@ -15,7 +15,6 @@ import { DataStoreContext } from "../../../../Context/DataProvider";
 import CustomGradientBtn from "../../../../Component/CustomGradientBtn";
 import calculatePercentage from "../../../../Utilities/calculatePercentage";
 import ProductModal from "../../../../Component/ProductDetailsModal/ProductModal";
-import Categories from "../../../Categories/Categories";
 
 const ProductsGrid = () => {
   return (

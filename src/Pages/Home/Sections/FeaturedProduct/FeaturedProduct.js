@@ -12,6 +12,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { DataStoreContext } from "../../../../Context/DataProvider";
 import calculatePercentage from "../../../../Utilities/calculatePercentage";
 import ProductCoupon from "../ProductCoupon/ProductCoupon";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const FeaturedProduct = () => {
   const { products } = useContext(DataStoreContext);
@@ -113,11 +114,12 @@ const FeaturedProduct = () => {
               </Text>
             </VStack>
             <Box h={"56"} w={"72"} flexGrow={1}>
-              <Image
+              <LazyLoadImage
                 src={productImg}
-                w={"full"}
-                h={"full"}
+                height={"100%"}
                 objectFit={"cover"}
+                effect="blur"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
             </Box>
           </Flex>

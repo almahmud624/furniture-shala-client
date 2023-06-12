@@ -1,6 +1,12 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+
+const data = [
+  { timerText: "Hrs", timer: "hours" },
+  { timerText: "Min", timer: "minutes" },
+  { timerText: "Sec", timer: "seconds" },
+];
 
 export const Countdown = ({
   setCouponStatus,
@@ -8,7 +14,8 @@ export const Countdown = ({
   productId,
   couponStatus,
 }) => {
-  const {pathname} = useLocation()
+  const { pathname } = useLocation();
+  const flashSaleCountdown = pathname === "/flashsale";
   const [time, setTime] = useState(couponDuration);
 
   useEffect(() => {
@@ -44,13 +51,13 @@ export const Countdown = ({
   }, [time, productId, setCouponStatus]);
 
   const formatTime = (time) => {
-    const day = Math.floor(time/(24*3600))
-    const hours = Math.floor((time % (24*3600)) / 3600);
+    const day = Math.floor(time / (24 * 3600));
+    const hours = Math.floor((time % (24 * 3600)) / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
 
     return {
-      day:day.toString().padStart(2,"0"),
+      day: day.toString().padStart(2, "0"),
       hours: hours.toString().padStart(2, "0"),
       minutes: minutes.toString().padStart(2, "0"),
       seconds: seconds.toString().padStart(2, "0"),
@@ -59,48 +66,47 @@ export const Countdown = ({
 
   return (
     <Box mt={3}>
-      <Box display="flex" justifyContent="space-between" gap={5}>
-        {pathname === '/flashsale'&&<Box
-          textAlign="center"
-          borderWidth={1}
-          borderColor={"gray.600"}
-          px={4}
-          rounded={"lg"}
-        >
-          <Text fontSize="xl">{formatTime(time).day}</Text>
-          <Text fontSize="lg">Day</Text>
-        </Box>}
-        <Box
-          textAlign="center"
-          borderWidth={1}
-          borderColor={"gray.600"}
-          px={4}
-          rounded={"lg"}
-        >
-          <Text fontSize="xl">{formatTime(time).hours}</Text>
-          <Text fontSize="lg">Hrs</Text>
-        </Box>
-        <Box
-          textAlign="center"
-          borderWidth={1}
-          borderColor={"gray.600"}
-          px={4}
-          rounded={"lg"}
-        >
-          <Text fontSize="xl">{formatTime(time).minutes}</Text>
-          <Text fontSize="lg">Min</Text>
-        </Box>
-        <Box
-          textAlign="center"
-          borderWidth={1}
-          borderColor={"gray.600"}
-          px={4}
-          rounded={"lg"}
-        >
-          <Text fontSize="xl">{formatTime(time).seconds}</Text>
-          <Text fontSize="lg">Sec</Text>
-        </Box>
-      </Box>
+      <Grid
+        templateColumns={`repeat(${flashSaleCountdown ? 2 : 4}, 1fr)`}
+        gap={5}
+      >
+        {flashSaleCountdown && (
+          <GridItem>
+            <Box
+              textAlign="center"
+              borderWidth={flashSaleCountdown ? 3 : 1}
+              borderColor={"gray.600"}
+              px={4}
+              py={flashSaleCountdown && 4}
+              rounded={"lg"}
+              fontWeight={"semibold"}
+            >
+              <Text fontSize="5xl">{formatTime(time).day}</Text>
+              <Text fontSize="xl">Day</Text>
+            </Box>
+          </GridItem>
+        )}
+        {data?.map(({ timerText, timer }) => (
+          <GridItem key={timer}>
+            <Box
+              textAlign="center"
+              borderWidth={flashSaleCountdown ? 3 : 1}
+              borderColor={"gray.600"}
+              px={4}
+              py={flashSaleCountdown && 4}
+              rounded={"lg"}
+              fontWeight={"semibold"}
+            >
+              <Text fontSize={flashSaleCountdown ? "5xl" : "xl"}>
+                {formatTime(time)[timer]}
+              </Text>
+              <Text fontSize={flashSaleCountdown ? "xl" : "lg"}>
+                {timerText}
+              </Text>
+            </Box>
+          </GridItem>
+        ))}
+      </Grid>
     </Box>
   );
 };
