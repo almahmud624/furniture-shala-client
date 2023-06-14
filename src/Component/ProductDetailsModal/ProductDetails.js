@@ -68,7 +68,9 @@ const ProductDetails = ({ product, setIsOrder }) => {
               </Text>
               ${newPrice}
             </Text>
-            <ReadMoreReadLess limit={150}>{description}</ReadMoreReadLess>
+            <ReadMoreReadLess limit={150} boxHeight={24}>
+              {description}
+            </ReadMoreReadLess>
             <Divider />
             <Text>Posted on : {createdAt}</Text>
             <Divider />

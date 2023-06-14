@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from "react";
 import {
   Box,
   Heading,
@@ -6,88 +6,56 @@ import {
   Image,
   Text,
   Divider,
-  HStack,
-  Tag,
-  Wrap,
-  WrapItem,
-  SpaceProps,
   useColorModeValue,
-  Container,
-  VStack,
-} from '@chakra-ui/react';
+  Grid,
+  HStack,
+} from "@chakra-ui/react";
+import ReadMoreReadLess from "../../Component/ReadMoreReadLess";
 
-
-const BlogTags = (props) => {
-  return (
-    <HStack spacing={2} marginTop={props.marginTop}>
-      {props.tags.map((tag) => {
-        return (
-          <Tag size={'md'} variant="solid" colorScheme="orange" key={tag}>
-            {tag}
-          </Tag>
-        );
-      })}
-    </HStack>
-  );
-};
-
-
-export const BlogAuthor = (props) => {
-  return (
-    <HStack marginTop="2" spacing="2" display="flex" alignItems="center">
-      <Image
-        borderRadius="full"
-        boxSize="40px"
-        src="https://100k-faces.glitch.me/random-image"
-        alt={`Avatar of ${props.name}`}
-      />
-      <Text fontWeight="medium">{props.name}</Text>
-      <Text>—</Text>
-      <Text>{props.date.toLocaleDateString()}</Text>
-    </HStack>
-  );
-};
-
+import data from "./blogDB.json";
+import BlogCard from "../../Component/BlogCard/BlogCard";
 const Blog = () => {
+  const [selectedBlog, setSelectedBlog] = useState(data[0]);
+  function handleBlog(value) {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    setSelectedBlog(value);
+  }
+
   return (
-    <Box maxW={'7xl'} p="12">
-      <Heading as="h1">Stories by Chakra Templates</Heading>
+    <Box maxW={"90%"} py="12" mx={"auto"}>
       <Box
-        marginTop={{ base: '1', sm: '5' }}
+        mb={10}
         display="flex"
-        flexDirection={{ base: 'column', sm: 'row' }}
-        justifyContent="space-between">
+        gap={7}
+        flexDirection={{ base: "column", sm: "row" }}
+        justifyContent="space-between"
+      >
         <Box
+          mb={"10"}
           display="flex"
-          flex="1"
-          marginRight="3"
           position="relative"
-          alignItems="center">
+          alignItems="center"
+          w={"45%"}
+          h={"96"}
+        >
           <Box
-            width={{ base: '100%', sm: '85%' }}
-            zIndex="2"
-            marginLeft={{ base: '0', sm: '5%' }}
-            marginTop="5%">
-            <Link textDecoration="none" _hover={{ textDecoration: 'none' }}>
-              <Image
-                borderRadius="lg"
-                src={
-                  'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80'
-                }
-                alt="some good alt text"
-                objectFit="contain"
-              />
-            </Link>
-          </Box>
-          <Box zIndex="1" width="100%" position="absolute" height="100%">
-            <Box
-              bgGradient={useColorModeValue(
-                'radial(orange.600 1px, transparent 1px)',
-                'radial(orange.300 1px, transparent 1px)'
-              )}
-              backgroundSize="20px 20px"
-              opacity="0.4"
-              height="100%"
+            width={"full"}
+            h={"full"}
+            border={"1px solid #2D3748"}
+            rounded="md"
+            boxShadow={"0px 0px 14px 0px rgba(0,0,0,0.45) "}
+            p={2}
+          >
+            <Image
+              borderRadius="sm"
+              w={"full"}
+              h={"full"}
+              src={selectedBlog?.thumbnail}
+              alt={selectedBlog?.title}
+              objectFit="cover"
             />
           </Box>
         </Box>
@@ -95,71 +63,43 @@ const Blog = () => {
           display="flex"
           flex="1"
           flexDirection="column"
-          justifyContent="center"
-          marginTop={{ base: '3', sm: '0' }}>
-          <BlogTags tags={['Engineering', 'Product']} />
-          <Heading marginTop="1">
-            <Link textDecoration="none" _hover={{ textDecoration: 'none' }}>
-              Blog article title
+          justifyContent="baseline"
+        >
+          <Heading>
+            <Link textDecoration="none" _hover={{ textDecoration: "none" }}>
+              {selectedBlog?.title}
             </Link>
           </Heading>
+          <HStack align={"center"} justify={"space-between"} my={3}>
+            <Text as="p" fontSize="md" color={"gray.400"}>
+              {selectedBlog?.published_date}
+            </Text>
+            <Text as="p" fontSize="md" color={"gray.400"}>
+              {selectedBlog?.read_time}
+            </Text>
+          </HStack>
           <Text
             as="p"
             marginTop="2"
-            color={useColorModeValue('gray.700', 'gray.200')}
-            fontSize="lg">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+            color={useColorModeValue("gray.700", "gray.200")}
+            fontSize="lg"
+          >
+            <ReadMoreReadLess limit={600} boxHeight={64}>
+              {selectedBlog?.description}
+            </ReadMoreReadLess>
           </Text>
-          <BlogAuthor name="John Doe" date={new Date('2021-04-06T19:01:27Z')} />
         </Box>
       </Box>
-      <Heading as="h2" marginTop="5">
-        Latest articles
+
+      <Heading as="h2" mt="10">
+        Latest Journal
       </Heading>
       <Divider marginTop="5" />
-      <Wrap spacing="30px" marginTop="5">
-        <WrapItem width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}>
-          <Box w="100%">
-            <Box borderRadius="lg" overflow="hidden">
-              <Link textDecoration="none" _hover={{ textDecoration: 'none' }}>
-                <Image
-                  transform="scale(1.0)"
-                  src={
-                    'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80'
-                  }
-                  alt="some text"
-                  objectFit="contain"
-                  width="100%"
-                  transition="0.3s ease-in-out"
-                  _hover={{
-                    transform: 'scale(1.05)',
-                  }}
-                />
-              </Link>
-            </Box>
-            <BlogTags tags={['Engineering', 'Product']} marginTop="3" />
-            <Heading fontSize="xl" marginTop="2">
-              <Link textDecoration="none" _hover={{ textDecoration: 'none' }}>
-                Some blog title
-              </Link>
-            </Heading>
-            <Text as="p" fontSize="md" marginTop="2">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </Text>
-            <BlogAuthor
-              name="John Doe"
-              date={new Date('2021-04-06T19:01:27Z')}
-            />
-          </Box>
-        </WrapItem>
-      </Wrap>
-     
+      <Grid marginTop="5" gap={5} templateColumns={"repeat(4,1fr)"}>
+        {data?.map((item) => (
+          <BlogCard item={item} handleBlog={handleBlog} />
+        ))}
+      </Grid>
     </Box>
   );
 };

@@ -2,7 +2,7 @@ import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
 
-const ReadMoreReadLess = ({ children, limit }) => {
+const ReadMoreReadLess = ({ children, limit, boxHeight }) => {
   const [isExpandable, setIsExpandable] = useState(false);
   const text = children;
   const onToggle = () => {
@@ -12,7 +12,11 @@ const ReadMoreReadLess = ({ children, limit }) => {
   const isTextWrap = text?.length < limit;
   return (
     <>
-      <Box overflowY={isExpandable && "scroll"} h={!isTextWrap && 24}>
+      <Box
+        id="scrollbar"
+        overflowY={isExpandable && "scroll"}
+        h={!isTextWrap && boxHeight}
+      >
         <Text>
           {isExpandable ? text : `${text.slice(0, limit)}`}
           {!isTextWrap && (
