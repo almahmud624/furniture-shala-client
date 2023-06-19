@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Table,
   Thead,
@@ -13,15 +13,19 @@ import {
   Button,
   useToast,
   Box,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../Context/AuthProvider";
 import axios from "axios";
 import Loader from "../../../Component/Loader";
+import ConfirmationModal from "../../../Component/ConfirmationModal";
 
 const MyProducts = () => {
   const { user, userSignOut } = useContext(AuthContext);
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const {
     data: sellerProducts = [],
@@ -89,11 +93,23 @@ const MyProducts = () => {
         }
       });
   };
+
+  const handeDeleteProduct = (id) => {
+    axios
+      .delete(`https://furniture-shala-server.vercel.app/products/${id}`)
+      .then((res) => {
+        if (res.status === 200) {
+          refetch();
+          onClose();
+        }
+      });
+  };
+
   if (isLoading) {
     return <Loader />;
   }
   return (
-    <div>
+    <>
       <Heading
         as="h3"
         size={["lg", "xl", "2xl"]}
@@ -111,6 +127,7 @@ const MyProducts = () => {
               <Th>Category</Th>
               <Th isNumeric>Price</Th>
               <Th>Status</Th>
+              <Th>Advertise</Th>
               <Th>Action</Th>
             </Tr>
           </Thead>
@@ -147,12 +164,31 @@ const MyProducts = () => {
                     {product.advertisement ? "Remove Advertise" : "Advertise"}
                   </Button>
                 </Td>
+                <Td>
+                  <Button
+                    bg="red.600"
+                    size="sm"
+                    onClick={() => {
+                      setSelectedProduct(product);
+                      onOpen();
+                    }}
+                  >
+                    Remove
+                  </Button>
+                </Td>
               </Tr>
             ))}
           </Tbody>
         </Table>
       </TableContainer>
-    </div>
+      <ConfirmationModal
+        isOpen={isOpen}
+        onClose={onClose}
+        handleAction={handeDeleteProduct}
+        targetedId={selectedProduct?._id}
+        modalBody={`Are you want to delete ${selectedProduct?.productName}? Before take any action, You have to know that delete item cann't be undone.`}
+      />
+    </>
   );
 };
 

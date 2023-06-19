@@ -30,6 +30,9 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthProvider";
 import axios from "axios";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
+import { storage } from "../../../Firebase/firebase.init";
 
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
@@ -45,7 +48,7 @@ const AddProduct = () => {
   // image preview state
   const [imgPreview, setImgPreview] = useState(null);
 
-  async function onSubmit(product) {
+  function onSubmit(product) {
     product.inStock = "available";
     product.createdAt = moment().format("ll");
     product.sellerName = user.displayName;
@@ -60,42 +63,29 @@ const AddProduct = () => {
       return;
     }
 
-    // formdata for img file
-    const formData = new FormData();
-    formData.append("image", imgPreview?.imgFile);
-    // host img on imgbb
-    try {
-      const { data } = await axios.post(
-        `https://api.imgbb.com/1/upload?&key=${process.env.REACT_APP_imgbb_hostkey}`,
-        formData
-      );
-      console.log(data);
-
-      if (data.success) {
-        product.productImg = data.data.url;
-
+    uploadImage().then((url) => {
+      if (url) {
+        product.productImg = url;
         // store new product
         try {
-          const { data } = await axios.post(
-            "https://furniture-shala-server.vercel.app/products",
-            product
-          );
-          if (data.acknowledged) {
-            toast({
-              title: `Product Successfully Added`,
-              position: "top",
-              isClosable: true,
-              status: "success",
+          axios
+            .post("https://furniture-shala-server.vercel.app/products", product)
+            .then((res) => {
+              if (res?.status === 200) {
+                toast({
+                  title: `Product Successfully Added`,
+                  position: "top",
+                  isClosable: true,
+                  status: "success",
+                });
+                navigate("/dashboard/my-products");
+              }
             });
-            navigate("/dashboard/my-products");
-          }
         } catch (error) {
           console.log(error);
         }
       }
-    } catch (error) {
-      console.log(error);
-    }
+    });
   }
 
   const handleImgPreview = (e) => {
@@ -104,10 +94,18 @@ const AddProduct = () => {
     const imgSrc = URL.createObjectURL(imgFile);
     setImgPreview({ imgSrc, imgFile });
   };
+
+  // upload image in firebase storage
+  const uploadImage = () => {
+    const imgRef = ref(storage, `images/${imgPreview?.imgFile?.name + v4()}`);
+    return uploadBytes(imgRef, imgPreview?.imgFile).then((res) =>
+      getDownloadURL(res.ref)
+    );
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Flex
-        // minH={"100vh"}
         align={"center"}
         justify={"center"}
         bg={useColorModeValue("gray.50", "gray.800")}

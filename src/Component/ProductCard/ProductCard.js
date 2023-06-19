@@ -39,7 +39,7 @@ const ProductCard = ({ product = {}, setProductInfo, onOpen }) => {
   };
   return (
     <>
-      <Center>
+      <Center pos={"relative"}>
         <Box
           w="full"
           rounded={"sm"}

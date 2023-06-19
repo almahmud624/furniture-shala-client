@@ -40,8 +40,6 @@ const AllBuyers = () => {
   const toast = useToast();
 
   const handleBuyersDelete = (id) => {
-    console.log(id);
-
     axios
       .delete(`https://furniture-shala-server.vercel.app/user/buyers/${id}`)
       .then((res) => {

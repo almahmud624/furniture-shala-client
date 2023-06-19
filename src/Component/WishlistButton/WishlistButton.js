@@ -5,6 +5,7 @@ import React, { useContext } from "react";
 import { BsHeartFill } from "react-icons/bs";
 import { AuthContext } from "../../Context/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import ViewOnlyMode from "../ViewOnlyMode/ViewOnlyMode";
 
 const WishlistButton = ({ product }) => {
   const navigate = useNavigate();
@@ -86,6 +87,7 @@ const WishlistButton = ({ product }) => {
         }}
         zIndex={10}
       />
+      <ViewOnlyMode />
     </>
   );
 };

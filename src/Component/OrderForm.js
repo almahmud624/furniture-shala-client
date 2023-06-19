@@ -13,11 +13,13 @@ import {
   NumberInput,
   Stack,
   InputRightAddon,
+  Box,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import moment from "moment";
 import axios from "axios";
 import { calculateDiscountAmount } from "../Utilities/calculateDiscountAmount";
+import ViewOnlyMode from "./ViewOnlyMode/ViewOnlyMode";
 
 export default function OrderForm({
   user,
@@ -215,14 +217,17 @@ export default function OrderForm({
               placeholder="Product Pick Up Location..."
             />
           </FormControl>
-          <Button
-            mt={4}
-            colorScheme="green"
-            isLoading={isSubmitting}
-            type="submit"
-          >
-            Submit
-          </Button>
+          <Box pos={"relative"} w={"fit-content"}>
+            <ViewOnlyMode />
+            <Button
+              mt={4}
+              colorScheme="green"
+              isLoading={isSubmitting}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </Box>
         </Stack>
       </form>
     </Container>

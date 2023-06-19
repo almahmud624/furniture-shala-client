@@ -10,10 +10,12 @@ import FeaturedProduct from "./Sections/FeaturedProduct/FeaturedProduct";
 import TopSellingProduct from "./Sections/TopSellingProduct/TopSellingProduct";
 import SeasonSale from "./Sections/SeasonSale/SeasonSale";
 import ProductsGrid from "./Sections/ProductsGrid/ProductsGrid";
+import ScrollToTop from "../../Component/ScrollToTop/ScrollToTop";
 const Home = () => {
   return (
     <>
       <Box maxWidth={"90%"} margin={"auto"}>
+        <ScrollToTop />
         <Header />
         <ProductSlider />
         <SiteFeature />

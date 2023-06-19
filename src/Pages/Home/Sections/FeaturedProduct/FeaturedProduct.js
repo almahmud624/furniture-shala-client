@@ -3,7 +3,6 @@ import {
   Flex,
   HStack,
   Heading,
-  Image,
   Stack,
   Text,
   VStack,
@@ -85,7 +84,13 @@ const FeaturedProduct = () => {
         </Heading>
       </Box>
       <Stack direction={{ md: "column", lg: "row" }} spacing={10} mt={10}>
-        <Box key={Math.random()} bg={"gray.900"} w={"50%"} h={"56"}>
+        <Box
+          key={Math.random()}
+          bg={"gray.900"}
+          w={"50%"}
+          h={"56"}
+          pos={"relative"}
+        >
           <Flex justify={"space-between"} alignItems={"center"}>
             <VStack align={"left"} pl={5} spacing={3} w={"full"}>
               <Heading size={"lg"} fontWeight={"semibold"}>
