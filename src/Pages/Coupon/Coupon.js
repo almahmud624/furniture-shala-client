@@ -2,12 +2,20 @@ import PageHeader from "../../Component/PageHeader/PageHeader";
 import ProductCoupon from "../Home/Sections/ProductCoupon/ProductCoupon";
 import elevenPercentImg from "../../Assets/elevenPercent.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-const { Box, Flex, Image } = require("@chakra-ui/react");
+import { useContext, useState } from "react";
+import { AuthContext } from "../../Context/AuthProvider";
+import FormModal from "../../Component/FormModal";
+import OrderForm from "../../Component/OrderForm";
+const { Box, Flex, useDisclosure } = require("@chakra-ui/react");
 
 const Coupon = () => {
   const products = JSON.parse(
     localStorage.getItem("furniture_shala_featured_product")
   );
+  const [productInfo, setProductInfo] = useState(null);
+  const { onClose, isOpen, onOpen } = useDisclosure();
+  const { user } = useContext(AuthContext);
+  const [coupon, setCoupon] = useState(null);
   return (
     <>
       <Box maxW={"90%"} mx={"auto"} py={10}>
@@ -44,10 +52,30 @@ const Coupon = () => {
         </Flex>
         <Flex justify={"space-between"} mt={10}>
           {products?.map((product) => (
-            <ProductCoupon key={Math.random()} product={product} />
+            <ProductCoupon
+              key={Math.random()}
+              product={product}
+              setProductInfo={setProductInfo}
+              onOpen={onOpen}
+              setCoupon={setCoupon}
+            />
           ))}
         </Flex>
       </Box>
+      <FormModal
+        isOpen={isOpen}
+        onClose={onClose}
+        coupon={coupon}
+        setCoupon={setCoupon}
+      >
+        <OrderForm
+          user={user}
+          productInfo={productInfo}
+          onClose={onClose}
+          coupon={coupon}
+          setCoupon={setCoupon}
+        />
+      </FormModal>
     </>
   );
 };

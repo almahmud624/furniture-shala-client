@@ -6,14 +6,17 @@ const categories = [
   {
     categoryName: "restaurent",
     categoryImg: "https://i.ibb.co/cDR15bZ/image.png",
+    color: "#907857",
   },
   {
     categoryName: "home",
     categoryImg: "https://i.ibb.co/XDHQV18/image.png",
+    color: "#910B0C",
   },
   {
     categoryName: "office",
     categoryImg: "https://i.ibb.co/yg7hKgB/image.png",
+    color: "#7A3B1B",
   },
 ];
 const Categories = () => {
@@ -53,58 +56,45 @@ const Categories = () => {
         {categories?.map((category) => (
           <Box role="group" key={Math.random()}>
             <SimpleGrid placeItems={"center"}>
-              <Link to={`/categories/${category?.categoryName}`}>
-                <Box>
-                  <Image
-                    src={category?.categoryImg}
-                    alt="Green double couch with wooden legs"
-                    borderRadius="73% 27% 79% 21% / 29% 72% 28% 71% "
+              <Box
+                px={5}
+                pt={5}
+                bg={"gray.900"}
+                rounded={"lg"}
+                boxShadow={"0 0 10px 3px rgba(0,0,0,0.35)"}
+                _groupHover={{ boxShadow: "none" }}
+                transition={"all .3s"}
+              >
+                <Link to={`/categories/${category?.categoryName}`}>
+                  <Box h={52}>
+                    <Image
+                      src={category?.categoryImg}
+                      alt="Green double couch with wooden legs"
+                      transition={".3s"}
+                      className="category-img"
+                      rounded={"lg"}
+                      w={"full"}
+                      h={"full"}
+                      objectFit={"cover"}
+                      _groupHover={{ transform: "translateY(5px)" }}
+                    />
+                  </Box>
+                  <Heading
+                    as={"h3"}
+                    fontSize={"xl"}
+                    textTransform={"capitalize"}
+                    textAlign={"center"}
+                    py={5}
+                    cursor={"pointer"}
+                    bg="transparent"
                     transition={".3s"}
-                    // _hover={{
-                    //   borderRadius: "5px",
-                    // }}
-                    // _groupHover={{
-                    //   background: "red",
-                    // }}
-                    className="category-img"
-                    _hover={{
-                      borderRadius: "5px 5px 0px 0px",
-                    }}
-                    _groupHover={{
-                      borderRadius: "5px 5px 0px 0px",
-                    }}
-                  />
-                </Box>
-                <Heading
-                  as={"h3"}
-                  fontSize={"xl"}
-                  style={{
-                    textTransform: "capitalize",
-                    // transform: "rotate(-5deg)",
-                  }}
-                  transform="rotate(-5deg)"
-                  textAlign={"center"}
-                  py={5}
-                  cursor={"pointer"}
-                  bg="transparent"
-                  transition={".3s"}
-                  border={"1px solid #276749"}
-                  borderRadius="73% 27% 79% 21% / 29% 72% 28% 71% "
-                  _hover={{
-                    transform: "rotate(0deg)",
-                    borderRadius: "0px 0px 5px 5px",
-                    borderTop: "none",
-                  }}
-                  _groupHover={{
-                    transform: "rotate(0deg)",
-                    borderRadius: "0px 0px 5px 5px",
-                    borderTop: "none",
-                  }}
-                  fontWeight={"normal"}
-                >
-                  {category?.categoryName} Furniture
-                </Heading>
-              </Link>
+                    fontWeight={"semibold"}
+                    color={category.color}
+                  >
+                    {category?.categoryName}
+                  </Heading>
+                </Link>
+              </Box>
             </SimpleGrid>
           </Box>
         ))}

@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Grid,
   GridItem,
   HStack,
@@ -76,7 +75,7 @@ const ProductGridItem = ({
   priceText,
   pricePercentage,
 }) => {
-  const [selectedProduct, setSelectedProduct] = useState({});
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { products } = useContext(DataStoreContext);
   // get featured product from local db
@@ -151,6 +150,7 @@ const ProductGridItem = ({
         onOpen={onOpen}
         isOpen={isOpen}
         product={selectedProduct}
+        setSelectedProduct={setSelectedProduct}
       />
     </>
   );

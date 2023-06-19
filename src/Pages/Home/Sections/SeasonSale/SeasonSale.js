@@ -73,7 +73,7 @@ const SeasonSale = () => {
             {getCurrentSeason()} Season Sale
           </Heading>
           <Text pb={2}>Free shipping on orders over $99</Text>
-          <CustomGradientBtn>Shop Now</CustomGradientBtn>
+          <CustomGradientBtn link={'/shop'}>Shop Now</CustomGradientBtn>
         </VStack>
       </Box>
     </>

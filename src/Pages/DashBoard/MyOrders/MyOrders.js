@@ -10,8 +10,6 @@ import {
   TableContainer,
   Heading,
   Image,
-  Text,
-  Button,
   Box,
 } from "@chakra-ui/react";
 import { AuthContext } from "../../../Context/AuthProvider";
@@ -19,6 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loader from "../../../Component/Loader";
 import NavItem from "../DashBoard/NavItem ";
+import NotFound from "../../../Component/NotFound/NotFound";
 
 const MyOrders = () => {
   const { products } = useContext(DataStoreContext);
@@ -49,36 +48,25 @@ const MyOrders = () => {
     },
   });
 
-  const filterOrdersProducts = products.map((product) => {
-    const matchdProducts = orders.filter(
-      (order) => order.productId === product._id
+  const filterOrdersProducts = orders?.map((order) => {
+    const product = products?.find(
+      (product) => product?._id === order?.productId
     );
-    let matchProduct;
-    if (
-      matchdProducts[0]?.productName &&
-      matchdProducts[0]?.productPrice &&
-      matchdProducts[0]?.orderdAt &&
-      matchdProducts[0]?._id &&
-      product?.productImg
-    ) {
-      matchProduct = {
-        _id: matchdProducts[0]?._id,
-        title: matchdProducts[0]?.productName,
-        price: matchdProducts[0]?.productPrice,
-        date: matchdProducts[0]?.orderdAt,
-        paid: matchdProducts[0]?.paid,
-        img: product?.productImg,
-        productId: matchdProducts[0]?.productId,
-      };
-    }
-    return matchProduct;
+    return {
+      _id: order?._id,
+      title: order?.productName,
+      price: order?.productPrice,
+      date: order?.orderdAt,
+      paid: order?.paid,
+      img: product?.productImg,
+      productId: order?.productId,
+    };
   });
+
   // filter undefined products
   const orderProducts = filterOrdersProducts.filter(
     (orderProduct) => orderProduct !== undefined
   );
-  console.log(orders);
-  console.log(orderProducts);
 
   if (isLoading) {
     return <Loader />;
@@ -93,63 +81,67 @@ const MyOrders = () => {
       >
         My Orders
       </Heading>
-      <TableContainer>
-        <Table variant="simple" bg={"gray.300"} _dark={{ bg: "gray.800" }}>
-          <Thead>
-            <Tr>
-              <Th></Th>
-              <Th>Title</Th>
-              <Th isNumeric>Price</Th>
-              <Th>Order Date</Th>
-              <Th>Status</Th>
-              <Th>Action</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {orderProducts?.map((product) => (
-              <Tr key={Math.random()}>
-                <Box w="12" h="12">
-                  <Image
-                    src={product?.img}
-                    w="full"
-                    h="full"
-                    p={"1"}
-                    rounded={"2xl"}
-                    objectFit="cover"
-                  />
-                </Box>
-                <Td>{product?.title}</Td>
-
-                <Td isNumeric color="green.600">
-                  ${product?.price}
-                </Td>
-                {}
-                <Td color="green.600">{product?.date}</Td>
-                <Td color="green.600">{product?.paid ? "Paid" : "unpaid"}</Td>
-                {product?.paid ? (
-                  <>
-                    <Td color="green.600">Order Placed</Td>
-                  </>
-                ) : (
-                  <Td>
-                    <NavItem
-                      path={`/dashboard/payments/${product?._id}`}
-                      display={"inline-block"}
-                      py={1}
-                      bg="teal.400"
-                      color="gray.900"
-                      fontWeight={"semibold"}
-                      disabled={product?.paid}
-                    >
-                      Pay
-                    </NavItem>
-                  </Td>
-                )}
+      {orderProducts?.length > 0 ? (
+        <TableContainer>
+          <Table variant="simple" bg={"gray.300"} _dark={{ bg: "gray.800" }}>
+            <Thead>
+              <Tr>
+                <Th></Th>
+                <Th>Title</Th>
+                <Th isNumeric>Price</Th>
+                <Th>Order Date</Th>
+                <Th>Status</Th>
+                <Th>Action</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
+            </Thead>
+            <Tbody>
+              {orderProducts?.map((product) => (
+                <Tr key={Math.random()}>
+                  <Box w="12" h="12">
+                    <Image
+                      src={product?.img}
+                      w="full"
+                      h="full"
+                      p={"1"}
+                      rounded={"2xl"}
+                      objectFit="cover"
+                    />
+                  </Box>
+                  <Td>{product?.title}</Td>
+
+                  <Td isNumeric color="green.600">
+                    ${product?.price}
+                  </Td>
+                  {}
+                  <Td color="green.600">{product?.date}</Td>
+                  <Td color="green.600">{product?.paid ? "Paid" : "unpaid"}</Td>
+                  {product?.paid ? (
+                    <>
+                      <Td color="green.600">Order Placed</Td>
+                    </>
+                  ) : (
+                    <Td>
+                      <NavItem
+                        path={`/dashboard/payments/${product?._id}`}
+                        display={"inline-block"}
+                        py={1}
+                        bg="teal.400"
+                        color="gray.900"
+                        fontWeight={"semibold"}
+                        disabled={product?.paid}
+                      >
+                        Pay
+                      </NavItem>
+                    </Td>
+                  )}
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <NotFound message={"Orders"} buttonText={"Shop"} link={"/shop"} />
+      )}
     </div>
   );
 };

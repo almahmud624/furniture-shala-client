@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton, Flex, useColorModeValue, Text } from "@chakra-ui/react";
+import { IconButton, Flex, useColorModeValue } from "@chakra-ui/react";
 import { BsArrowBarRight } from "react-icons/bs";
 
 const MobileNav = ({ onOpen, ...rest }) => {
@@ -22,10 +22,6 @@ const MobileNav = ({ onOpen, ...rest }) => {
           aria-label="open menu"
           icon={<BsArrowBarRight />}
         />
-
-        {/* <Text fontSize="2xl" ml="8" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text> */}
       </Flex>
     </div>
   );

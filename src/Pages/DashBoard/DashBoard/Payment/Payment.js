@@ -106,7 +106,9 @@ const Payment = () => {
         paymentInfo
       );
       if (data.acknowledged) {
-        // navigate("/dashboard/my-orders");
+        navigate("/dashboard/my-orders");
+        console.log(data);
+
         toast({
           title: `${"Payment Successful"}`,
           position: "top",

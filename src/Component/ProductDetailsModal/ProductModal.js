@@ -14,7 +14,13 @@ import { AuthContext } from "../../Context/AuthProvider";
 import OrderForm from "../OrderForm";
 import { CloseIcon } from "@chakra-ui/icons";
 
-const ProductModal = ({ onClose, isOpen, product }) => {
+const ProductModal = ({
+  onClose,
+  isOpen,
+  product = {},
+  discount,
+  setSelectedProduct,
+}) => {
   const [scrollBehavior] = useState("inside");
   const [isOrder, setIsOrder] = useState(false);
   const { user } = useContext(AuthContext);
@@ -37,11 +43,13 @@ const ProductModal = ({ onClose, isOpen, product }) => {
                 cursor={"pointer"}
                 h={3}
                 w={3}
-                onClick={() => setIsOrder(false)}
+                onClick={() => {
+                  setIsOrder(false);
+                }}
               />
             </Box>
           ) : (
-            <ModalCloseButton />
+            <ModalCloseButton onClick={() => setSelectedProduct(null)} />
           )}
           <ModalBody>
             {isOrder ? (
@@ -50,9 +58,14 @@ const ProductModal = ({ onClose, isOpen, product }) => {
                 productInfo={product}
                 onClose={onClose}
                 setIsOrder={setIsOrder}
+                discount={discount}
               />
             ) : (
-              <ProductDetails product={product} setIsOrder={setIsOrder} />
+              <ProductDetails
+                product={product}
+                setIsOrder={setIsOrder}
+                discount={discount}
+              />
             )}
           </ModalBody>
         </ModalContent>

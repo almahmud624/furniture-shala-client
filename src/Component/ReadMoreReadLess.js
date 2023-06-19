@@ -18,7 +18,7 @@ const ReadMoreReadLess = ({ children, limit, boxHeight }) => {
         h={!isTextWrap && boxHeight}
       >
         <Text>
-          {isExpandable ? text : `${text.slice(0, limit)}`}
+          {isExpandable ? text : `${text?.slice(0, limit)}`}
           {!isTextWrap && (
             <Text
               display={"inline-block"}

@@ -13,10 +13,13 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import CustomGradientBtn from "../CustomGradientBtn";
 import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { ThreeDots } from "react-loader-spinner";
+import { DataStoreContext } from "../../Context/DataProvider";
+import GridItemCard from "../GridItemCard/GridItemCard";
 
 const InfiniteScrollProduct = ({ searchQuery }) => {
+  const { products: allProducts } = useContext(DataStoreContext);
   const { ref, inView } = useInView();
   // get data by inifinite scrolling
   const {
@@ -56,7 +59,8 @@ const InfiniteScrollProduct = ({ searchQuery }) => {
   }
 
   // filter data by price range
-  const filteredProducts = products?.filter((product) =>
+  // applied filter on all products when search query available
+  const filteredProducts = allProducts?.filter((product) =>
     product?.productName?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
@@ -82,63 +86,9 @@ const InfiniteScrollProduct = ({ searchQuery }) => {
           ) : status === "error" ? (
             <Text>Error:{error.message}</Text>
           ) : (
-            filteredProducts?.map(
-              ({ productName, productImg, newPrice, categories }) => (
-                <GridItem
-                  key={Math.random()}
-                  overflow={"hidden"}
-                  borderBottomWidth={1}
-                  borderLeftWidth={1}
-                  borderRightWidth={1}
-                >
-                  <Flex
-                    flexDir={"column"}
-                    justifyContent={"space-between"}
-                    alignItems={"center"}
-                  >
-                    <Box w={"full"}>
-                      <Box w={"full"} h={"250px"}>
-                        <Image
-                          src={productImg}
-                          w={"full"}
-                          h={"full"}
-                          objectFit={"cover"}
-                        />
-                      </Box>
-                    </Box>
-                    <VStack gap={1} align={"left"} py={3} px={3}>
-                      <Text
-                        textTransform={"capitalize"}
-                        px={3}
-                        py={1}
-                        bg={"red.600"}
-                        display={"inline"}
-                        w={"fit-content"}
-                      >
-                        {categories}
-                      </Text>
-                      <Heading
-                        size={"lg"}
-                        fontSize={"xl"}
-                        fontWeight={"semibold"}
-                      >
-                        {productName}
-                      </Heading>
-                      <Text
-                        fontWeight={"thin"}
-                        fontSize={"xl"}
-                        fontFamily={"cursive"}
-                      >
-                        ${newPrice}
-                      </Text>
-                      <CustomGradientBtn customStyle={{ h: "10" }}>
-                        Order Now
-                      </CustomGradientBtn>
-                    </VStack>
-                  </Flex>
-                </GridItem>
-              )
-            )
+            (searchQuery ? filteredProducts : products)?.map((product) => (
+              <GridItemCard key={product?._id} product={product} />
+            ))
           )}
         </Grid>
         {filteredProducts?.length > 0 ? (

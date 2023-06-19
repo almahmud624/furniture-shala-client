@@ -8,7 +8,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import "./FormModal.css";
-const FormModal = ({ children, isOpen, onClose, modalTitle }) => {
+const FormModal = ({ children, isOpen, onClose, coupon, setCoupon }) => {
   const [scrollBehavior] = useState("inside");
   return (
     <div>
@@ -16,7 +16,7 @@ const FormModal = ({ children, isOpen, onClose, modalTitle }) => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Order Form</ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton onClick={() => coupon && setCoupon(null)} />
           <ModalBody>{children}</ModalBody>
         </ModalContent>
       </Modal>

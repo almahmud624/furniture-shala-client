@@ -1,6 +1,5 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Footer from "../../Shared/Footer";
 import Navbar from "../../Shared/Navbar";
 import {
   Box,
@@ -41,7 +40,7 @@ const DashBoard = ({ children }) => {
 
         {/* mobilenav */}
         <MobileNav display={{ base: "flex", md: "none" }} onOpen={onOpen} />
-        <Box ml={{ base: 0, md: 60 }} p="4">
+        <Box ml={{ base: 0, md: 60 }} p="4" zIndex={50}>
           {/* here all dashboard content */}
           {children} <Outlet />
         </Box>

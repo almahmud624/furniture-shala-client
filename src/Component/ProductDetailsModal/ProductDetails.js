@@ -11,8 +11,9 @@ import {
 import CustomGradientBtn from "../CustomGradientBtn";
 import ReadMoreReadLess from "../ReadMoreReadLess";
 import { Link } from "react-router-dom";
+import { calculateDiscountAmount } from "../../Utilities/calculateDiscountAmount";
 
-const ProductDetails = ({ product, setIsOrder }) => {
+const ProductDetails = ({ product, setIsOrder, discount }) => {
   const {
     categories,
     productImg,
@@ -25,11 +26,11 @@ const ProductDetails = ({ product, setIsOrder }) => {
     totalSelled,
     createdAt,
     location,
-  } = product;
+  } = product || {};
 
   // generate tags
-  const tags = productName.split(" ");
-  tags.push(categories);
+  const tags = productName?.split(" ");
+  tags?.push(categories);
 
   return (
     <>
@@ -64,9 +65,15 @@ const ProductDetails = ({ product, setIsOrder }) => {
                 color={"red.500"}
                 textDecor={"line-through"}
               >
-                ${oldPrice}
+                ${discount ? newPrice : oldPrice}
               </Text>
-              ${newPrice}
+              {discount ? (
+                <Text as={"span"} fontWeight={"thin"} fontSize={"lg"}>
+                  ${calculateDiscountAmount(discount, product)}
+                </Text>
+              ) : (
+                `$${newPrice}`
+              )}
             </Text>
             <ReadMoreReadLess limit={150} boxHeight={24}>
               {description}
@@ -102,7 +109,7 @@ const ProductDetails = ({ product, setIsOrder }) => {
                 w: "fit-content",
               }}
             >
-              Buy Now
+              Order Now
             </CustomGradientBtn>
           </VStack>
         </Flex>

@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import {
-  FormErrorMessage,
   FormLabel,
   FormControl,
   Input,
@@ -13,14 +12,26 @@ import {
   NumberInputField,
   NumberInput,
   Stack,
+  InputRightAddon,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import moment from "moment";
 import axios from "axios";
+import { calculateDiscountAmount } from "../Utilities/calculateDiscountAmount";
 
-export default function OrderForm({ user, productInfo, onClose, setIsOrder }) {
+export default function OrderForm({
+  user,
+  productInfo,
+  onClose,
+  setIsOrder,
+  discount,
+  coupon,
+  setCoupon,
+}) {
   const toast = useToast();
   const toastIdRef = useRef();
+  const [couponInput, setCouponInput] = useState();
+  const [amount, setAmount] = useState(productInfo?.newPrice);
 
   const {
     handleSubmit,
@@ -31,6 +42,7 @@ export default function OrderForm({ user, productInfo, onClose, setIsOrder }) {
   async function onSubmit(order) {
     order.productId = productInfo?._id;
     order.orderdAt = moment().format("ll");
+    order.productPrice = amount;
 
     try {
       const { data } = await axios.post(
@@ -43,13 +55,37 @@ export default function OrderForm({ user, productInfo, onClose, setIsOrder }) {
           position: "top",
           isClosable: true,
         });
-        setIsOrder(false);
         onClose();
+        setIsOrder(false);
       }
     } catch (error) {
       console.log(error);
     }
   }
+
+  const handleCouponDiscount = () => {
+    if (couponInput === coupon?.couponText) {
+      const calculatedAmount = calculateDiscountAmount(
+        parseInt(coupon?.couponPercentage),
+        productInfo
+      );
+      setAmount(calculatedAmount);
+      setCoupon(null);
+      toastIdRef.current = toast({
+        title: `Coupon Applied`,
+        position: "top",
+        isClosable: true,
+        status: "success",
+      });
+    } else {
+      toastIdRef.current = toast({
+        title: `Wrong Coupon`,
+        position: "top",
+        isClosable: true,
+        status: "error",
+      });
+    }
+  };
 
   return (
     <Container maxW="md">
@@ -80,7 +116,11 @@ export default function OrderForm({ user, productInfo, onClose, setIsOrder }) {
               </InputLeftAddon>
               <NumberInput
                 w={"full"}
-                defaultValue={Number(productInfo?.newPrice)}
+                value={
+                  discount
+                    ? calculateDiscountAmount(discount, productInfo)
+                    : amount
+                }
                 readOnly
               >
                 <NumberInputField
@@ -88,10 +128,38 @@ export default function OrderForm({ user, productInfo, onClose, setIsOrder }) {
                   placeholder="0000"
                   roundedBottomLeft={0}
                   roundedTopLeft={0}
+                  rounded={discount && 0}
                 />
               </NumberInput>
+              {discount && (
+                <InputRightAddon
+                  bg="gray.50"
+                  _dark={{
+                    bg: "gray.800",
+                  }}
+                  color="gray.500"
+                  rounded="md"
+                >
+                  11% Discount Applied
+                </InputRightAddon>
+              )}
             </InputGroup>
           </FormControl>
+          {coupon && (
+            <FormControl>
+              <InputGroup>
+                <Input
+                  type="text"
+                  onChange={(e) => setCouponInput(e.target.value)}
+                />
+                <InputRightAddon
+                  children="Apply Coupon"
+                  cursor={"pointer"}
+                  onClick={handleCouponDiscount}
+                />
+              </InputGroup>
+            </FormControl>
+          )}
           <FormControl>
             <FormLabel htmlFor="name">Customar name</FormLabel>
             <Input

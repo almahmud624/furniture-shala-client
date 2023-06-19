@@ -5,15 +5,8 @@ import {
   Flex,
   useColorModeValue,
   Text,
-  Icon,
 } from "@chakra-ui/react";
-import {
-  FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
-  FiSettings,
-} from "react-icons/fi";
+import { FiCompass } from "react-icons/fi";
 import NavItem from "./NavItem ";
 import { AuthContext } from "../../../Context/AuthProvider";
 import useRoleCheck from "../../../Hooks/useRoleCheck";
@@ -90,15 +83,6 @@ const SidebarContent = ({ onClose, ...rest }) => {
             >
               My Products
             </NavItem>
-
-            {/* <NavItem
-              key={Math.random()}
-              icon={FiCompass}
-              path="/dashboard/my-buyers"
-              onClose={onClose}
-            >
-              My Buyers
-            </NavItem> */}
           </>
         )}
 

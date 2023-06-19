@@ -5,12 +5,14 @@ import displayProductCount from "../../../../Utilities/displayItemCount";
 import calculatePercentage from "../../../../Utilities/calculatePercentage";
 import useGetQueryValue from "../../../../Hooks/useGetQueryValue";
 import SortProducts from "../../../../Component/SortProducts/SortProducts";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import GridItemCard from "../../../../Component/GridItemCard/GridItemCard";
 import Loader from "../../../../Component/Loader";
+import { DataStoreContext } from "../../../../Context/DataProvider";
 
 const ShopProduct = () => {
   const [sort, setSort] = useState("");
+  const { products: allProducts } = useContext(DataStoreContext);
 
   // get filter query value
   const [
@@ -22,6 +24,22 @@ const ShopProduct = () => {
     prodcutUsageQuery,
     locationQuery,
   ] = useGetQueryValue();
+
+  // Initialize a flag variable
+  let showFilterProducts = false;
+
+  // Check if any of the query values is true
+  if (
+    queryCategory ||
+    queryDiscount ||
+    querySeller ||
+    queryMaxPrice ||
+    queryMinPrice ||
+    prodcutUsageQuery ||
+    locationQuery
+  ) {
+    showFilterProducts = true;
+  }
 
   // pagination
   const [page, setPage] = useState(1);
@@ -43,8 +61,26 @@ const ShopProduct = () => {
     { keepPreviousData: true }
   );
 
+  // sort products
+  const sortedProducts = products?.sort((a, b) => {
+    switch (sort) {
+      case "to-low":
+        return b.newPrice - a.newPrice;
+      case "to-high":
+        return a.newPrice - b.newPrice;
+      case "most-sold":
+        return b.totalSelled - a.totalSelled;
+      case "latest":
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+        return dateB - dateA;
+      default:
+        return 0;
+    }
+  });
+
   // filter prodcuts
-  const filteredProducts = products
+  const filteredProducts = allProducts
     ?.filter((product) => {
       const price = parseInt(product?.newPrice);
       if (queryMinPrice || queryMaxPrice) {
@@ -97,31 +133,18 @@ const ShopProduct = () => {
         return locationQuery === location;
       }
       return true;
-    })
-    ?.sort((a, b) => {
-      switch (sort) {
-        case "to-low":
-          return b.newPrice - a.newPrice;
-        case "to-high":
-          return a.newPrice - b.newPrice;
-        case "most-sold":
-          return b.totalSelled - a.totalSelled;
-        case "latest":
-          const dateA = new Date(a.createdAt);
-          const dateB = new Date(b.createdAt);
-          return dateB - dateA;
-        default:
-          return 0;
-      }
     });
 
-  const { length: filteredProductsLength } = filteredProducts || [];
+  // const finally products show by condition
+  const showProducts = showFilterProducts ? filteredProducts : sortedProducts;
+
+  const { length: productsLength } = showProducts || [];
   return (
     <>
       <Box>
         <Flex justify={"space-between"} align={"center"} mb={5}>
           <Text mb={3} fontWeight={"thin"} fontSize={"lg"}>
-            {displayProductCount(filteredProductsLength, "Prodcut")} Found!
+            {displayProductCount(productsLength, "Product")} Found!
           </Text>
           <Box>
             <SortProducts setSort={setSort} sort={sort} />
@@ -129,7 +152,7 @@ const ShopProduct = () => {
         </Flex>
         <Grid
           templateColumns={
-            filteredProductsLength === 0
+            productsLength === 0
               ? "1fr"
               : {
                   base: "1fr",
@@ -143,7 +166,7 @@ const ShopProduct = () => {
             <Loader />
           ) : isError ? (
             <Text>Error:{error.message}</Text>
-          ) : filteredProductsLength === 0 ? (
+          ) : productsLength === 0 ? (
             <Box
               h={"md"}
               display={"flex"}
@@ -153,13 +176,13 @@ const ShopProduct = () => {
               <Heading>No Products Found</Heading>
             </Box>
           ) : (
-            filteredProducts?.map((product) => (
+            showProducts?.map((product) => (
               <GridItemCard key={product?._id} product={product} />
             ))
           )}
         </Grid>
 
-        {filteredProductsLength > 0 && (
+        {productsLength > 0 && (
           <Flex justify={"center"} mt={5} gap={5} align={"center"}>
             <Button
               onClick={() => setPage((prevState) => Math.max(prevState - 1, 0))}
@@ -168,7 +191,10 @@ const ShopProduct = () => {
               Prev Page
             </Button>
 
-            <Button onClick={() => setPage((prevState) => prevState + 1)}>
+            <Button
+              onClick={() => setPage((prevState) => prevState + 1)}
+              disabled={showFilterProducts}
+            >
               Next Page
             </Button>
             <Text fontWeight={"semibold"}>

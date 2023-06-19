@@ -7,16 +7,24 @@ import {
   Stack,
   Text,
   VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import { DataStoreContext } from "../../../../Context/DataProvider";
 import calculatePercentage from "../../../../Utilities/calculatePercentage";
 import ProductCoupon from "../ProductCoupon/ProductCoupon";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import FormModal from "../../../../Component/FormModal";
+import OrderForm from "../../../../Component/OrderForm";
+import { AuthContext } from "../../../../Context/AuthProvider";
 
 const FeaturedProduct = () => {
   const { products } = useContext(DataStoreContext);
   const [randomProducts, setRandomProducts] = useState([]);
+  const [productInfo, setProductInfo] = useState(null);
+  const { onClose, isOpen, onOpen } = useDisclosure();
+  const { user } = useContext(AuthContext);
+  const [coupon, setCoupon] = useState(null);
 
   const selectRandomProducts = () => {
     const currentTime = new Date().getTime();
@@ -109,6 +117,10 @@ const FeaturedProduct = () => {
                   color: "green.500",
                   borderBottomColor: "green.700",
                 }}
+                onClick={() => {
+                  setProductInfo(randomProducts?.[0]);
+                  onOpen();
+                }}
               >
                 Save {calculatePercentage(oldPrice, newPrice)}%
               </Text>
@@ -124,8 +136,27 @@ const FeaturedProduct = () => {
             </Box>
           </Flex>
         </Box>
-        <ProductCoupon product={randomProducts?.[1]} />
+        <ProductCoupon
+          product={randomProducts?.[1]}
+          onOpen={onOpen}
+          setProductInfo={setProductInfo}
+          setCoupon={setCoupon}
+        />
       </Stack>
+      <FormModal
+        isOpen={isOpen}
+        onClose={onClose}
+        coupon={coupon}
+        setCoupon={setCoupon}
+      >
+        <OrderForm
+          user={user}
+          productInfo={productInfo}
+          onClose={onClose}
+          coupon={coupon}
+          setCoupon={setCoupon}
+        />
+      </FormModal>
     </Box>
   );
 };

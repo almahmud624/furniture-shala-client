@@ -10,12 +10,15 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
-import calculatePercentage from "../../../../Utilities/calculatePercentage";
 import { Countdown } from "../../../../Component/Countdown";
+import { useLocation } from "react-router-dom";
 
-const ProductCoupon = ({ product }) => {
-  const { _id, productName, productImg, newPrice, oldPrice } = product || {};
+const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
+  const { pathname } = useLocation();
+  const { _id, productName, productImg, newPrice } = product || {};
   const [couponStatus, setCouponStatus] = useState({ _id, status: true });
+  const couponText = pathname === "/coupon" ? "Winter06" : "Coupen11";
+  const couponPercentage = pathname === "/coupon" ? "11" : "20";
   return (
     <>
       <Flex gap={5} justify={"space-between"}>
@@ -36,13 +39,14 @@ const ProductCoupon = ({ product }) => {
                     <Heading size={"md"} fontWeight={"semibold"}>
                       {productName}
                     </Heading>
+                    <Text fontSize={"lg"}>${newPrice}</Text>
                     <Text fontSize={"lg"} color={"green.500"}>
-                      {calculatePercentage(oldPrice, newPrice)}% Off
+                      Get {couponPercentage}% Off
                     </Text>
                   </VStack>
                   <Countdown
                     setCouponStatus={setCouponStatus}
-                    couponDuration={60}
+                    couponDuration={24 * 60 * 60}
                     productId={_id}
                     couponStatus={couponStatus}
                   />
@@ -83,9 +87,18 @@ const ProductCoupon = ({ product }) => {
                   fontWeight={"semibold"}
                   textAlign={"center"}
                 >
-                  Coupen11
+                  {couponText}
                 </Text>
-                <Button variant={"outline"}>Order Now</Button>
+                <Button
+                  variant={"outline"}
+                  onClick={() => {
+                    setProductInfo(product);
+                    setCoupon({ couponText, couponPercentage });
+                    onOpen();
+                  }}
+                >
+                  Order Now
+                </Button>
               </VStack>
               <Box
                 pos={"absolute"}

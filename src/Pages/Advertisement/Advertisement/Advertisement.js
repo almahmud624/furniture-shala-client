@@ -1,4 +1,4 @@
-import { Box, Button, Flex, SimpleGrid, chakra } from "@chakra-ui/react";
+import { Box, Flex, SimpleGrid, chakra } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import CustomGradientBtn from "../../../Component/CustomGradientBtn";
 import { DataStoreContext } from "../../../Context/DataProvider";
@@ -78,7 +78,9 @@ const Advertisement = () => {
                   room, or any other area of your home, this promotion makes it
                   easy and affordable to find exactly what you need.
                 </chakra.p>
-                <CustomGradientBtn>Explore more</CustomGradientBtn>
+                <CustomGradientBtn link={"/shop"}>
+                  Explore more
+                </CustomGradientBtn>
               </Box>
               <Box
                 w="full"
