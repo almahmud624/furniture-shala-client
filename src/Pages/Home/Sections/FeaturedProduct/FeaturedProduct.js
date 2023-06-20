@@ -83,20 +83,29 @@ const FeaturedProduct = () => {
           Today's Featured
         </Heading>
       </Box>
-      <Stack direction={{ md: "column", lg: "row" }} spacing={10} mt={10}>
+      <Flex
+        flexDir={{ base: "column", md: "column", lg: "row" }}
+        gap={10}
+        mt={10}
+      >
         <Box
           key={Math.random()}
           bg={"gray.900"}
-          w={"50%"}
-          h={"56"}
+          w={{ base: "full", md: "50%" }}
+          h={{ base: 40, md: "56" }}
           pos={"relative"}
         >
-          <Flex justify={"space-between"} alignItems={"center"}>
+          <Flex justify={"space-between"} alignItems={"center"} gap={4}>
             <VStack align={"left"} pl={5} spacing={3} w={"full"}>
-              <Heading size={"lg"} fontWeight={"semibold"}>
+              <Heading
+                size={{ base: "md", md: "lg" }}
+                fontWeight={"semibold"}
+                noOfLines={2}
+                title={productName}
+              >
                 {productName}
               </Heading>
-              <HStack fontSize={"lg"}>
+              <HStack fontSize={{ base: "md", md: "lg" }}>
                 <Text
                   display={"inline"}
                   textDecoration={"line-through"}
@@ -130,7 +139,7 @@ const FeaturedProduct = () => {
                 Save {calculatePercentage(oldPrice, newPrice)}%
               </Text>
             </VStack>
-            <Box h={"56"} w={"72"} flexGrow={1}>
+            <Box h={{ base: 40, md: "56" }} w={"72"} flexGrow={1}>
               <LazyLoadImage
                 src={productImg}
                 height={"100%"}
@@ -147,7 +156,7 @@ const FeaturedProduct = () => {
           setProductInfo={setProductInfo}
           setCoupon={setCoupon}
         />
-      </Stack>
+      </Flex>
       <FormModal
         isOpen={isOpen}
         onClose={onClose}

@@ -1,11 +1,10 @@
-import { Box, Grid, GridItem, Text } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const data = [
   { timerText: "Hrs", timer: "hours" },
   { timerText: "Min", timer: "minutes" },
-  { timerText: "Sec", timer: "seconds" },
 ];
 
 export const Countdown = ({
@@ -88,14 +87,18 @@ export const Countdown = ({
         )}
         {data?.map(({ timerText, timer }) => (
           <GridItem key={timer}>
-            <Box
+            <Flex
               textAlign="center"
-              borderWidth={flashSaleCountdown ? 3 : 1}
+              borderWidth={flashSaleCountdown ? 3 : { base: "none", md: 1 }}
               borderColor={"gray.600"}
-              px={4}
-              py={flashSaleCountdown && 4}
+              px={{ base: 0, md: 4 }}
+              py={flashSaleCountdown && { base: 0, md: 4 }}
               rounded={"lg"}
               fontWeight={"semibold"}
+              flexDir={{ base: "row", md: "column" }}
+              justify={"center"}
+              align={"center"}
+              gap={0.5}
             >
               <Text fontSize={flashSaleCountdown ? "5xl" : "xl"}>
                 {formatTime(time)[timer]}
@@ -103,9 +106,26 @@ export const Countdown = ({
               <Text fontSize={flashSaleCountdown ? "xl" : "lg"}>
                 {timerText}
               </Text>
-            </Box>
+            </Flex>
           </GridItem>
         ))}
+        <GridItem>
+          <Box
+            textAlign="center"
+            borderWidth={flashSaleCountdown ? 3 : 1}
+            borderColor={"gray.600"}
+            px={4}
+            py={flashSaleCountdown && 4}
+            rounded={"lg"}
+            fontWeight={"semibold"}
+            display={{ base: "none", md: "inline-block" }}
+          >
+            <Text fontSize={flashSaleCountdown ? "5xl" : "xl"}>
+              {formatTime(time).seconds}
+            </Text>
+            <Text fontSize={flashSaleCountdown ? "xl" : "lg"}>Sec</Text>
+          </Box>
+        </GridItem>
       </Grid>
     </Box>
   );

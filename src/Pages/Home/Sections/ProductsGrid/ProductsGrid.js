@@ -21,8 +21,8 @@ const ProductsGrid = () => {
       <Box my={20}>
         <Grid
           h="fit-content"
-          templateRows="repeat(2, 1fr)"
-          templateColumns="repeat(6, 1fr)"
+          templateRows={{ base: "1fr", md: "repeat(2, 1fr)" }}
+          templateColumns={{ base: "1fr", md: "repeat(6, 1fr)" }}
           gap={4}
         >
           <GridItem rowSpan={2} colSpan={2}>

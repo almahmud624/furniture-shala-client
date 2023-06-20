@@ -123,7 +123,11 @@ const ShopSidebar = () => {
   };
   return (
     <>
-      <Box>
+      <Box
+        h={{ base: "fit-content", md: "md" }}
+        overflow={{ base: "none", md: "auto" }}
+        id="scrollbar"
+      >
         <HStack justify={"space-between"} textAlign={"right"} mb={5}>
           <Text fontWeight={"semibold"} fontSize={"lg"}>
             Filter

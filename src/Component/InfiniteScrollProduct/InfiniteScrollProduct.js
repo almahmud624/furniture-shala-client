@@ -79,7 +79,7 @@ const InfiniteScrollProduct = ({ searchQuery }) => {
             md: "repeat(2,1fr)",
             lg: "repeat(4,1fr)",
           }}
-          gap={5}
+          gap={{ base: 7, md: 5 }}
         >
           {status === "loading" ? (
             <Text>Loading...</Text>

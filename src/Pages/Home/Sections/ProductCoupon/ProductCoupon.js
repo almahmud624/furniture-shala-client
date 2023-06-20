@@ -22,11 +22,16 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
   return (
     <>
       <Flex gap={5} justify={"space-between"}>
-        <Box w={"xl"} h={56} bg={"gray.900"} pos={"relative"}>
+        <Box w={"xl"} h={{ base: 40, md: 56 }} bg={"gray.900"} pos={"relative"}>
           <Flex h={"full"}>
-            <Box w={"65%"}>
+            <Box w={{ base: "60%", md: "65%" }}>
               <Flex color={"gray.200"} h={"full"} align={"center"}>
-                <Box h={"full"} w={72} pr={3}>
+                <Box
+                  h={"full"}
+                  w={72}
+                  pr={3}
+                  display={{ base: "none", md: "inline-block" }}
+                >
                   <Image
                     w={"full"}
                     h={"full"}
@@ -34,12 +39,17 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
                     src={productImg}
                   />
                 </Box>
-                <Box pr={3} py={3}>
+                <Box pr={2} py={3} pl={{ base: 4, md: 0 }}>
                   <VStack align={"left"}>
                     <Heading size={"md"} fontWeight={"semibold"}>
                       {productName}
                     </Heading>
-                    <Text fontSize={"lg"}>${newPrice}</Text>
+                    <Text
+                      fontSize={"lg"}
+                      display={{ base: "none", md: "block" }}
+                    >
+                      ${newPrice}
+                    </Text>
                     <Text fontSize={"lg"} color={"green.500"}>
                       Get {couponPercentage}% Off
                     </Text>
@@ -54,7 +64,7 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
               </Flex>
             </Box>
             <Box
-              w={"35%"}
+              w={{ base: "40% ", md: "35%" }}
               position={"relative"}
               borderLeftWidth={2}
               borderLeftColor={"gray.500"}
@@ -65,12 +75,19 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
                 justify={"center"}
                 align={"left"}
                 p={3}
-                mx={3}
+                pr={{ base: 2, md: 3 }}
+                mr={{ base: 2, md: 3 }}
+                ml={3}
                 h={"full"}
-                spacing={5}
+                spacing={{ base: 3, md: 5 }}
               >
                 <Text fontWeight={""} fontSize={"lg"}>
-                  Coupon{" "}
+                  <Text
+                    as={"span"}
+                    display={{ base: "none", md: "inline-block" }}
+                  >
+                    Coupon
+                  </Text>
                   <Text
                     as={"span"}
                     color={couponStatus?.status ? "green.500" : "red.500"}
@@ -80,7 +97,7 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
                   <Icon as={BsInfoCircle} ml={1} />
                 </Text>
                 <Text
-                  p={3}
+                  p={{ base: 1, md: 3 }}
                   borderStyle={"dashed"}
                   borderWidth={2}
                   borderColor={"teal.500"}
@@ -91,6 +108,7 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
                 </Text>
                 <Button
                   variant={"outline"}
+                  size={{ base: "sm", md: "md" }}
                   onClick={() => {
                     setProductInfo(product);
                     setCoupon({ couponText, couponPercentage });
@@ -103,7 +121,7 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
               <Box
                 pos={"absolute"}
                 top={"-10%"}
-                left={"-8%"}
+                left={{ base: "-11%", md: "-8%" }}
                 scale={2}
                 w={"8"}
                 h={"8"}
@@ -114,7 +132,7 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
               <Box
                 pos={"absolute"}
                 bottom={"-10%"}
-                left={"-8%"}
+                left={{ base: "-11%", md: "-8%" }}
                 scale={2}
                 w={"8"}
                 h={"8"}

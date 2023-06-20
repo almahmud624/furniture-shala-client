@@ -31,7 +31,7 @@ const SiderbarSeller = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
 
   return (
     <>
-      <SidebarFilterAccordion title={"Seller"}>
+      <SidebarFilterAccordion title={"Seller"} filterValue={filterInfo?.seller}>
         <Box px={0.5}>
           <Input
             placeholder="Search seller..."
@@ -40,7 +40,14 @@ const SiderbarSeller = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
             onChange={(e) => handleSearchSeller(e.target.value)}
           />
         </Box>
-        <VStack align={"left"} mt={2} h={52} overflowY={"auto"} id="scrollbar">
+        <VStack
+          align={"left"}
+          mt={2}
+          h={52}
+          overflowY={"auto"}
+          id="scrollbar"
+          color={"gray.200"}
+        >
           {removeDuplicate(products, "sellerName")
             ?.filter((value) =>
               value.toLowerCase().includes(searchQuery.toLowerCase())

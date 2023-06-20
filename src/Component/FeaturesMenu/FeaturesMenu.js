@@ -70,7 +70,12 @@ export default function FeaturesMenu({
           <Menu key={title} heading={title} items={items} />
         ))}
       </Grid>
-      <Flex flex={1} w={"full"} justify={"right"}>
+      <Flex
+        flex={1}
+        w={"full"}
+        justify={"right"}
+        display={{ base: "none", md: "block" }}
+      >
         <Image
           alt={"Login Image"}
           objectFit={"cover"}

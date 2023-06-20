@@ -8,9 +8,14 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const SidebarFilterAccordion = ({ children, title }) => {
+const SidebarFilterAccordion = ({ children, title, filterValue }) => {
   return (
-    <>
+    <Box
+      borderTopWidth={filterValue && 1}
+      borderBottomWidth={filterValue && 1}
+      borderColor={"teal.500"}
+      color={filterValue && "teal.500"}
+    >
       <Accordion allowMultiple>
         <AccordionItem>
           <h2>
@@ -32,7 +37,7 @@ const SidebarFilterAccordion = ({ children, title }) => {
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-    </>
+    </Box>
   );
 };
 

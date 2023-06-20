@@ -10,7 +10,7 @@ import GridItemCard from "../../../../Component/GridItemCard/GridItemCard";
 import Loader from "../../../../Component/Loader";
 import { DataStoreContext } from "../../../../Context/DataProvider";
 
-const ShopProduct = () => {
+const ShopProduct = ({ onOpen }) => {
   const [sort, setSort] = useState("");
   const { products: allProducts } = useContext(DataStoreContext);
 
@@ -142,10 +142,23 @@ const ShopProduct = () => {
   return (
     <>
       <Box>
-        <Flex justify={"space-between"} align={"center"} mb={5}>
-          <Text mb={3} fontWeight={"thin"} fontSize={"lg"}>
+        <Flex justify={"space-between"} alignItems={"center"} mb={5}>
+          <Text
+            fontWeight={"thin"}
+            fontSize={"lg"}
+            display={{ base: "none", md: "block" }}
+          >
             {displayProductCount(productsLength, "Product")} Found!
           </Text>
+          <Button
+            variant={"outline"}
+            fontWeight={"thin"}
+            fontSize={"lg"}
+            display={{ base: "block", md: "none" }}
+            onClick={onOpen}
+          >
+            Filter
+          </Button>
           <Box>
             <SortProducts setSort={setSort} sort={sort} />
           </Box>
@@ -160,7 +173,7 @@ const ShopProduct = () => {
                   lg: "repeat(3,1fr)",
                 }
           }
-          gap={5}
+          gap={{ base: 7, md: 5 }}
         >
           {isLoading ? (
             <Loader />

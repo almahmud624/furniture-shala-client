@@ -28,8 +28,11 @@ const SidebarCategories = ({
 
   return (
     <>
-      <SidebarFilterAccordion title={"Furniture"}>
-        <VStack align={"left"}>
+      <SidebarFilterAccordion
+        title={"Furniture"}
+        filterValue={filterInfo?.category}
+      >
+        <VStack align={"left"} color={"gray.200"}>
           {Object.entries(categoryCounts).map(([categoryName, count]) => (
             <HStack
               justify={"space-between"}

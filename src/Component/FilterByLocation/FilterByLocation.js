@@ -31,7 +31,10 @@ const FilterByLocation = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
 
   return (
     <>
-      <SidebarFilterAccordion title={"Location"}>
+      <SidebarFilterAccordion
+        title={"Location"}
+        filterValue={filterInfo?.location}
+      >
         <Box px={0.5}>
           <Input
             placeholder="Search location..."
@@ -40,7 +43,14 @@ const FilterByLocation = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
             onChange={(e) => handleSearchlocation(e.target.value)}
           />
         </Box>
-        <VStack align={"left"} mt={2} h={52} overflowY={"auto"} id="scrollbar">
+        <VStack
+          align={"left"}
+          mt={2}
+          h={52}
+          overflowY={"auto"}
+          id="scrollbar"
+          color={"gray.200"}
+        >
           {removeDuplicate(products, "location")
             ?.filter((value) =>
               value.toLowerCase().includes(searchQuery.toLowerCase())

@@ -78,7 +78,12 @@ const Advertisement = () => {
                   room, or any other area of your home, this promotion makes it
                   easy and affordable to find exactly what you need.
                 </chakra.p>
-                <CustomGradientBtn link={"/shop"}>
+                <CustomGradientBtn
+                  link={"/shop"}
+                  customStyle={{
+                    display: { base: "none", md: "inline-block" },
+                  }}
+                >
                   Explore more
                 </CustomGradientBtn>
               </Box>

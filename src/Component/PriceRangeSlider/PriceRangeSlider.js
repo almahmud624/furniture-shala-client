@@ -6,10 +6,7 @@ import SidebarFilterAccordion from "../SidebarFilterAccordion/SidebarFilterAccor
 const PriceRangeSlider = ({
   min = 0,
   max,
-  setMinVal,
-  setMaxVal,
   generateQueryPath,
-  category,
   filterInfo,
   setFilterInfo,
 }) => {

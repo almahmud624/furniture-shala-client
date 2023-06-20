@@ -35,6 +35,7 @@ let settings = {
   cssEase: "linear",
   pauseOnHover: true,
   swipeToSlide: true,
+  arrows: false,
   responsive: [
     {
       breakpoint: 1024,

@@ -51,8 +51,8 @@ export const routes = createBrowserRouter([
       { path: "/become-seller", element: <BecomeASeller /> },
       { path: "/contact", element: <Contact /> },
       { path: "/about-us", element: <AboutUs /> },
-      { path: "/coupon", element:<Coupon /> },
-      { path: "/flashsale", element:<FlashSale /> },
+      { path: "/coupon", element: <Coupon /> },
+      { path: "/flashsale", element: <FlashSale /> },
     ],
   },
   {

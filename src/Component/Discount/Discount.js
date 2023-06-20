@@ -16,8 +16,11 @@ const Discount = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
 
   return (
     <>
-      <SidebarFilterAccordion title={"Discounts"}>
-        <VStack align={"left"} mt={2}>
+      <SidebarFilterAccordion
+        title={"Discounts"}
+        filterValue={filterInfo?.discount}
+      >
+        <VStack align={"left"} mt={2} color={"gray.200"}>
           {data.map(({ title, value }) => (
             <HStack
               justify={"space-between"}

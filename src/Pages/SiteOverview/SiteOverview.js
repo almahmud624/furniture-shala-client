@@ -51,7 +51,7 @@ const SiteOverview = () => {
       </Box>
 
       <Flex p={1} flex={1} align="center" justify="center">
-        <Flex direction="column">
+        <Flex direction="column" w={{ base: "full", md: "initial" }}>
           <Box>
             <chakra.h2
               mb={4}
@@ -96,7 +96,7 @@ const SiteOverview = () => {
             spacing={1}
             mt={0}
             mb={4}
-            border={"1px solid #303640"}
+            border={{ base: "none", md: "1px solid #303640" }}
             borderRadius={3}
           >
             {statData.map((data) => (

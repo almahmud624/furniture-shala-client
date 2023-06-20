@@ -10,7 +10,7 @@ const SeasonSale = () => {
   return (
     <>
       <Box my={20} pos={"relative"}>
-        <Box h={"430px"} w={"full"}>
+        <Box h={{ base: "full", md: "430px" }} w={"full"}>
           <Image src={bg} objectFit={"cover"} w={"full"} h={"full"} />
         </Box>
         <Box
@@ -73,7 +73,9 @@ const SeasonSale = () => {
             {getCurrentSeason()} Season Sale
           </Heading>
           <Text pb={2}>Free shipping on orders over $99</Text>
-          <CustomGradientBtn link={'/shop'}>Shop Now</CustomGradientBtn>
+          <CustomGradientBtn link={"/shop"} size={{ base: "sm", md: "md" }}>
+            Shop Now
+          </CustomGradientBtn>
         </VStack>
       </Box>
     </>

@@ -25,8 +25,18 @@ const ProductUsageYear = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
   };
   return (
     <>
-      <SidebarFilterAccordion title={"Years Of Use"}>
-        <VStack align={"left"} mt={2} h={52} overflowY={"auto"} id="scrollbar">
+      <SidebarFilterAccordion
+        title={"Years Of Use"}
+        filterValue={filterInfo?.yearsOfUse}
+      >
+        <VStack
+          align={"left"}
+          mt={2}
+          h={52}
+          overflowY={"auto"}
+          id="scrollbar"
+          color={"gray.200"}
+        >
           {removeDuplicate(products, "yearsOfUse")?.map((yearsOfUse) => (
             <HStack
               key={Math.random()}
