@@ -48,10 +48,10 @@ const ProductUsageYear = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
               borderWidth={2}
               cursor={"pointer"}
               _hover={{
-                borderColor: "teal.600",
+                borderColor: "primary",
               }}
               borderColor={
-                yearsOfUse === filterInfo?.yearsOfUse ? "teal.600" : "gray.700"
+                yearsOfUse === filterInfo?.yearsOfUse ? "primary" : "gray.700"
               }
               role="group"
               transition={"all"}

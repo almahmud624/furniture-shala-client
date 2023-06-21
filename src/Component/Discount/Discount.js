@@ -31,10 +31,10 @@ const Discount = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
               borderWidth={2}
               cursor={"pointer"}
               _hover={{
-                borderColor: "teal.600",
+                borderColor: "primary",
               }}
               borderColor={
-                value === filterInfo?.discount ? "teal.600" : "gray.700"
+                value === filterInfo?.discount ? "primary" : "gray.700"
               }
               role="group"
               transition={"all"}

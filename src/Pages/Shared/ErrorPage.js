@@ -10,7 +10,7 @@ const ErrorPage = () => {
           display="inline-block"
           as="h2"
           size={"4xl"}
-          bgGradient="linear(to-r, teal.400, teal.600)"
+          bgGradient="linear(to-r, teal.400, primary)"
           backgroundClip="text"
         >
           404

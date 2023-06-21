@@ -39,7 +39,7 @@ const FilterByLocation = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
           <Input
             placeholder="Search location..."
             size="md"
-            focusBorderColor="teal.600"
+            focusBorderColor="primary"
             onChange={(e) => handleSearchlocation(e.target.value)}
           />
         </Box>
@@ -66,10 +66,10 @@ const FilterByLocation = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
                 borderWidth={2}
                 cursor={"pointer"}
                 _hover={{
-                  borderColor: "teal.600",
+                  borderColor: "primary",
                 }}
                 borderColor={
-                  location === filterInfo?.location ? "teal.600" : "gray.700"
+                  location === filterInfo?.location ? "primary" : "gray.700"
                 }
                 role="group"
                 transition={"all"}

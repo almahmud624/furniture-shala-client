@@ -27,7 +27,7 @@ import {
 } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
-import logo from "../../Assets/logo.png";
+import logo2 from "../../Assets/logo2.png";
 import FeaturesMenu from "../../Component/FeaturesMenu/FeaturesMenu";
 
 const Navbar = () => {
@@ -39,26 +39,14 @@ const Navbar = () => {
     <>
       <Stack spacing={{ base: "6", md: "8" }} align="start">
         <Link to="/">
-          {" "}
-          <Text
-            display={{ sm: "flex", md: "none" }}
-            alignItems={"center"}
-            fontSize={"xl"}
-            fontWeight={"bold"}
-            color={"primary"}
-          >
-            Furniture
-            <Box
-              h={8}
-              w={8}
-              style={{ filter: "contrast(80%)" }}
-              display={"inline-block"}
-              mx={1}
-            >
-              <Image src={logo} h={"full"} w={"full"}></Image>
-            </Box>
-            Shala
-          </Text>
+          <Box h={"full"} w={40} display={{ sm: "inline-block", md: "none" }}>
+            <Image
+              src={logo2}
+              h={"full"}
+              w={"full"}
+              objectFit={"contain"}
+            ></Image>
+          </Box>
         </Link>
       </Stack>
       <Link
@@ -140,26 +128,14 @@ const Navbar = () => {
             display={{ base: "none", md: "flex" }}
           >
             <Link to="/">
-              {" "}
-              <Text
-                display={{ sm: "none", md: "flex" }}
-                alignItems={"center"}
-                fontSize={"xl"}
-                fontWeight={"bold"}
-                color={"primary"}
-              >
-                Furniture
-                <Box
-                  h={8}
-                  w={8}
-                  style={{ filter: "contrast(80%)" }}
-                  display={"inline-block"}
-                  mx={1}
-                >
-                  <Image src={logo} h={"full"} w={"full"}></Image>
-                </Box>
-                Shala
-              </Text>
+              <Box h={"full"} w={40} display={"inline-block"} mx={1}>
+                <Image
+                  src={logo2}
+                  h={"full"}
+                  w={"full"}
+                  objectFit={"contain"}
+                ></Image>
+              </Box>
             </Link>
           </Stack>
           <Flex alignItems={"center"}>

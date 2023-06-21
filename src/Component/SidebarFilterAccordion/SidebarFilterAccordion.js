@@ -13,8 +13,8 @@ const SidebarFilterAccordion = ({ children, title, filterValue }) => {
     <Box
       borderTopWidth={filterValue && 1}
       borderBottomWidth={filterValue && 1}
-      borderColor={"teal.500"}
-      color={filterValue && "teal.500"}
+      borderColor={"primary"}
+      color={filterValue && "primary"}
     >
       <Accordion allowMultiple>
         <AccordionItem>

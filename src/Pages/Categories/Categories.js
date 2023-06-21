@@ -1,11 +1,4 @@
-import {
-  Box,
-  Heading,
-  SimpleGrid,
-  chakra,
-  Image,
-  Flex,
-} from "@chakra-ui/react";
+import { Box, Heading, chakra, Image, Flex } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -13,18 +6,15 @@ const categories = [
   {
     categoryName: "restaurent",
     categoryImg: "https://i.ibb.co/cDR15bZ/image.png",
-    color: "#907857",
   },
   {
     categoryName: "home",
     categoryImg: "https://i.ibb.co/XDHQV18/image.png",
-    color: "#910B0C",
   },
   {
     categoryName: "office",
     categoryImg:
       "https://i.ibb.co/m0MvtqK/loft-home-office-interior-design-1.jpg",
-    color: "#7A3B1B",
   },
 ];
 const Categories = () => {
@@ -75,6 +65,7 @@ const Categories = () => {
               bg={"gray.900"}
               rounded={"lg"}
               borderWidth={1}
+              borderColor={"secondary"}
               boxShadow={"0 0 10px 3px rgba(0,0,0,0.35)"}
               _groupHover={{ boxShadow: "none" }}
               transition={"all .3s"}
@@ -103,7 +94,7 @@ const Categories = () => {
                   bg="transparent"
                   transition={".3s"}
                   fontWeight={"semibold"}
-                  color={category.color}
+                  color={"primary"}
                 >
                   {category?.categoryName}
                 </Heading>

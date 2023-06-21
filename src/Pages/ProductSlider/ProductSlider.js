@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  ButtonGroup,
   Card,
   CardBody,
   CardFooter,
@@ -10,7 +9,6 @@ import {
   Image,
   Stack,
   Text,
-  useColorMode,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
@@ -72,7 +70,7 @@ const ProductSlider = () => {
 
   return (
     <div>
-      <Box mt={[0, 0, "18rem"]} mb={[0, 0, "2rem"]}>
+      <Box mt={[0, 0, 32]} mb={[0, 0, "2rem"]}>
         <Slider {...settings}>
           {products?.map((product) => (
             <div key={Math.random()}>

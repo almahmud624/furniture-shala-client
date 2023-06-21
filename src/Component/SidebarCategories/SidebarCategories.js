@@ -40,12 +40,12 @@ const SidebarCategories = ({
               pl={2}
               rounded={"lg"}
               borderColor={
-                filterInfo.category === categoryName ? "teal.600" : "gray.700"
+                filterInfo.category === categoryName ? "primary" : "gray.700"
               }
               borderWidth={2}
               cursor={"pointer"}
               _hover={{
-                borderColor: "teal.600",
+                borderColor: "primary",
               }}
               role="group"
               transition={"all"}
@@ -62,11 +62,9 @@ const SidebarCategories = ({
                 rounded={"md"}
                 p={1}
                 borderColor={
-                  filterInfo?.category === categoryName
-                    ? "teal.500"
-                    : "gray.600"
+                  filterInfo?.category === categoryName ? "primary" : "gray.600"
                 }
-                _groupHover={{ borderLeftColor: "teal.500" }}
+                _groupHover={{ borderLeftColor: "primary" }}
                 transition={"all"}
                 transitionDuration={".3s"}
               >

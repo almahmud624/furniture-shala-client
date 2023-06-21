@@ -36,7 +36,7 @@ const SiderbarSeller = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
           <Input
             placeholder="Search seller..."
             size="md"
-            focusBorderColor="teal.600"
+            focusBorderColor="primary"
             onChange={(e) => handleSearchSeller(e.target.value)}
           />
         </Box>
@@ -63,10 +63,10 @@ const SiderbarSeller = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
                 borderWidth={2}
                 cursor={"pointer"}
                 _hover={{
-                  borderColor: "teal.600",
+                  borderColor: "primary",
                 }}
                 borderColor={
-                  sellerName === filterInfo?.seller ? "teal.600" : "gray.700"
+                  sellerName === filterInfo?.seller ? "primary" : "gray.700"
                 }
                 role="group"
                 transition={"all"}
