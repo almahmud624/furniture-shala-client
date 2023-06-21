@@ -30,8 +30,12 @@ const FlashSale = () => {
   return (
     <>
       <Box maxW={"90%"} mx="auto" py={10}>
-        <Flex textAlign={"center"} justify={"space-between"}>
-          <Box w={"50%"}>
+        <Flex
+          textAlign={"center"}
+          justify={"space-between"}
+          flexDir={{ base: "column", md: "row" }}
+        >
+          <Box w={{ base: "full", md: "50%" }}>
             <PageHeader
               pageTag={"Week Deal"}
               title={"Deal of the week"}
@@ -49,11 +53,20 @@ const FlashSale = () => {
             </PageHeader>
           </Box>
 
-          <Box w={"40%"}>
+          <Box w={{ base: "full", md: "40%" }}>
             <LazyLoadImage effect="blur" src={flashSaleImg} />
           </Box>
         </Flex>
-        <Grid templateColumns={"repeat(4,1fr)"} gap={5} rowGap={20} mt={20}>
+        <Grid
+          templateColumns={{
+            base: "1fr",
+            md: "repeat(2,1fr)",
+            lg: "repeat(4,1fr)",
+          }}
+          gap={5}
+          rowGap={20}
+          mt={20}
+        >
           {products?.slice(0, 4)?.map((product) => (
             <FlashSaleCard
               key={product?._id}
@@ -82,7 +95,7 @@ function FlashSaleCard({ product = {}, handleProduct }) {
         p={3}
         borderWidth={1}
         borderRadius={5}
-        bg={"gray.300"}
+        bg={"secondary"}
         boxShadow={"0px 10px 8px 1px rgba(0,0,0,0.25)"}
         _hover={{ boxShadow: "none" }}
         transition={"all"}
@@ -104,7 +117,7 @@ function FlashSaleCard({ product = {}, handleProduct }) {
           minH={"44"}
           mt={3}
           gap={2}
-          color={"gray.800"}
+          color={"gray.200"}
         >
           <Heading size={"md"} fontWeight={"semibold"}>
             {productName}
@@ -120,8 +133,8 @@ function FlashSaleCard({ product = {}, handleProduct }) {
           </Text>
           <Button
             variant={"outline"}
-            borderColor={"gray.800"}
-            color={"gray.800"}
+            borderColor={"primary"}
+            color={"gray.200"}
             onClick={() => handleProduct(product)}
           >
             Discover

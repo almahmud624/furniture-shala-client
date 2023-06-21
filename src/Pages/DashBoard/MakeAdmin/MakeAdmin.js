@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
 import Loader from "../../../Component/Loader";
+import CustomButton from "../../../Component/CustomButton";
 
 const MakeAdmin = () => {
   const toast = useToast();
@@ -97,25 +98,34 @@ const MakeAdmin = () => {
                 <Tr key={Math.random()}>
                   <Td>{user?.name}</Td>
                   <Td>{user?.email}</Td>
-                  <Td color="green.600" style={{ textTransform: "capitalize" }}>
+                  <Td
+                    color={
+                      user?.role === "admin"
+                        ? "green.600"
+                        : user?.role === "seller"
+                        ? "primary"
+                        : "yellow.600"
+                    }
+                    style={{ textTransform: "capitalize" }}
+                  >
                     {user?.role === "admin" ? "Admin" : user?.role}
                   </Td>
 
                   <Td>
-                    <Button
-                      bg="teal.600"
+                    <CustomButton
                       size="sm"
-                      onClick={() => handleMakeAdmin(user)}
+                      text={
+                        user.role === "admin"
+                          ? "Remove Admin Role"
+                          : "Make Admin"
+                      }
+                      action={() => handleMakeAdmin(user)}
                       disabled={[
                         "furnitureshala@gmail.com",
                         "seller@gmail.com",
                         "user@gmail.com",
                       ].find((each) => each === user?.email)}
-                    >
-                      {user.role === "admin"
-                        ? "Remove Admin Role"
-                        : "Make Admin"}
-                    </Button>
+                    />
                   </Td>
                 </Tr>
               ))}

@@ -19,7 +19,12 @@ const Coupon = () => {
   return (
     <>
       <Box maxW={"90%"} mx={"auto"} py={10}>
-        <Flex justify={"center"} align={"center"}>
+        <Flex
+          justify={"center"}
+          align={"center"}
+          flexDir={{ base: "column", md: "row" }}
+          gap={{ base: 5, md: 0 }}
+        >
           <Box flex={"1"}>
             <PageHeader
               pageTag={"Coupon"}
@@ -36,7 +41,7 @@ const Coupon = () => {
           </Box>
           <Flex flex={"1"} justify={"right"}>
             <Box
-              width={"80%"}
+              width={{ base: "full", md: "80%" }}
               border={"1px solid #2D3748"}
               rounded="md"
               boxShadow={"0px 0px 14px 0px rgba(0,0,0,0.45) "}
@@ -50,7 +55,12 @@ const Coupon = () => {
             </Box>
           </Flex>
         </Flex>
-        <Flex justify={"space-between"} mt={10}>
+        <Flex
+          justify={"space-between"}
+          mt={10}
+          flexDir={{ base: "column", md: "row" }}
+          gap={{ base: 5, md: 0 }}
+        >
           {products?.map((product) => (
             <ProductCoupon
               key={Math.random()}

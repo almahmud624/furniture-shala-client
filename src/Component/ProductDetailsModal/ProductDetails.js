@@ -35,18 +35,19 @@ const ProductDetails = ({ product, setIsOrder, discount }) => {
   return (
     <>
       <Box my={10} maxW={"4xl"} mx={"auto"}>
-        <Flex gap={5}>
-          <Box w={"40%"}>
+        <Flex gap={5} flexDir={{ base: "column", md: "row" }}>
+          <Box w={{ base: "full", md: "40%" }}>
             <Box w={"full"} h={"full"}>
               <Image
                 w={"full"}
                 objectFit={"cover"}
                 h={"full"}
                 src={productImg}
+                rounded={{ base: "md", md: "none" }}
               />
             </Box>
           </Box>
-          <VStack align={"left"} w={"50%"}>
+          <VStack align={"left"} w={{ base: "full", md: "50%" }}>
             <Text
               textTransform={"capitalize"}
               fontWeight={"thin"}

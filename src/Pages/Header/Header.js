@@ -16,7 +16,7 @@ const Header = () => {
     <>
       <Container
         maxW="7xl"
-        px={{ base: 6, md: 3 }}
+        px={{ base: 2, md: 3 }}
         mt={[5, 10, 16]}
         mb={[0, 0, 36]}
       >
@@ -32,16 +32,14 @@ const Header = () => {
             maxW="8xl"
           >
             <chakra.h1
-              fontSize={["xl", "3xl", "5xl"]}
+              fontSize={["2xl", "3xl", "5xl"]}
               lineHeight={1.3}
               fontWeight="bold"
               textAlign="left"
             >
-              <chakra.span color="green.600">
-                Resale your furniture{" "}
-              </chakra.span>
+              <chakra.span color="primary">Resale your furniture </chakra.span>
               with <br />
-              <chakra.span color="green.600">Best Price</chakra.span>
+              <chakra.span color="primary">Best Price</chakra.span>
             </chakra.h1>
             <Text
               fontSize={["1em", "1em", "1.1em"]}

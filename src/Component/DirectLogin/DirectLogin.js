@@ -60,11 +60,11 @@ const DirectLogin = () => {
           size="sm"
           bg={"transparent"}
           borderWidth={1}
-          borderColor={"green.500"}
+          borderColor={"primary"}
           color={"gray.700"}
           _dark={{ color: "#fff" }}
           _hover={{
-            bg: "green.700",
+            bg: "primary",
             color: "#ffffff",
           }}
           borderRadius={2}
@@ -82,15 +82,12 @@ const DirectLogin = () => {
       <Popover>
         <PopoverTrigger>
           <Button
-            bg={"transparent"}
+            variant={"outline"}
             borderWidth={1}
-            borderColor={"green.500"}
-            rounded={"sm"}
-            color={"green.500"}
-            _hover={{ color: "gray.700", _dark: { color: "#fff" } }}
-            size={["sm", "md"]}
+            borderColor={"primary"}
+            rounded={"md"}
           >
-            Direct Login
+            Demo Login
           </Button>
         </PopoverTrigger>
         <PopoverContent>

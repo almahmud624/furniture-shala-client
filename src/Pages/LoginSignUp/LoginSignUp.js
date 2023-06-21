@@ -230,11 +230,11 @@ const LoginSignUp = () => {
                 <Stack spacing={10} pt={2}>
                   <Button
                     isLoading={isSubmitting}
-                    size="lg"
-                    bg={"green.600"}
+                    size="md"
+                    bg={"primary"}
                     color={"white"}
                     _hover={{
-                      bg: "green.700",
+                      bg: "primary",
                     }}
                     type="submit"
                     _loading={state === "submitting"}

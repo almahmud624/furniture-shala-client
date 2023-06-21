@@ -26,7 +26,7 @@ const ReadMoreReadLess = ({ children, limit, boxHeight }) => {
               variant={"unstyled"}
               onClick={onToggle}
               cursor={"pointer"}
-              color={"teal.500"}
+              color={"primary"}
               ml={isExpandable && 1}
             >
               {isExpandable ? "Read Less" : "...Read More"}

@@ -244,7 +244,7 @@ const Payment = () => {
               </Stack>
             </Box>
             <Box
-              bg={"green.700"}
+              bg={"primary"}
               p={3}
               borderRadius={7}
               fontWeight="semibold"

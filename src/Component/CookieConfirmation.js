@@ -93,10 +93,10 @@ const CookieConfirmation = () => {
               Privacy Policy
             </Button>
             <Button
-              bg={"green.600"}
+              bg={"primary"}
               color={"white"}
               _hover={{
-                bg: "green.700",
+                bg: "primary",
               }}
               w={"full"}
               onClick={handleCookie}

@@ -17,14 +17,14 @@ const CustomGradientBtn = ({
         _dark={{ color: "#ffffff" }}
         size={size}
         fontWeight={"semibold"}
-        bgGradient="linear(to-r, #38A169, #0D6D61)"
+        bgGradient="linear(to-r, #2C74B3, #144272)"
         rounded="sm"
         mb={{ base: 2, sm: 0 }}
         zIndex={5}
         lineHeight={1}
         transition="all 0.5s ease"
         _hover={{
-          bgGradient: "linear(to-l, #38A169, #0D6D61)",
+          bgGradient: "linear(to-l, #2C74B3, #144272)",
           transition: "all 0.5s",
         }}
         sx={customStyle}

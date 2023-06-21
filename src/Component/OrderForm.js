@@ -90,7 +90,7 @@ export default function OrderForm({
   };
 
   return (
-    <Container maxW="md">
+    <Container>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={5} py={4}>
           <FormControl>
@@ -221,7 +221,10 @@ export default function OrderForm({
             <ViewOnlyMode />
             <Button
               mt={4}
-              colorScheme="green"
+              bg={"primary"}
+              _hover={{ bg: "secondary" }}
+              transition={"all .3s"}
+              borderRadius={"sm"}
               isLoading={isSubmitting}
               type="submit"
             >

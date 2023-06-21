@@ -20,6 +20,7 @@ import { AuthContext } from "../../../Context/AuthProvider";
 import axios from "axios";
 import Loader from "../../../Component/Loader";
 import ConfirmationModal from "../../../Component/ConfirmationModal";
+import CustomButton from "../../../Component/CustomButton";
 
 const MyProducts = () => {
   const { user, userSignOut } = useContext(AuthContext);
@@ -145,36 +146,36 @@ const MyProducts = () => {
                   />
                 </Box>
                 <Td>{product?.productName}</Td>
-                <Td>{product?.categories}</Td>
-                <Td isNumeric color="green.600">
+                <Td textTransform={"capitalize"}>{product?.categories}</Td>
+                <Td isNumeric color={"green.600"}>
                   <Text as="del" fontSize={"xs"} color="red.600" pr={1}>
                     ${product?.oldPrice}
                   </Text>
                   ${product?.newPrice}
                 </Td>
-                <Td color="green.600" style={{ textTransform: "capitalize" }}>
+                <Td textTransform={"capitalize"} color={"green.600"}>
                   {product?.inStock}
                 </Td>
                 <Td>
-                  <Button
-                    bg="teal.600"
-                    size="sm"
-                    onClick={() => handleAdvertisement(product)}
-                  >
-                    {product.advertisement ? "Remove Advertise" : "Advertise"}
-                  </Button>
+                  <CustomButton
+                    size={"sm"}
+                    action={() => handleAdvertisement(product)}
+                    text={
+                      product.advertisement ? "Remove Advertise" : "Advertise"
+                    }
+                  />
                 </Td>
                 <Td>
-                  <Button
-                    bg="red.600"
-                    size="sm"
-                    onClick={() => {
+                  <CustomButton
+                    size={"sm"}
+                    action={() => {
                       setSelectedProduct(product);
                       onOpen();
                     }}
-                  >
-                    Remove
-                  </Button>
+                    text={"Remove"}
+                    bg="red.600"
+                    _hover={{ bg: "red.700" }}
+                  />
                 </Td>
               </Tr>
             ))}

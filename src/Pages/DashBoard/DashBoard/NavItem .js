@@ -1,26 +1,33 @@
 import React from "react";
 
 import { Flex, Icon } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const NavItem = ({ icon, children, path, onClose, ...rest }) => {
   return (
     <div>
-      <Link
+      <NavLink
         to={path}
-        style={{ textDecoration: "none" }}
+        style={({ isActive, isPending }) => {
+          return {
+            fontWeight: isActive ? "500" : "",
+            color: isActive ? "#2C74B3" : "white",
+          };
+        }}
         _focus={{ boxShadow: "none" }}
         onClick={onClose}
       >
         <Flex
           align="center"
           p="4"
+          py={2}
+          my={2}
           mx="4"
-          borderRadius="lg"
+          borderRadius="md"
           role="group"
           cursor="pointer"
           _hover={{
-            bg: "cyan.700",
+            bg: "primary",
             color: "white",
           }}
           {...rest}
@@ -37,7 +44,7 @@ const NavItem = ({ icon, children, path, onClose, ...rest }) => {
           )}
           {children}
         </Flex>
-      </Link>
+      </NavLink>
     </div>
   );
 };

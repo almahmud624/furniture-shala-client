@@ -74,6 +74,7 @@ const Categories = () => {
               pt={5}
               bg={"gray.900"}
               rounded={"lg"}
+              borderWidth={1}
               boxShadow={"0 0 10px 3px rgba(0,0,0,0.35)"}
               _groupHover={{ boxShadow: "none" }}
               transition={"all .3s"}

@@ -58,7 +58,7 @@ export default function BlogCard({ item, handleBlog }) {
           </Text>
 
           <Button
-            color={"green.700"}
+            color={"primary"}
             variant={"unstyled"}
             onClick={() => handleBlog(item)}
           >

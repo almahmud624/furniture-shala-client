@@ -30,7 +30,7 @@ const ProductModal = ({
         isOpen={isOpen}
         onClose={onClose}
         isCentered
-        size={isOrder ? "md" : "3xl"}
+        size={isOrder ? { base: "sm", md: "md" } : { base: "sm", md: "3xl" }}
         scrollBehavior={scrollBehavior}
       >
         <ModalOverlay />

@@ -11,6 +11,7 @@ import {
   Heading,
   Image,
   Box,
+  Text,
 } from "@chakra-ui/react";
 import { AuthContext } from "../../../Context/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
@@ -18,10 +19,13 @@ import axios from "axios";
 import Loader from "../../../Component/Loader";
 import NavItem from "../DashBoard/NavItem ";
 import NotFound from "../../../Component/NotFound/NotFound";
+import CustomButton from "../../../Component/CustomButton";
+import { useNavigate } from "react-router-dom";
 
 const MyOrders = () => {
   const { products } = useContext(DataStoreContext);
   const { user, userSignOut } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   // get orders by email
   const { data: orders = [], isLoading } = useQuery({
@@ -109,29 +113,30 @@ const MyOrders = () => {
                   </Box>
                   <Td>{product?.title}</Td>
 
-                  <Td isNumeric color="green.600">
-                    ${product?.price}
-                  </Td>
+                  <Td isNumeric>${product?.price}</Td>
                   {}
-                  <Td color="green.600">{product?.date}</Td>
-                  <Td color="green.600">{product?.paid ? "Paid" : "unpaid"}</Td>
+                  <Td>{product?.date}</Td>
+                  <Td textTransform={"capitalize"}>
+                    {product?.paid ? (
+                      <Text color={"green.600"}>Paid</Text>
+                    ) : (
+                      <Text color={"red.600"}>Unpaid</Text>
+                    )}
+                  </Td>
                   {product?.paid ? (
                     <>
-                      <Td color="green.600">Order Placed</Td>
+                      <Td color={"green.600"}>Order Placed</Td>
                     </>
                   ) : (
                     <Td>
-                      <NavItem
-                        path={`/dashboard/payments/${product?._id}`}
-                        display={"inline-block"}
-                        py={1}
-                        bg="teal.400"
-                        color="gray.900"
-                        fontWeight={"semibold"}
+                      <CustomButton
+                        size={"sm"}
+                        text={"Pay"}
+                        action={() =>
+                          navigate(`/dashboard/payments/${product?._id}`)
+                        }
                         disabled={product?.paid}
-                      >
-                        Pay
-                      </NavItem>
+                      />
                     </Td>
                   )}
                 </Tr>

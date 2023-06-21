@@ -119,17 +119,17 @@ const FeaturedProduct = () => {
                 display={"inline"}
                 bg={"gray.900"}
                 fontFamily={"cursive"}
-                color={"green.600"}
+                color={"primary"}
                 fontSize={"lg"}
                 w={"fit-content"}
                 borderBottomWidth={1}
-                borderBottomColor={"green.600"}
+                borderBottomColor={"primary"}
                 cursor={"pointer"}
                 transition={"all"}
                 transitionDuration={"0.5s"}
                 _hover={{
                   color: "green.500",
-                  borderBottomColor: "green.700",
+                  borderBottomColor: "primary",
                 }}
                 onClick={() => {
                   setProductInfo(randomProducts?.[0]);

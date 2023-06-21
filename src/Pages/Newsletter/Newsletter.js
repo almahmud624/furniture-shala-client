@@ -84,7 +84,9 @@ const Newsletter = () => {
             </FormControl>
             <FormControl w={{ base: "100%", md: "40%" }}>
               <Button
-                colorScheme={state === "success" ? "green" : "red"}
+                bg={"primary"}
+                _hover={{ bg: "secondary" }}
+                transition={"all .3s"}
                 isLoading={state === "submitting"}
                 w="100%"
                 type={state === "success" ? "button" : "submit"}

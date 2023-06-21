@@ -45,7 +45,7 @@ const Navbar = () => {
             alignItems={"center"}
             fontSize={"xl"}
             fontWeight={"bold"}
-            color={"green.600"}
+            color={"primary"}
           >
             Furniture
             <Box
@@ -103,6 +103,17 @@ const Navbar = () => {
     </>
   );
 
+  const handleMenuToggle = () => {
+    if (showFeaturesMenu) {
+      setShowFeaturesMenu(false);
+    }
+    if (isOpen) {
+      onClose();
+    } else {
+      onOpen();
+    }
+  };
+
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -112,7 +123,7 @@ const Navbar = () => {
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label={"Open Menu"}
             display={{ md: "none" }}
-            onClick={isOpen ? onClose : onOpen}
+            onClick={handleMenuToggle}
           />
           <HStack spacing={8} alignItems={"center"}>
             <HStack
@@ -122,34 +133,6 @@ const Navbar = () => {
             >
               {linkItems}
             </HStack>
-            {/* <Stack
-              spacing={{ base: "6", md: "8" }}
-              align="start"
-              display={{ base: "none", md: "flex" }}
-            >
-              <Link to="/">
-                {" "}
-                <Text
-                  display={{ sm: "none", md: "flex" }}
-                  alignItems={"center"}
-                  fontSize={"xl"}
-                  fontWeight={"bold"}
-                  color={"green.600"}
-                >
-                  Furniture
-                  <Box
-                    h={8}
-                    w={8}
-                    style={{ filter: "contrast(80%)" }}
-                    display={"inline-block"}
-                    mx={1}
-                  >
-                    <Image src={logo} h={"full"} w={"full"}></Image>
-                  </Box>
-                  Shala
-                </Text>
-              </Link>
-            </Stack> */}
           </HStack>
           <Stack
             spacing={{ base: "6", md: "8" }}
@@ -163,7 +146,7 @@ const Navbar = () => {
                 alignItems={"center"}
                 fontSize={"xl"}
                 fontWeight={"bold"}
-                color={"green.600"}
+                color={"primary"}
               >
                 Furniture
                 <Box
@@ -221,9 +204,9 @@ const Navbar = () => {
                     px={4}
                     py={1}
                     borderWidth={1}
-                    borderColor={"green.500"}
+                    borderColor={"primary"}
                     rounded={"sm"}
-                    bg={"green.700"}
+                    bg={"primary"}
                     _hover={{
                       textDecoration: "none",
                       bg: "transparent",
@@ -233,7 +216,7 @@ const Navbar = () => {
                       },
                     }}
                     color={"#fff"}
-                    size={["sm", "md"]}
+                    size={"sm"}
                     to="/login"
                   >
                     Login

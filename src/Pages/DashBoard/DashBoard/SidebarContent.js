@@ -41,7 +41,6 @@ const SidebarContent = ({ onClose, ...rest }) => {
           <>
             <NavItem
               key={Math.random()}
-              icon={FiCompass}
               path="/dashboard/all-sellers"
               onClose={onClose}
             >
@@ -49,7 +48,6 @@ const SidebarContent = ({ onClose, ...rest }) => {
             </NavItem>
             <NavItem
               key={Math.random()}
-              icon={FiCompass}
               path="/dashboard/all-buyers"
               onClose={onClose}
             >
@@ -57,7 +55,6 @@ const SidebarContent = ({ onClose, ...rest }) => {
             </NavItem>
             <NavItem
               key={Math.random()}
-              icon={FiCompass}
               path="/dashboard/make-admin"
               onClose={onClose}
             >
@@ -69,7 +66,6 @@ const SidebarContent = ({ onClose, ...rest }) => {
           <>
             <NavItem
               key={Math.random()}
-              icon={FiCompass}
               path="/dashboard/add-product"
               onClose={onClose}
             >
@@ -77,7 +73,6 @@ const SidebarContent = ({ onClose, ...rest }) => {
             </NavItem>
             <NavItem
               key={Math.random()}
-              icon={FiCompass}
               path="/dashboard/my-products"
               onClose={onClose}
             >
@@ -90,7 +85,6 @@ const SidebarContent = ({ onClose, ...rest }) => {
           <>
             <NavItem
               key={Math.random()}
-              icon={FiCompass}
               path="/dashboard/my-orders"
               onClose={onClose}
             >
@@ -98,7 +92,6 @@ const SidebarContent = ({ onClose, ...rest }) => {
             </NavItem>
             <NavItem
               key={Math.random()}
-              icon={FiCompass}
               path="/dashboard/my-wishlist"
               onClose={onClose}
             >

@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
-  Button,
   Heading,
   Table,
   TableContainer,
@@ -16,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loader from "../../../Component/Loader";
 import ConfirmationModal from "../../../Component/ConfirmationModal";
+import CustomButton from "../../../Component/CustomButton";
 
 const AllBuyers = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -45,7 +45,7 @@ const AllBuyers = () => {
       .then((res) => {
         if (res.data.deletedCount > 0) {
           toast({
-            title: `Buyer Succfully Removed`,
+            title: `Buyer Successfully Removed`,
             position: "top",
             isClosable: true,
             status: "success",
@@ -85,22 +85,22 @@ const AllBuyers = () => {
                 <Td>{buyer?.name}</Td>
                 <Td>{buyer?.email}</Td>
 
-                <Td color="green.600" style={{ textTransform: "capitalize" }}>
+                <Td color="primary" style={{ textTransform: "capitalize" }}>
                   {buyer?.role === "user" && "Buyer"}
                 </Td>
 
                 <Td>
-                  <Button
-                    onClick={() => {
+                  <CustomButton
+                    size={"sm"}
+                    text={"Remove Buyer"}
+                    action={() => {
                       onOpen();
                       setBuyerInfo(buyer);
                     }}
-                    bg="teal.600"
-                    size={"sm"}
                     disabled={"user@gmail.com" === buyer?.email}
-                  >
-                    Delete Buyer
-                  </Button>
+                    bg="red.600"
+                    _hover={{ bg: "red.700" }}
+                  />
                 </Td>
               </Tr>
             ))}

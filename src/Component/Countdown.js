@@ -71,18 +71,22 @@ export const Countdown = ({
       >
         {flashSaleCountdown && (
           <GridItem>
-            <Box
+            <Flex
               textAlign="center"
               borderWidth={flashSaleCountdown ? 3 : 1}
               borderColor={"gray.600"}
-              px={4}
-              py={flashSaleCountdown && 4}
+              px={{ base: 0, md: 4 }}
+              py={flashSaleCountdown && { base: 0, md: 4 }}
               rounded={"lg"}
               fontWeight={"semibold"}
+              flexDir={{ base: "row", md: "column" }}
+              justify={"center"}
+              align={"center"}
+              gap={0.5}
             >
               <Text fontSize="5xl">{formatTime(time).day}</Text>
               <Text fontSize="xl">Day</Text>
-            </Box>
+            </Flex>
           </GridItem>
         )}
         {data?.map(({ timerText, timer }) => (
@@ -118,7 +122,7 @@ export const Countdown = ({
             py={flashSaleCountdown && 4}
             rounded={"lg"}
             fontWeight={"semibold"}
-            display={{ base: "none", md: "inline-block" }}
+            display={{ base: "none", md: "block" }}
           >
             <Text fontSize={flashSaleCountdown ? "5xl" : "xl"}>
               {formatTime(time).seconds}

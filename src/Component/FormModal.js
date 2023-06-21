@@ -12,7 +12,13 @@ const FormModal = ({ children, isOpen, onClose, coupon, setCoupon }) => {
   const [scrollBehavior] = useState("inside");
   return (
     <div>
-      <Modal isOpen={isOpen} onClose={onClose} scrollBehavior={scrollBehavior}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        scrollBehavior={scrollBehavior}
+        size={{ base: "sm", md: "md" }}
+        isCentered
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Order Form</ModalHeader>

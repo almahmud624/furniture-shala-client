@@ -47,8 +47,13 @@ const data = [
 const BecomeASeller = () => {
   return (
     <>
-      <Box py={20} maxWidth={"90%"} margin={"auto"}>
-        <Flex justify={"center"} align={"center"}>
+      <Box py={10} maxWidth={"90%"} margin={"auto"}>
+        <Flex
+          justify={"center"}
+          align={"center"}
+          flexDir={{ base: "column", md: "row" }}
+          gap={{ base: 5, md: 0 }}
+        >
           <Box flex={"1"}>
             <PageHeader
               pageTag={"Become Seller"}
@@ -66,7 +71,7 @@ const BecomeASeller = () => {
           </Box>
           <Flex flex={"1"} justify={"right"}>
             <Box
-              width={"80%"}
+              width={{ base: "full", md: "80%" }}
               border={"1px solid #2D3748"}
               rounded={"md"}
               boxShadow={"0px 0px 14px 0px rgba(0,0,0,0.45) "}

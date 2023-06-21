@@ -29,7 +29,7 @@ const Blog = () => {
       <Box
         mb={10}
         display="flex"
-        gap={7}
+        gap={{ base: 0, md: 7 }}
         flexDirection={{ base: "column", sm: "row" }}
         justifyContent="space-between"
       >
@@ -38,8 +38,8 @@ const Blog = () => {
           display="flex"
           position="relative"
           alignItems="center"
-          w={"45%"}
-          h={"96"}
+          w={{ base: "full", md: "45%" }}
+          h={{ base: "full", md: "96" }}
         >
           <Box
             width={"full"}
@@ -91,15 +91,23 @@ const Blog = () => {
         </Box>
       </Box>
 
-      <Heading as="h2" mt="10">
-        Latest Journal
-      </Heading>
-      <Divider marginTop="5" />
-      <Grid marginTop="5" gap={5} templateColumns={"repeat(4,1fr)"}>
-        {data?.map((item) => (
-          <BlogCard item={item} handleBlog={handleBlog} />
-        ))}
-      </Grid>
+      <Box mt={{ base: 40, md: "10" }}>
+        <Heading as="h2">Latest Journal</Heading>
+        <Divider marginTop="5" />
+        <Grid
+          marginTop="5"
+          gap={5}
+          templateColumns={{
+            base: "1fr",
+            md: "repeat(3,1fr)",
+            lg: "repeat(4,1fr)",
+          }}
+        >
+          {data?.map((item) => (
+            <BlogCard item={item} handleBlog={handleBlog} />
+          ))}
+        </Grid>
+      </Box>
     </Box>
   );
 };

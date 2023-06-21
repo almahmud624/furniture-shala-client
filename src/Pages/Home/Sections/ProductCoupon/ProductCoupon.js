@@ -90,17 +90,17 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
                   </Text>
                   <Text
                     as={"span"}
+                    ml={{ base: 0, md: 2 }}
                     color={couponStatus?.status ? "green.500" : "red.500"}
                   >
                     {couponStatus?.status ? "Active" : "Close"}
                   </Text>
-                  <Icon as={BsInfoCircle} ml={1} />
                 </Text>
                 <Text
                   p={{ base: 1, md: 3 }}
                   borderStyle={"dashed"}
                   borderWidth={2}
-                  borderColor={"teal.500"}
+                  borderColor={"primary"}
                   fontWeight={"semibold"}
                   textAlign={"center"}
                 >
@@ -109,6 +109,9 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
                 <Button
                   variant={"outline"}
                   size={{ base: "sm", md: "md" }}
+                  borderRadius={"sm"}
+                  _hover={{ borderColor: "primary" }}
+                  transition={"all .3s"}
                   onClick={() => {
                     setProductInfo(product);
                     setCoupon({ couponText, couponPercentage });

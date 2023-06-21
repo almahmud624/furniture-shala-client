@@ -106,7 +106,7 @@ const ProductSlider = () => {
                       </Heading>
                     </Stack>
                   </CardBody>
-                  <Divider bg={"green.700"} />
+                  <Divider bg={"primary"} />
                   <CardFooter
                     justifyContent={"space-between"}
                     alignItems={"center"}
@@ -114,10 +114,11 @@ const ProductSlider = () => {
                     <Button
                       variant="solid"
                       size={"sm"}
-                      bg="green.700"
+                      bg="primary"
                       color={"gray.300"}
-                      borderRadius="md"
-                      _hover={{ bg: "green.600" }}
+                      borderRadius="sm"
+                      _hover={{ bg: "secondary" }}
+                      transition={"all .3s"}
                       onClick={() => {
                         setProductInfo(product);
                         onOpen();
@@ -126,7 +127,7 @@ const ProductSlider = () => {
                     >
                       Buy now
                     </Button>
-                    <Text color="green.600" fontSize="xl">
+                    <Text color="primary" fontSize="xl">
                       ${product?.newPrice}
                     </Text>
                   </CardFooter>

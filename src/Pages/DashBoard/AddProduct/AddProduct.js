@@ -33,10 +33,12 @@ import axios from "axios";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 import { storage } from "../../../Firebase/firebase.init";
+import CustomButton from "../../../Component/CustomButton";
 
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [state, setState] = useState("initial");
 
   const {
     handleSubmit,
@@ -49,6 +51,7 @@ const AddProduct = () => {
   const [imgPreview, setImgPreview] = useState(null);
 
   function onSubmit(product) {
+    setState("isSubmitting");
     product.inStock = "available";
     product.createdAt = moment().format("ll");
     product.sellerName = user.displayName;
@@ -78,11 +81,13 @@ const AddProduct = () => {
                   isClosable: true,
                   status: "success",
                 });
+                setState("Submitted");
                 navigate("/dashboard/my-products");
               }
             });
         } catch (error) {
           console.log(error);
+          setState("Error");
         }
       }
     });
@@ -402,14 +407,12 @@ const AddProduct = () => {
               </Box>
 
               <Stack spacing={10} pt={2}>
-                <Button
+                <CustomButton
+                  text={"Submit"}
                   mt={4}
-                  colorScheme="green"
-                  isLoading={isSubmitting}
+                  isLoading={state === "isSubmitting"}
                   type="submit"
-                >
-                  Submit
-                </Button>
+                />
               </Stack>
             </Stack>
           </Box>

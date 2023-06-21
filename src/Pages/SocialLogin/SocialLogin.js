@@ -53,6 +53,7 @@ const SocialLogin = () => {
           <Button
             w={"full"}
             variant={"outline"}
+            borderColor={"primary"}
             onClick={() => handleGoogleSignIn()}
             leftIcon={<FcGoogle />}
           >

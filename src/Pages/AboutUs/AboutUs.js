@@ -39,7 +39,7 @@ export default function AboutUs() {
         textAlign={"center"}
         align={"center"}
         spacing={{ base: 5, md: 5 }}
-        pt={{ base: 14, md: 14 }}
+        pt={10}
         w={"full"}
       >
         <PageHeader
@@ -97,7 +97,8 @@ function CustomerService() {
       <Stack
         align={"center"}
         spacing={{ base: 8, md: 10 }}
-        py={{ base: 20, md: 28 }}
+        pt={{ base: 20, md: 28 }}
+        pb={{ base: 10, md: 16 }}
         direction={{ base: "column", md: "row" }}
       >
         <Stack flex={1} spacing={{ base: 5, md: 5 }}>
@@ -137,10 +138,10 @@ function CustomerService() {
           </Accordion>
         </Stack>
         <Box
-          height={"300px"}
+          height={{ base: "full", md: "300px" }}
           rounded={"xl"}
           boxShadow={"2xl"}
-          width={"50%"}
+          width={{ base: "full", md: "50%" }}
           overflow={"hidden"}
           flex={1}
         >

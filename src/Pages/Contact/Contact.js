@@ -15,10 +15,18 @@ import { MdOutlineEmail, MdPhone } from "react-icons/md";
 import PageHeader from "../../Component/PageHeader/PageHeader";
 import contactImg from "../../Assets/contact-img.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import CustomButton from "../../Component/CustomButton";
 
 export default function Contact() {
   return (
-    <Box bg="gray.800" maxW="full" mt={0} overflow="hidden">
+    <Box
+      maxW={"90%"}
+      mx={"auto"}
+      bg="gray.800"
+      mt={0}
+      overflow="hidden"
+      pb={{ base: 7, md: 0 }}
+    >
       <Flex justify="center">
         <Flex
           color="white"
@@ -26,8 +34,9 @@ export default function Contact() {
           m={{ sm: 4, md: 16, lg: 10 }}
           p={{ sm: 5, md: 5, lg: 14 }}
           gap={10}
+          flexDir={{ base: "column", md: "row" }}
         >
-          <Box w={"50%"}>
+          <Box w={{ base: "full", md: "50%" }}>
             <PageHeader
               title={"Let's talk about everything"}
               headerStyle={{ fontSize: "4xl" }}
@@ -52,7 +61,7 @@ export default function Contact() {
           </Box>
 
           <Box flex={1}>
-            <Box mx={8} color="#0B0E3F">
+            <Box mx={{ base: 0, md: 8 }} color="#0B0E3F">
               <PageHeader
                 title={"We would love to hear from you."}
                 headerStyle={{ fontSize: "4xl", color: "gray.200" }}
@@ -89,14 +98,11 @@ export default function Contact() {
                   />
                 </FormControl>
                 <FormControl id="name" float="right">
-                  <Button
-                    variant="solid"
-                    bg="#0D74FF"
-                    color="white"
-                    _hover={{}}
-                  >
-                    Send Message
-                  </Button>
+                  <CustomButton
+                    text={"Send Message"}
+                    size={"md"}
+                    rounded={"md"}
+                  />
                 </FormControl>
               </VStack>
             </Box>

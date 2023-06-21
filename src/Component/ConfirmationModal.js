@@ -27,13 +27,15 @@ const ConfirmationModal = ({
 
         <ModalFooter>
           <Button
-            colorScheme="blue"
+            colorScheme="green"
             mr={3}
             onClick={() => handleAction(targetedId)}
           >
             Remove
           </Button>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button colorScheme="red" onClick={onClose}>
+            Cancel
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

@@ -8,6 +8,7 @@ import {
   useBreakpointValue,
   Button,
   useDisclosure,
+  Text,
 } from "@chakra-ui/react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 import Slider from "react-slick";
@@ -71,14 +72,14 @@ const AdvertismentCarousel = ({ advertiseItems }) => {
           top={top}
           transform={"translate(0%, -50%)"}
           zIndex={2}
-          bg="green.600"
+          bg="primary"
           _dark={{
-            bg: "green.700",
+            bg: "primary",
           }}
           _hover={{
             bg: "green.800",
             _dark: {
-              bg: "green.600",
+              bg: "primary",
             },
           }}
           color={"#ccc"}
@@ -96,14 +97,14 @@ const AdvertismentCarousel = ({ advertiseItems }) => {
           top={top}
           transform={"translate(0%, -50%)"}
           zIndex={2}
-          bg="green.600"
+          bg="primary"
           _dark={{
-            bg: "green.700",
+            bg: "primary",
           }}
           _hover={{
             bg: "green.800",
             _dark: {
-              bg: "green.600",
+              bg: "primary",
             },
           }}
           color={"#ccc"}
@@ -124,45 +125,54 @@ const AdvertismentCarousel = ({ advertiseItems }) => {
               backgroundImage={`url(${card.productImg})`}
             >
               <Container size="container.lg" height="600px" position="relative">
-                <Stack
-                  spacing={6}
+                <Box
                   w={"sm"}
                   maxW={"md"}
                   position="absolute"
                   top="50%"
                   left={"50%"}
                   transform="translate(-50%, -50%)"
-                  backdropFilter="auto"
-                  backdropInvert="80%"
-                  backdropBlur="2px"
-                  backdropBrightness={"30"}
-                  borderRadius={5}
+                  color={"gray.800"}
+                  _hover={{ opacity: 1 }}
+                  transition={"all .3s"}
                 >
-                  <Heading
-                    fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
-                    textAlign={"center"}
-                    pt={2}
-                    color={"#cccccc"}
-                    mt={2}
+                  <Box
+                    backdropFilter="blur(3px)"
+                    backgroundImage="linear-gradient(to top, #dfe6e9 0%, gray 100%)"
+                    opacity={0.8}
+                    borderTopRadius={5}
+                    py={3}
                   >
-                    {card.productName}
-                  </Heading>
+                    <Heading
+                      fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
+                      textAlign={"center"}
+                      pt={2}
+                      mt={2}
+                    >
+                      {card?.productName}
+                    </Heading>
+                    <Text
+                      textAlign={"center"}
+                      fontSize={{ base: "inherit", md: "xl" }}
+                      fontWeight={"semibold"}
+                      color={"gray.700"}
+                    >
+                      ${card?.newPrice}
+                    </Text>
+                  </Box>
                   <Button
+                    w={"full"}
                     fontSize={{ base: "md", lg: "lg" }}
-                    color="#ccc"
-                    bg="green.600"
-                    borderTop={"1px solid gray"}
+                    color="gray.800"
+                    bg="primary"
                     _dark={{
-                      bgGradient: "linear(to-b,#333333, #26745D)",
+                      backgroundImage:
+                        "linear-gradient(to bottom, #dfe6e9 0%, #2C74B3 100%)",
                     }}
-                    _hover={{
-                      bg: "green.800",
-                      _dark: {
-                        bg: "green.600",
-                      },
-                    }}
+                    transition={"all 0.3s"}
                     display={"inline-block"}
-                    borderRadius={5}
+                    borderEndRadius={5}
+                    borderTopRadius={0}
                     onClick={() => {
                       setProductInfo(card);
                       onOpen();
@@ -171,7 +181,7 @@ const AdvertismentCarousel = ({ advertiseItems }) => {
                   >
                     Buy Now
                   </Button>
-                </Stack>
+                </Box>
               </Container>
             </Box>
           ))}

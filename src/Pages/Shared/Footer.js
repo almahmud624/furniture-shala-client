@@ -22,7 +22,7 @@ const Footer = () => {
           borderWidth={1}
           p={2}
           borderRadius={5}
-          _hover={{ bg: "green.700", borderColor: "green.500" }}
+          _hover={{ bg: "primary", borderColor: "green.500" }}
         >
           {children}
         </Link>
@@ -32,7 +32,7 @@ const Footer = () => {
   return (
     <>
       <Divider />
-      <Box px={10}>
+      <Box maxW={"90%"} mx={"auto"}>
         <Stack
           spacing="8"
           direction={{ base: "column", md: "row" }}
@@ -45,7 +45,7 @@ const Footer = () => {
               alignItems={"center"}
               fontSize={"xl"}
               fontWeight={"bold"}
-              color={"green.600"}
+              color={"primary"}
             >
               Furniture
               <Box

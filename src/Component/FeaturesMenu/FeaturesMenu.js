@@ -42,7 +42,7 @@ export default function FeaturesMenu({
 }) {
   return (
     <Stack
-      maxH={"72"}
+      maxH={{ base: "full", md: "72" }}
       direction={{ base: "column", md: "row" }}
       pos={"absolute"}
       top={16}
@@ -56,25 +56,31 @@ export default function FeaturesMenu({
       borderTopWidth={1}
       borderTopColor={"gray.700"}
       justify={"center"}
+      w={"full"}
     >
       <Grid
         templateColumns={{
-          base: "repeat(1, 1fr)",
+          base: "repeat(2, 1fr)",
           sm: "repeat(2, 1fr)",
           md: "repeat(3, 1fr)",
         }}
         gap={{ base: "8", sm: "12", md: "16" }}
-        w={"60%"}
+        w={{ base: "full", md: "60%" }}
       >
         {menus?.map(({ title, items }) => (
-          <Menu key={title} heading={title} items={items} />
+          <Menu
+            key={title}
+            heading={title}
+            items={items}
+            setShowFeaturesMenu={setShowFeaturesMenu}
+          />
         ))}
       </Grid>
       <Flex
         flex={1}
         w={"full"}
         justify={"right"}
-        display={{ base: "none", md: "block" }}
+        display={{ base: "none", md: "inline-flex" }}
       >
         <Image
           alt={"Login Image"}
@@ -88,7 +94,7 @@ export default function FeaturesMenu({
     </Stack>
   );
 }
-const Menu = ({ heading, items }) => {
+const Menu = ({ heading, items, setShowFeaturesMenu }) => {
   return (
     <GridItem>
       <Heading
@@ -102,7 +108,9 @@ const Menu = ({ heading, items }) => {
       <VStack align={"left"}>
         {items?.map(({ itemTitle, href }) => (
           <Text textTransform={"capitalize"} key={itemTitle}>
-            <Link to={href}>{itemTitle}</Link>
+            <Link to={href} onClick={() => setShowFeaturesMenu(false)}>
+              {itemTitle}
+            </Link>
           </Text>
         ))}
       </VStack>

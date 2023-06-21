@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import {
-  Button,
   Heading,
   Table,
   TableContainer,
@@ -15,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loader from "../../../Component/Loader";
 import { AuthContext } from "../../../Context/AuthProvider";
+import CustomButton from "../../../Component/CustomButton";
 
 const AllSellers = () => {
   const { userSignOut } = useContext(AuthContext);
@@ -118,27 +118,25 @@ const AllSellers = () => {
                   </>
                 ) : (
                   <Td style={{ textTransform: "capitalize" }}>
-                    <Button
-                      bg="teal.600"
+                    <CustomButton
                       size="sm"
-                      onClick={() => {
+                      text={"Verfiy Seller"}
+                      action={() => {
                         handleVerifySeller(seller?.email);
                       }}
-                    >
-                      Verfiy Seller
-                    </Button>
+                    />
                   </Td>
                 )}
 
                 <Td>
-                  <Button
-                    bg="teal.600"
-                    size="sm"
-                    onClick={() => handleSellerDelete(seller?._id)}
+                  <CustomButton
+                    size={"sm"}
+                    text={"Remove Seller"}
+                    action={() => handleSellerDelete(seller?._id)}
                     disabled={"seller@gmail.com" === seller?.email}
-                  >
-                    Delete Seller
-                  </Button>
+                    bg="red.600"
+                    _hover={{ bg: "red.700" }}
+                  />
                 </Td>
               </Tr>
             ))}

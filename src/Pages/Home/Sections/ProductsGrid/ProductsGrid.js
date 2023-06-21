@@ -118,7 +118,7 @@ const ProductGridItem = ({
             left={0}
             p={2}
           >
-            <Heading size={"md"} fontSize={28} fontWeight={"semibold"}>
+            <Heading size={{ base: "md", lg: "lg" }} fontWeight={"semibold"}>
               {productName}
             </Heading>
             {priceText && (
