@@ -1,16 +1,18 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../Context/AuthProvider";
 
-const useRoleCheck = (email) => {
+const useRoleCheck = () => {
+  const { user } = useContext(AuthContext);
   const [role, setRole] = useState(false);
   const [isRoleLoading, setRoleLoading] = useState(true);
 
   useEffect(() => {
     const checkSeller = async () => {
-      if (email) {
+      if (user?.email) {
         try {
           const { data } = await axios.get(
-            `https://furniture-shala-server.vercel.app/user/role/${email}`
+            `https://furniture-shala-server.vercel.app/user/role/${user?.email}`
           );
           setRole(data.role);
           setRoleLoading(false);
@@ -20,7 +22,7 @@ const useRoleCheck = (email) => {
       }
     };
     checkSeller();
-  }, [email]);
+  }, [user]);
   return [role, isRoleLoading];
 };
 

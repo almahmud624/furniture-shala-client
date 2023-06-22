@@ -84,7 +84,12 @@ const Navbar = () => {
           textDecoration: "none",
           bg: useColorModeValue("gray.200", "gray.700"),
         }}
-        onMouseOver={() => setShowFeaturesMenu(true)}
+        onMouseOver={() => {
+          setShowFeaturesMenu(true);
+          if (isOpen) {
+            onClose();
+          }
+        }}
       >
         Features
       </Link>

@@ -1,18 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import CookieConfirmation from "../Component/CookieConfirmation";
 import Footer from "../Pages/Shared/Footer";
 import Navbar from "../Pages/Shared/Navbar";
-import useAdminSellerCheck from "../Hooks/useAdminSellerCheck";
 import { useToast } from "@chakra-ui/react";
 import useCheckOnlineStatus from "../Hooks/useCheckOnlineStatus";
+import useRoleCheck from "../Hooks/useRoleCheck";
 
 const Main = () => {
-  const [isShown, role] = useAdminSellerCheck();
+  const [role] = useRoleCheck();
+  const isAdminSeller = role === "admin" || role === "seller";
   const isOnline = useCheckOnlineStatus();
   const toast = useToast();
   useEffect(() => {
-    if (isShown) {
+    if (isAdminSeller) {
       toast({
         title: `You're Currently Joined as a ${role}`,
         description: "View only mode activated",
@@ -31,7 +32,7 @@ const Main = () => {
         duration: 9000,
       });
     }
-  }, [isShown, role, toast, isOnline]);
+  }, [role, toast, isOnline, isAdminSeller]);
   return (
     <div>
       <Navbar />

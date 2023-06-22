@@ -8,9 +8,8 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import ProductDetails from "./ProductDetails";
-import { AuthContext } from "../../Context/AuthProvider";
 import OrderForm from "../OrderForm";
 import { CloseIcon } from "@chakra-ui/icons";
 
@@ -20,10 +19,11 @@ const ProductModal = ({
   product = {},
   discount,
   setSelectedProduct,
+  queryPath,
 }) => {
   const [scrollBehavior] = useState("inside");
   const [isOrder, setIsOrder] = useState(false);
-  const { user } = useContext(AuthContext);
+
   return (
     <>
       <Modal
@@ -54,7 +54,6 @@ const ProductModal = ({
           <ModalBody>
             {isOrder ? (
               <OrderForm
-                user={user}
                 productInfo={product}
                 onClose={onClose}
                 setIsOrder={setIsOrder}

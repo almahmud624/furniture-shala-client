@@ -4,7 +4,6 @@ import {
   Container,
   Heading,
   IconButton,
-  Stack,
   useBreakpointValue,
   Button,
   useDisclosure,
@@ -17,7 +16,6 @@ import OrderForm from "../../../Component/OrderForm";
 import FormModal from "../../../Component/FormModal";
 import { AuthContext } from "../../../Context/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import brokenImg from "../../../Assets/image-not-found.jpg";
 
 const settings = {
   dots: true,
@@ -187,7 +185,7 @@ const AdvertismentCarousel = ({ advertiseItems }) => {
           ))}
         </Slider>
         <FormModal isOpen={isOpen} onClose={onClose} modalTitle={"demo"}>
-          <OrderForm user={user} productInfo={productInfo} onClose={onClose} />
+          <OrderForm productInfo={productInfo} onClose={onClose} />
         </FormModal>
       </Box>
     </div>

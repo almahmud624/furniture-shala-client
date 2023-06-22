@@ -131,28 +131,16 @@ const ShopSidebar = () => {
           </Button>
         </HStack>
         <Flex flexDir={"column"} gap={5}>
-          <Suspense fallback={<Text>Loading...</Text>}>
-            <PriceRangeSlider
-              max={maximumPrice}
-              min={minimumPrice}
-              {...commonProps}
-            />
-          </Suspense>
-          <Suspense fallback={<Text>Loading...</Text>}>
-            <SidebarCategories {...commonProps} />
-          </Suspense>
-          <Suspense fallback={<Text>Loading...</Text>}>
-            <Discount {...commonProps} />
-          </Suspense>
-          <Suspense fallback={<Text>Loading...</Text>}>
-            <SiderbarSeller {...commonProps} />
-          </Suspense>
-          <Suspense fallback={<Text>Loading...</Text>}>
-            <ProductUsageYear {...commonProps} />
-          </Suspense>
-          <Suspense fallback={<Text>Loading...</Text>}>
-            <FilterByLocation {...commonProps} />
-          </Suspense>
+          <PriceRangeSlider
+            max={maximumPrice}
+            min={minimumPrice}
+            {...commonProps}
+          />
+          <SidebarCategories {...commonProps} />
+          <Discount {...commonProps} />
+          <SiderbarSeller {...commonProps} />
+          <ProductUsageYear {...commonProps} />
+          <FilterByLocation {...commonProps} />
         </Flex>
       </Box>
     </>

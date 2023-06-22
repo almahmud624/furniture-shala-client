@@ -2,13 +2,11 @@ import React, { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import Loader from "../../Component/Loader";
 import { AuthContext } from "../../Context/AuthProvider";
-import useRoleCheck from "../../Hooks/useRoleCheck";
 
 const PrivateSellerRoute = ({ children }) => {
-  const { user, loading } = useContext(AuthContext);
-  const [role, isRoleLoading] = useRoleCheck(user?.email);
+  const { user, loading, role } = useContext(AuthContext);
   const location = useLocation();
-  if (loading || isRoleLoading) {
+  if (loading) {
     return <Loader />;
   }
 

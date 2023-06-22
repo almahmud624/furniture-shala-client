@@ -18,7 +18,6 @@ const Advertisement = () => {
           _dark={{
             bg: "#3e3e3e",
           }}
-          // p={20}
           w="full"
         >
           <Box
@@ -26,8 +25,8 @@ const Advertisement = () => {
             _dark={{
               bg: "gray.800",
             }}
-            // px={8}
-            py={20}
+            pt={{ base: 0, md: 20 }}
+            pb={20}
             mx="auto"
           >
             <SimpleGrid

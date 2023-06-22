@@ -3,7 +3,6 @@ import {
   FormLabel,
   FormControl,
   Input,
-  Button,
   useToast,
   Container,
   InputLeftAddon,
@@ -15,16 +14,16 @@ import {
   InputRightAddon,
   Box,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import moment from "moment";
 import axios from "axios";
 import { calculateDiscountAmount } from "../Utilities/calculateDiscountAmount";
-import ViewOnlyMode from "./ViewOnlyMode/ViewOnlyMode";
 import CustomButton from "./CustomButton";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/AuthProvider";
+import useAdminSellerCheck from "../Hooks/useAdminSellerCheck";
 
 export default function OrderForm({
-  user,
   productInfo,
   onClose,
   setIsOrder,
@@ -32,6 +31,8 @@ export default function OrderForm({
   coupon,
   setCoupon,
 }) {
+  const { user } = useContext(AuthContext);
+  const [isAdminSeller] = useAdminSellerCheck();
   const toast = useToast();
   const toastIdRef = useRef();
   const [couponInput, setCouponInput] = useState();
@@ -45,8 +46,13 @@ export default function OrderForm({
   } = useForm();
 
   async function onSubmit(order) {
+    // user not available to redirect
     if (!user?.uid) {
       return navigate("/login");
+    }
+    // disable order for admin/ seller
+    if (isAdminSeller) {
+      return;
     }
     order.productId = productInfo?._id;
     order.orderdAt = moment().format("ll");
@@ -224,13 +230,12 @@ export default function OrderForm({
             />
           </FormControl>
           <Box pos={"relative"} w={"fit-content"}>
-            <ViewOnlyMode />
-
             <CustomButton
               rounded={"sm"}
-              text={"submit"}
+              text={"Submit"}
               isLoading={isSubmitting}
               type="Submit"
+              disabled={isAdminSeller}
             />
           </Box>
         </Stack>

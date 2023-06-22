@@ -2,8 +2,7 @@ import PageHeader from "../../Component/PageHeader/PageHeader";
 import ProductCoupon from "../Home/Sections/ProductCoupon/ProductCoupon";
 import elevenPercentImg from "../../Assets/elevenPercent.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../Context/AuthProvider";
+import { useState } from "react";
 import FormModal from "../../Component/FormModal";
 import OrderForm from "../../Component/OrderForm";
 const { Box, Flex, useDisclosure } = require("@chakra-ui/react");
@@ -14,7 +13,6 @@ const Coupon = () => {
   );
   const [productInfo, setProductInfo] = useState(null);
   const { onClose, isOpen, onOpen } = useDisclosure();
-  const { user } = useContext(AuthContext);
   const [coupon, setCoupon] = useState(null);
   return (
     <>
@@ -79,7 +77,6 @@ const Coupon = () => {
         setCoupon={setCoupon}
       >
         <OrderForm
-          user={user}
           productInfo={productInfo}
           onClose={onClose}
           coupon={coupon}

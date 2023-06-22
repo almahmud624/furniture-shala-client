@@ -147,7 +147,6 @@ const ShopProduct = ({ onOpen }) => {
     : sortedProducts;
 
   const { length: productsLength } = showProducts || [];
-  console.log(isPreviousData);
 
   return (
     <>

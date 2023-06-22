@@ -20,16 +20,22 @@ import PrivateAdminRoute from "../Pages/Route/PrivateAdminRoute";
 import PrivateRoute from "../Pages/Route/PrivateRoute";
 import PrivateSellerRoute from "../Pages/Route/PrivateSellerRoute";
 import ErrorPage from "../Pages/Shared/ErrorPage";
-import Shop from "../Pages/Shop/Shop";
-import SearchProduct from "../Pages/SearchProduct/SearchProduct";
-import BecomeASeller from "../Pages/BecomeASeller/BecomeASeller";
-import Contact from "../Pages/Contact/Contact";
-import AboutUs from "../Pages/AboutUs/AboutUs";
-import Coupon from "../Pages/Coupon/Coupon";
-import FlashSale from "../Pages/FlashSale/FlashSale";
 import React, { Suspense } from "react";
 import Loader from "../Component/Loader";
+import ProductDetails from "../Component/ProductDetailsModal/ProductDetails";
 const Blog = React.lazy(() => import("../Pages/Blog/Blog"));
+const FlashSale = React.lazy(() => import("../Pages/FlashSale/FlashSale"));
+const Coupon = React.lazy(() => import("../Pages/Coupon/Coupon"));
+const AboutUs = React.lazy(() => import("../Pages/AboutUs/AboutUs"));
+const Contact = React.lazy(() => import("../Pages/Contact/Contact"));
+const Shop = React.lazy(() => import("../Pages/Shop/Shop"));
+const SearchProduct = React.lazy(() =>
+  import("../Pages/SearchProduct/SearchProduct")
+);
+
+const BecomeASeller = React.lazy(() =>
+  import("../Pages/BecomeASeller/BecomeASeller")
+);
 
 export const routes = createBrowserRouter([
   {
@@ -47,6 +53,14 @@ export const routes = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/product-details/:productId",
+        element: (
+          <PrivateRoute>
+            <ProductDetails />
+          </PrivateRoute>
+        ),
+      },
       { path: "/login", element: <LoginSignUp /> },
       {
         path: "/blog",
@@ -56,13 +70,62 @@ export const routes = createBrowserRouter([
           </Suspense>
         ),
       },
-      { path: "/shop", element: <Shop /> },
-      { path: "/search", element: <SearchProduct /> },
-      { path: "/become-seller", element: <BecomeASeller /> },
-      { path: "/contact", element: <Contact /> },
-      { path: "/about-us", element: <AboutUs /> },
-      { path: "/coupon", element: <Coupon /> },
-      { path: "/flashsale", element: <FlashSale /> },
+      {
+        path: "/shop",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Shop />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/search",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <SearchProduct />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/become-seller",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <BecomeASeller />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/contact",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Contact />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/about-us",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <AboutUs />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/coupon",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Coupon />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/flashsale",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <FlashSale />
+          </Suspense>
+        ),
+      },
     ],
   },
   {

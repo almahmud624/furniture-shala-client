@@ -2,7 +2,6 @@ export const setAuthToken = (user) => {
   const currentUser = {
     email: user.email,
   };
-  console.log(currentUser);
   fetch("https://furniture-shala-server.vercel.app/jwt", {
     method: "POST",
     headers: {

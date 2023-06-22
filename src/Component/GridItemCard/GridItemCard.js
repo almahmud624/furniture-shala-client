@@ -12,15 +12,20 @@ import React, { useState } from "react";
 import CustomGradientBtn from "../CustomGradientBtn";
 import ProductModal from "../ProductDetailsModal/ProductModal";
 import WishlistButton from "../WishlistButton/WishlistButton";
+import { useLocation } from "react-router-dom";
 
 const GridItemCard = ({ product }) => {
   const { productName, productImg, newPrice, categories } = product || {};
   const [selectedProduct, setSelectedProduct] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [queryPath, setQueryPath] = useState("");
+  const { search } = useLocation();
   const handleProduct = () => {
+    setQueryPath(search);
     setSelectedProduct(product);
     onOpen();
   };
+
   return (
     <>
       <GridItem
@@ -94,6 +99,7 @@ const GridItemCard = ({ product }) => {
         isOpen={isOpen}
         product={selectedProduct}
         setSelectedProduct={setSelectedProduct}
+        queryPath={queryPath}
       />
     </>
   );

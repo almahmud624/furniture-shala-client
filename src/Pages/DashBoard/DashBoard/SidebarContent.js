@@ -6,15 +6,12 @@ import {
   useColorModeValue,
   Text,
 } from "@chakra-ui/react";
-import { FiCompass } from "react-icons/fi";
 import NavItem from "./NavItem ";
 import { AuthContext } from "../../../Context/AuthProvider";
-import useRoleCheck from "../../../Hooks/useRoleCheck";
 import useAdminCheck from "../../../Hooks/useAdminCheck";
 
 const SidebarContent = ({ onClose, ...rest }) => {
-  const { user } = useContext(AuthContext);
-  const [role] = useRoleCheck(user?.email);
+  const { user, role } = useContext(AuthContext);
   const [admin] = useAdminCheck(user?.email);
 
   return (

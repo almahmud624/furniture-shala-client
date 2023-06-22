@@ -67,7 +67,7 @@ const FeaturedProduct = () => {
   }, []);
 
   return (
-    <Box mt={16}>
+    <Box mt={{ base: 8, md: 16 }}>
       <Box>
         <Heading
           mb={4}
@@ -172,7 +172,6 @@ const FeaturedProduct = () => {
         setCoupon={setCoupon}
       >
         <OrderForm
-          user={user}
           productInfo={productInfo}
           onClose={onClose}
           coupon={coupon}

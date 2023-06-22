@@ -26,7 +26,7 @@ const Newsletter = () => {
         justifyContent="space-between"
         mb={16}
         px={{ sm: 0, md: 16 }}
-        py={{ sm: 10, md: 0 }}
+        py={{ base: 10, md: 0 }}
         bg={useColorModeValue("gray.300", "#1E2532")}
         borderRadius={5}
       >

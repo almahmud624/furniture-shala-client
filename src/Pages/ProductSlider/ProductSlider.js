@@ -140,7 +140,7 @@ const ProductSlider = () => {
           ))}
         </Slider>
         <FormModal isOpen={isOpen} onClose={onClose} modalTitle={"demo"}>
-          <OrderForm user={user} productInfo={productInfo} onClose={onClose} />
+          <OrderForm productInfo={productInfo} onClose={onClose} />
         </FormModal>
       </Box>
     </div>

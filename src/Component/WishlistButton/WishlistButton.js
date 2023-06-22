@@ -5,11 +5,12 @@ import React, { useContext } from "react";
 import { BsHeartFill } from "react-icons/bs";
 import { AuthContext } from "../../Context/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import ViewOnlyMode from "../ViewOnlyMode/ViewOnlyMode";
+import useAdminSellerCheck from "../../Hooks/useAdminSellerCheck";
 
 const WishlistButton = ({ product }) => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  const [isAdminSeller] = useAdminSellerCheck();
   const toast = useToast();
 
   // getting wishlist by user email
@@ -29,6 +30,10 @@ const WishlistButton = ({ product }) => {
 
   // send wishlisted product
   const handleWishList = (product) => {
+    // disable button for admin/ seller
+    if (isAdminSeller) {
+      return;
+    }
     // check listed product
     const listedProduct = userWishList?.find(
       (item) => item?.productId === product?._id
@@ -82,13 +87,12 @@ const WishlistButton = ({ product }) => {
             ? "red.500"
             : "white"
         }
-        cursor={"pointer"}
+        cursor={isAdminSeller ? "not-allowed" : "pointer"}
         onClick={() => {
           user?.email ? handleWishList(product) : navigate("/login");
         }}
         zIndex={10}
       />
-      <ViewOnlyMode />
     </>
   );
 };

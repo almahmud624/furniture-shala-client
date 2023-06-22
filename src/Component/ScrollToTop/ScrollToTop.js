@@ -5,7 +5,7 @@ import useAdminSellerCheck from "../../Hooks/useAdminSellerCheck";
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [isShown] = useAdminSellerCheck();
+  const [isAdminSeller] = useAdminSellerCheck();
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -37,7 +37,7 @@ const ScrollToTop = () => {
         align={"center"}
         display={isVisible ? "block" : "none"}
       >
-        {isShown && (
+        {isAdminSeller && (
           <Text
             pos={"absolute"}
             transform={"rotate(90deg)"}

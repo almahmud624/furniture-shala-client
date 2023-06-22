@@ -4,13 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import ProductCard from "../../../../Component/ProductCard/ProductCard";
 import FormModal from "../../../../Component/FormModal";
 import OrderForm from "../../../../Component/OrderForm";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../../../Context/AuthProvider";
+import { useState } from "react";
 
 const TopSellingProduct = () => {
   const [productInfo, setProductInfo] = useState(null);
   const { onClose, isOpen, onOpen } = useDisclosure();
-  const { user } = useContext(AuthContext);
+
   const { data: mostSoldProducts = [], isLoading } = useQuery({
     queryKey: ["most-sold"],
     queryFn: async () => {
@@ -62,7 +61,7 @@ const TopSellingProduct = () => {
         </Grid>
       </Box>
       <FormModal isOpen={isOpen} onClose={onClose}>
-        <OrderForm user={user} productInfo={productInfo} onClose={onClose} />
+        <OrderForm productInfo={productInfo} onClose={onClose} />
       </FormModal>
     </>
   );

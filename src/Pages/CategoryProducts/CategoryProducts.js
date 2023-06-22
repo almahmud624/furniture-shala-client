@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Box, Text, Grid, useDisclosure, chakra } from "@chakra-ui/react";
 import FormModal from "../../Component/FormModal";
-import { AuthContext } from "../../Context/AuthProvider";
 import OrderForm from "../../Component/OrderForm";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -11,7 +10,6 @@ import ProductCard from "../../Component/ProductCard/ProductCard";
 
 const CategoryProducts = () => {
   const { category } = useParams();
-  const { user } = useContext(AuthContext);
 
   const [productInfo, setProductInfo] = useState(null);
   const { onClose, isOpen, onOpen } = useDisclosure();
@@ -83,7 +81,7 @@ const CategoryProducts = () => {
         </Grid>
       </Box>
       <FormModal isOpen={isOpen} onClose={onClose}>
-        <OrderForm user={user} productInfo={productInfo} onClose={onClose} />
+        <OrderForm productInfo={productInfo} onClose={onClose} />
       </FormModal>
     </>
   );

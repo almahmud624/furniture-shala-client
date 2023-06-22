@@ -6,6 +6,7 @@ import { useContext, useEffect } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { DataStoreContext } from "../../Context/DataProvider";
 import GridItemCard from "../GridItemCard/GridItemCard";
+import Loader from "../Loader";
 
 const InfiniteScrollProduct = ({ searchQuery }) => {
   const { products: allProducts } = useContext(DataStoreContext);
@@ -71,7 +72,7 @@ const InfiniteScrollProduct = ({ searchQuery }) => {
           gap={{ base: 7, md: 5 }}
         >
           {status === "loading" ? (
-            <Text>Loading...</Text>
+            <Loader />
           ) : status === "error" ? (
             <Text>Error:{error.message}</Text>
           ) : (

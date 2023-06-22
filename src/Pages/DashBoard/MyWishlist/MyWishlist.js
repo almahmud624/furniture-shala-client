@@ -153,7 +153,7 @@ const MyWishlist = () => {
         />
       )}
       <FormModal isOpen={isOpen} onClose={onClose}>
-        <OrderForm user={user} productInfo={productInfo} onClose={onClose} />
+        <OrderForm productInfo={productInfo} onClose={onClose} />
       </FormModal>
     </>
   );

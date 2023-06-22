@@ -10,12 +10,15 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { app } from "../Firebase/firebase.init";
+import { useQuery } from "@chakra-ui/react";
+import axios from "axios";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
+  const [role, setRole] = useState();
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
   // create use
@@ -48,8 +51,14 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem("furniture-token");
     return signOut(auth);
   };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      axios
+        .get(
+          `https://furniture-shala-server.vercel.app/user/role/${currentUser?.email}`
+        )
+        .then((res) => setRole(res?.data?.role));
       setUser(currentUser);
       setLoading(false);
     });
@@ -63,6 +72,7 @@ const AuthProvider = ({ children }) => {
     userSignOut,
     loading,
     googleSignIn,
+    role,
   };
   return (
     <AuthContext.Provider value={authStore}>{children}</AuthContext.Provider>
