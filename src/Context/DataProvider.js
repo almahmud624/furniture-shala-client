@@ -14,8 +14,6 @@ const DataProvider = ({ children }) => {
   const {
     data: products = [],
     isLoading,
-    refetch,
-    isError,
     error,
   } = useQuery({
     queryKey: ["products"],
@@ -29,7 +27,6 @@ const DataProvider = ({ children }) => {
         console.log(error);
       }
     },
-    // refetchInterval: 1000,
   });
 
   const dataStore = {
@@ -41,7 +38,6 @@ const DataProvider = ({ children }) => {
     setReportedItems,
     products,
     isLoading,
-    isError,
     error,
   };
 

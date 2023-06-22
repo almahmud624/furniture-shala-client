@@ -9,6 +9,7 @@ import { useContext, useState } from "react";
 import GridItemCard from "../../../../Component/GridItemCard/GridItemCard";
 import Loader from "../../../../Component/Loader";
 import { DataStoreContext } from "../../../../Context/DataProvider";
+import NotFound from "../../../../Component/NotFound/NotFound";
 
 const ShopProduct = ({ onOpen }) => {
   const [sort, setSort] = useState("");
@@ -53,14 +54,10 @@ const ShopProduct = ({ onOpen }) => {
   } = useQuery({
     queryKey: ["products", page],
     queryFn: async () => {
-      try {
-        const { data } = await axios.get(
-          `https://furniture-shala-server.vercel.app/products?_limit=6&_page=${page}`
-        );
-        return data;
-      } catch (error) {
-        console.log(error);
-      }
+      const { data } = await axios.get(
+        `https://furniture-shala-server.vercel.app/products?_limit=6&_page=${page}`
+      );
+      return data;
     },
     keepPreviousData: true,
     staleTime: 5000,
@@ -150,6 +147,7 @@ const ShopProduct = ({ onOpen }) => {
     : sortedProducts;
 
   const { length: productsLength } = showProducts || [];
+  console.log(isPreviousData);
 
   return (
     <>
@@ -199,14 +197,7 @@ const ShopProduct = ({ onOpen }) => {
               <Heading>{error?.message}</Heading>
             </Box>
           ) : productsLength === 0 ? (
-            <Box
-              h={"md"}
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"center"}
-            >
-              <Heading color={"red.600"}>No Products Found</Heading>
-            </Box>
+            <NotFound message={"Products"} buttonText={"home"} link={"/"} />
           ) : (
             showProducts?.map((product) => (
               <GridItemCard key={product?._id} product={product} />

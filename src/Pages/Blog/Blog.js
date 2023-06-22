@@ -9,6 +9,7 @@ import {
   useColorModeValue,
   Grid,
   HStack,
+  Flex,
 } from "@chakra-ui/react";
 import ReadMoreReadLess from "../../Component/ReadMoreReadLess";
 
@@ -25,13 +26,13 @@ const Blog = () => {
   }
 
   return (
-    <Box maxW={"90%"} py="12" mx={"auto"}>
+    <Flex flexDir={"column"} maxW={"90%"} py="12" mx={"auto"}>
       <Box
-        mb={10}
         display="flex"
         gap={{ base: 0, md: 7 }}
         flexDirection={{ base: "column", sm: "row" }}
         justifyContent="space-between"
+        mb={{ base: 40, md: "10" }}
       >
         <Box
           mb={"10"}
@@ -65,11 +66,10 @@ const Blog = () => {
           flexDirection="column"
           justifyContent="baseline"
         >
-          <Heading>
-            <Link textDecoration="none" _hover={{ textDecoration: "none" }}>
-              {selectedBlog?.title}
-            </Link>
-          </Heading>
+          <Link textDecoration="none" _hover={{ textDecoration: "none" }}>
+            <Heading>{selectedBlog?.title}</Heading>
+          </Link>
+
           <HStack align={"center"} justify={"space-between"} my={3}>
             <Text as="p" fontSize="md" color={"gray.400"}>
               {selectedBlog?.published_date}
@@ -92,7 +92,7 @@ const Blog = () => {
       </Box>
 
       <Box mt={{ base: 40, md: "10" }}>
-        <Heading as="h2">Latest Journal</Heading>
+        <Heading>Latest Blog</Heading>
         <Divider marginTop="5" />
         <Grid
           marginTop="5"
@@ -108,7 +108,7 @@ const Blog = () => {
           ))}
         </Grid>
       </Box>
-    </Box>
+    </Flex>
   );
 };
 

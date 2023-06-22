@@ -78,8 +78,9 @@ const WishlistButton = ({ product }) => {
         right={3}
         top={3}
         color={
-          userWishList?.some((list) => list?.productId === product?._id) &&
-          "red.500"
+          userWishList?.some((list) => list?.productId === product?._id)
+            ? "red.500"
+            : "white"
         }
         cursor={"pointer"}
         onClick={() => {

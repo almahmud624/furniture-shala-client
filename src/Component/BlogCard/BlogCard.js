@@ -15,7 +15,7 @@ export default function BlogCard({ item, handleBlog }) {
   return (
     <>
       <GridItem width={"full"} bg={"gray.900"} p={4}>
-        <Box w="100%">
+        <Box w="100%" color={"gray.200"}>
           <Heading fontSize="2xl" fontWeight={"semibold"} mb="5">
             <Link
               textDecoration="none"

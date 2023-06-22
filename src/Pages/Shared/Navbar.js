@@ -166,7 +166,7 @@ const Navbar = () => {
                     />
                   )}
                 </MenuButton>
-                <MenuList>
+                <MenuList zIndex={50}>
                   <MenuItem>{user?.displayName}</MenuItem>
                   <MenuItem>Profile</MenuItem>
                   <MenuDivider />

@@ -26,6 +26,8 @@ const NavItem = ({ icon, children, path, onClose, ...rest }) => {
           borderRadius="md"
           role="group"
           cursor="pointer"
+          color={"gray.800"}
+          _dark={{ color: "gray.200" }}
           _hover={{
             bg: "primary",
             color: "white",

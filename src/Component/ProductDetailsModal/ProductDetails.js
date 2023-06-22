@@ -10,10 +10,14 @@ import {
 } from "@chakra-ui/react";
 import CustomGradientBtn from "../CustomGradientBtn";
 import ReadMoreReadLess from "../ReadMoreReadLess";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { calculateDiscountAmount } from "../../Utilities/calculateDiscountAmount";
+import { useContext } from "react";
+import { AuthContext } from "../../Context/AuthProvider";
 
 const ProductDetails = ({ product, setIsOrder, discount }) => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     categories,
     productImg,
@@ -102,7 +106,10 @@ const ProductDetails = ({ product, setIsOrder, discount }) => {
               </Box>
             </Flex>
             <CustomGradientBtn
-              action={() => setIsOrder(true)}
+              action={() => {
+                setIsOrder(true);
+                !user?.uid && navigate("/login");
+              }}
               size={"md"}
               customStyle={{
                 h: 10,

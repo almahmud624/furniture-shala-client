@@ -3,7 +3,7 @@ import {
   Flex,
   HStack,
   Heading,
-  Stack,
+  Image,
   Text,
   VStack,
   useDisclosure,
@@ -12,10 +12,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { DataStoreContext } from "../../../../Context/DataProvider";
 import calculatePercentage from "../../../../Utilities/calculatePercentage";
 import ProductCoupon from "../ProductCoupon/ProductCoupon";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import FormModal from "../../../../Component/FormModal";
 import OrderForm from "../../../../Component/OrderForm";
 import { AuthContext } from "../../../../Context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const FeaturedProduct = () => {
   const { products } = useContext(DataStoreContext);
@@ -24,6 +24,7 @@ const FeaturedProduct = () => {
   const { onClose, isOpen, onOpen } = useDisclosure();
   const { user } = useContext(AuthContext);
   const [coupon, setCoupon] = useState(null);
+  const navigate = useNavigate();
 
   const selectRandomProducts = () => {
     const currentTime = new Date().getTime();
@@ -101,6 +102,7 @@ const FeaturedProduct = () => {
                 size={{ base: "md", md: "lg" }}
                 fontWeight={"semibold"}
                 noOfLines={2}
+                color="gray.200"
                 title={productName}
               >
                 {productName}
@@ -113,7 +115,9 @@ const FeaturedProduct = () => {
                 >
                   ${oldPrice}
                 </Text>
-                <Text display={"inline"}>${newPrice}</Text>
+                <Text display={"inline"} color="gray.300">
+                  ${newPrice}
+                </Text>
               </HStack>
               <Text
                 display={"inline"}
@@ -134,6 +138,7 @@ const FeaturedProduct = () => {
                 onClick={() => {
                   setProductInfo(randomProducts?.[0]);
                   onOpen();
+                  !user?.uid && navigate("/login");
                 }}
               >
                 Save {calculatePercentage(oldPrice, newPrice)}%
@@ -144,12 +149,11 @@ const FeaturedProduct = () => {
               w={"72"}
               flexGrow={1}
             >
-              <LazyLoadImage
+              <Image
                 src={productImg}
                 height={"100%"}
                 objectFit={"cover"}
-                effect="blur"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                w={"full"}
               />
             </Box>
           </Flex>

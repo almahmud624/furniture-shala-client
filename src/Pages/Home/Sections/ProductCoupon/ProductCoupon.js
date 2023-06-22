@@ -3,18 +3,19 @@ import {
   Button,
   Flex,
   Heading,
-  Icon,
   Image,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { BsInfoCircle } from "react-icons/bs";
+import { useContext, useState } from "react";
 import { Countdown } from "../../../../Component/Countdown";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../../Context/AuthProvider";
 
 const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
   const { pathname } = useLocation();
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const { _id, productName, productImg, newPrice } = product || {};
   const [couponStatus, setCouponStatus] = useState({ _id, status: true });
   const couponText = pathname === "/coupon" ? "Winter06" : "Coupen11";
@@ -121,6 +122,7 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
                     setProductInfo(product);
                     setCoupon({ couponText, couponPercentage });
                     onOpen();
+                    !user?.uid && navigate("/login");
                   }}
                 >
                   Order Now
@@ -135,7 +137,10 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
                 h={"8"}
                 mx={"auto"}
                 rounded={"full"}
-                bg={"gray.800"}
+                bg={"white"}
+                _dark={{
+                  bg: "gray.800",
+                }}
               ></Box>
               <Box
                 pos={"absolute"}
@@ -146,7 +151,10 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
                 h={"8"}
                 mx={"auto"}
                 rounded={"full"}
-                bg={"gray.800"}
+                bg={"white"}
+                _dark={{
+                  bg: "gray.800",
+                }}
               ></Box>
             </Box>
           </Flex>

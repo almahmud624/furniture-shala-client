@@ -118,11 +118,15 @@ const ProductGridItem = ({
             left={0}
             p={2}
           >
-            <Heading size={{ base: "md", lg: "lg" }} fontWeight={"semibold"}>
+            <Heading
+              size={{ base: "md", lg: "lg" }}
+              fontWeight={"semibold"}
+              color="gray.200"
+            >
               {productName}
             </Heading>
             {priceText && (
-              <Text fontSize={20} fontWeight={"thin"}>
+              <Text fontSize={20} fontWeight={"thin"} color="gray.300">
                 from ${newPrice}
               </Text>
             )}

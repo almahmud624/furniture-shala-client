@@ -30,7 +30,7 @@ const SeasonSale = () => {
           h={"full"}
           justify={"center"}
         >
-          <Text fontWeight={"semibold"}>
+          <Text fontWeight={"semibold"} color="gray.400">
             Extra{" "}
             <Text
               display={"inline-block"}
@@ -69,10 +69,13 @@ const SeasonSale = () => {
             lineHeight={{
               md: "shorter",
             }}
+            color={"gray.200"}
           >
             {getCurrentSeason()} Season Sale
           </Heading>
-          <Text pb={2}>Free shipping on orders over $99</Text>
+          <Text pb={2} color="gray.400">
+            Free shipping on orders over $99
+          </Text>
           <CustomGradientBtn link={"/shop"} size={{ base: "sm", md: "md" }}>
             Shop Now
           </CustomGradientBtn>

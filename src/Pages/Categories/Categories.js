@@ -62,7 +62,8 @@ const Categories = () => {
             <Box
               px={5}
               pt={5}
-              bg={"gray.900"}
+              bg={"transparent"}
+              _dark={{ bg: "gray.900" }}
               rounded={"lg"}
               borderWidth={1}
               borderColor={"secondary"}

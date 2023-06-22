@@ -47,14 +47,15 @@ export default function FeaturesMenu({
       pos={"absolute"}
       top={16}
       zIndex={showFeaturesMenu ? 50 : -1}
-      bg={"gray.900"}
+      bg={"gray.100"}
+      _dark={{ bg: "gray.900", borderTopColor: "gray.700" }}
       opacity={showFeaturesMenu ? "1" : "0"}
       transition={"all"}
       transitionDuration={".5s"}
       onMouseLeave={() => setShowFeaturesMenu(false)}
       p={10}
       borderTopWidth={1}
-      borderTopColor={"gray.700"}
+      borderTopColor={"gray.400"}
       justify={"center"}
       w={"full"}
     >

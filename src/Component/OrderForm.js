@@ -20,6 +20,8 @@ import moment from "moment";
 import axios from "axios";
 import { calculateDiscountAmount } from "../Utilities/calculateDiscountAmount";
 import ViewOnlyMode from "./ViewOnlyMode/ViewOnlyMode";
+import CustomButton from "./CustomButton";
+import { useNavigate } from "react-router-dom";
 
 export default function OrderForm({
   user,
@@ -34,6 +36,7 @@ export default function OrderForm({
   const toastIdRef = useRef();
   const [couponInput, setCouponInput] = useState();
   const [amount, setAmount] = useState(productInfo?.newPrice);
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -42,6 +45,9 @@ export default function OrderForm({
   } = useForm();
 
   async function onSubmit(order) {
+    if (!user?.uid) {
+      return navigate("/login");
+    }
     order.productId = productInfo?._id;
     order.orderdAt = moment().format("ll");
     order.productPrice = amount;
@@ -219,17 +225,13 @@ export default function OrderForm({
           </FormControl>
           <Box pos={"relative"} w={"fit-content"}>
             <ViewOnlyMode />
-            <Button
-              mt={4}
-              bg={"primary"}
-              _hover={{ bg: "secondary" }}
-              transition={"all .3s"}
-              borderRadius={"sm"}
+
+            <CustomButton
+              rounded={"sm"}
+              text={"submit"}
               isLoading={isSubmitting}
-              type="submit"
-            >
-              Submit
-            </Button>
+              type="Submit"
+            />
           </Box>
         </Stack>
       </form>

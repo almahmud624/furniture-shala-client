@@ -9,7 +9,8 @@ const PageHeader = ({ pageTag, title, children, tagStyle, headerStyle }) => {
           <Text
             as={"span"}
             fontWeight={"semibold"}
-            color={"gray.300"}
+            color={"gray.600"}
+            _dark={{ color: "gray.300" }}
             pos={"relative"}
           >
             <Image src={svgCurve} pos={"absolute"} top={5} />

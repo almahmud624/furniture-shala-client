@@ -135,6 +135,9 @@ function FlashSaleCard({ product = {}, handleProduct }) {
             variant={"outline"}
             borderColor={"primary"}
             color={"gray.200"}
+            bg={"transparent"}
+            _hover={{ bg: "primary", borderColor: "secondary" }}
+            transition={"all .3s"}
             onClick={() => handleProduct(product)}
           >
             Discover

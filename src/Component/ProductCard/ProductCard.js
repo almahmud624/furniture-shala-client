@@ -72,6 +72,7 @@ const ProductCard = ({ product = {}, setProductInfo, onOpen }) => {
             {!isHomePage && <WishlistButton product={product} />}
             <Icon
               as={ImEnlarge}
+              color={"white"}
               fontSize={"24px"}
               pos={"absolute"}
               cursor={"pointer"}
