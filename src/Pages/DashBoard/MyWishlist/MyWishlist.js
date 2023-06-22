@@ -146,7 +146,11 @@ const MyWishlist = () => {
           ))}
         </SimpleGrid>
       ) : (
-        <NotFound message={"Wishlist"} buttonText={"Shop"} link={"/shop"} />
+        <NotFound
+          message={"Wishlist"}
+          buttonText={"Go To Shop"}
+          link={"/shop"}
+        />
       )}
       <FormModal isOpen={isOpen} onClose={onClose}>
         <OrderForm user={user} productInfo={productInfo} onClose={onClose} />

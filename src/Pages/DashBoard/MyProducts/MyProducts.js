@@ -10,7 +10,6 @@ import {
   Heading,
   Image,
   Text,
-  Button,
   useToast,
   Box,
   useDisclosure,
@@ -21,6 +20,8 @@ import axios from "axios";
 import Loader from "../../../Component/Loader";
 import ConfirmationModal from "../../../Component/ConfirmationModal";
 import CustomButton from "../../../Component/CustomButton";
+import NotFound from "../../../Component/NotFound/NotFound";
+import { sortLatestItem } from "../../../Utilities/sortLatestItem";
 
 const MyProducts = () => {
   const { user, userSignOut } = useContext(AuthContext);
@@ -119,69 +120,77 @@ const MyProducts = () => {
       >
         My Product
       </Heading>
-      <TableContainer>
-        <Table variant="simple" bg={"gray.300"} _dark={{ bg: "gray.800" }}>
-          <Thead>
-            <Tr>
-              <Th></Th>
-              <Th>Name</Th>
-              <Th>Category</Th>
-              <Th isNumeric>Price</Th>
-              <Th>Status</Th>
-              <Th>Advertise</Th>
-              <Th>Action</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {sellerProducts?.map((product, i) => (
-              <Tr key={Math.random()}>
-                <Box w="12" h="12">
-                  <Image
-                    src={product?.productImg}
-                    w="full"
-                    h="full"
-                    objectFit={"cover"}
-                    p={"1"}
-                    rounded={"2xl"}
-                  />
-                </Box>
-                <Td>{product?.productName}</Td>
-                <Td textTransform={"capitalize"}>{product?.categories}</Td>
-                <Td isNumeric color={"green.600"}>
-                  <Text as="del" fontSize={"xs"} color="red.600" pr={1}>
-                    ${product?.oldPrice}
-                  </Text>
-                  ${product?.newPrice}
-                </Td>
-                <Td textTransform={"capitalize"} color={"green.600"}>
-                  {product?.inStock}
-                </Td>
-                <Td>
-                  <CustomButton
-                    size={"sm"}
-                    action={() => handleAdvertisement(product)}
-                    text={
-                      product.advertisement ? "Remove Advertise" : "Advertise"
-                    }
-                  />
-                </Td>
-                <Td>
-                  <CustomButton
-                    size={"sm"}
-                    action={() => {
-                      setSelectedProduct(product);
-                      onOpen();
-                    }}
-                    text={"Remove"}
-                    bg="red.600"
-                    _hover={{ bg: "red.700" }}
-                  />
-                </Td>
+      {sellerProducts?.length > 0 ? (
+        <TableContainer>
+          <Table variant="simple" bg={"gray.300"} _dark={{ bg: "gray.800" }}>
+            <Thead>
+              <Tr>
+                <Th></Th>
+                <Th>Name</Th>
+                <Th>Category</Th>
+                <Th isNumeric>Price</Th>
+                <Th>Status</Th>
+                <Th>Advertise</Th>
+                <Th>Action</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
+            </Thead>
+            <Tbody>
+              {sortLatestItem(sellerProducts)?.map((product, i) => (
+                <Tr key={Math.random()}>
+                  <Box w="12" h="12">
+                    <Image
+                      src={product?.productImg}
+                      w="full"
+                      h="full"
+                      objectFit={"cover"}
+                      p={"1"}
+                      rounded={"2xl"}
+                    />
+                  </Box>
+                  <Td>{product?.productName}</Td>
+                  <Td textTransform={"capitalize"}>{product?.categories}</Td>
+                  <Td isNumeric color={"green.600"}>
+                    <Text as="del" fontSize={"xs"} color="red.600" pr={1}>
+                      ${product?.oldPrice}
+                    </Text>
+                    ${product?.newPrice}
+                  </Td>
+                  <Td textTransform={"capitalize"} color={"green.600"}>
+                    {product?.inStock}
+                  </Td>
+                  <Td>
+                    <CustomButton
+                      size={"sm"}
+                      action={() => handleAdvertisement(product)}
+                      text={
+                        product.advertisement ? "Remove Advertise" : "Advertise"
+                      }
+                    />
+                  </Td>
+                  <Td>
+                    <CustomButton
+                      size={"sm"}
+                      action={() => {
+                        setSelectedProduct(product);
+                        onOpen();
+                      }}
+                      text={"Remove"}
+                      bg="red.600"
+                      _hover={{ bg: "red.700" }}
+                    />
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <NotFound
+          message={"Products"}
+          buttonText={"Add Product"}
+          link={"/dashboard/add-product"}
+        />
+      )}
       <ConfirmationModal
         isOpen={isOpen}
         onClose={onClose}

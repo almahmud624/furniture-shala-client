@@ -197,7 +197,11 @@ const ShopProduct = ({ onOpen }) => {
               <Heading>{error?.message}</Heading>
             </Box>
           ) : productsLength === 0 ? (
-            <NotFound message={"Products"} buttonText={"home"} link={"/"} />
+            <NotFound
+              message={"Products"}
+              buttonText={"Go To Home"}
+              link={"/"}
+            />
           ) : (
             showProducts?.map((product) => (
               <GridItemCard key={product?._id} product={product} />

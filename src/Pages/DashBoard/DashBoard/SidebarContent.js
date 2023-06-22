@@ -44,7 +44,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
               path="/dashboard/all-sellers"
               onClose={onClose}
             >
-              All Selleres
+              All Sellers
             </NavItem>
             <NavItem
               key={Math.random()}
@@ -66,17 +66,17 @@ const SidebarContent = ({ onClose, ...rest }) => {
           <>
             <NavItem
               key={Math.random()}
-              path="/dashboard/add-product"
-              onClose={onClose}
-            >
-              Add Product
-            </NavItem>
-            <NavItem
-              key={Math.random()}
               path="/dashboard/my-products"
               onClose={onClose}
             >
               My Products
+            </NavItem>
+            <NavItem
+              key={Math.random()}
+              path="/dashboard/add-product"
+              onClose={onClose}
+            >
+              Add Product
             </NavItem>
           </>
         )}

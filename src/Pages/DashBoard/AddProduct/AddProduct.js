@@ -8,7 +8,6 @@ import {
   Input,
   HStack,
   Stack,
-  Button,
   Text,
   useColorModeValue,
   useToast,
@@ -63,6 +62,7 @@ const AddProduct = () => {
         isClosable: true,
         status: "error",
       });
+      setState("error");
       return;
     }
 

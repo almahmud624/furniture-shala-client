@@ -7,6 +7,7 @@ const CustomGradientBtn = ({
   customStyle,
   size = ["sm", "md", "lg"],
   action,
+  ...rest
 }) => {
   return (
     <>
@@ -28,6 +29,7 @@ const CustomGradientBtn = ({
         }}
         sx={customStyle}
         onClick={action}
+        {...rest}
       >
         <Link to={link}> {children} </Link>
       </chakra.button>

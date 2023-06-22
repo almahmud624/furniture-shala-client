@@ -16,6 +16,7 @@ import axios from "axios";
 import React from "react";
 import Loader from "../../../Component/Loader";
 import CustomButton from "../../../Component/CustomButton";
+import NotFound from "../../../Component/NotFound/NotFound";
 
 const MakeAdmin = () => {
   const toast = useToast();
@@ -73,7 +74,7 @@ const MakeAdmin = () => {
     return <Loader />;
   }
   return (
-    <div>
+    <>
       <div>
         <Heading
           as="h3"
@@ -83,57 +84,61 @@ const MakeAdmin = () => {
         >
           Make Admin
         </Heading>
-        <TableContainer>
-          <Table variant="simple" bg={"gray.300"} _dark={{ bg: "gray.800" }}>
-            <Thead>
-              <Tr>
-                <Th>Name</Th>
-                <Th>Email</Th>
-                <Th>Role</Th>
-                <Th>Action</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {users?.map((user, i) => (
-                <Tr key={Math.random()}>
-                  <Td>{user?.name}</Td>
-                  <Td>{user?.email}</Td>
-                  <Td
-                    color={
-                      user?.role === "admin"
-                        ? "green.600"
-                        : user?.role === "seller"
-                        ? "primary"
-                        : "yellow.600"
-                    }
-                    style={{ textTransform: "capitalize" }}
-                  >
-                    {user?.role === "admin" ? "Admin" : user?.role}
-                  </Td>
-
-                  <Td>
-                    <CustomButton
-                      size="sm"
-                      text={
-                        user.role === "admin"
-                          ? "Remove Admin Role"
-                          : "Make Admin"
-                      }
-                      action={() => handleMakeAdmin(user)}
-                      disabled={[
-                        "furnitureshala@gmail.com",
-                        "seller@gmail.com",
-                        "user@gmail.com",
-                      ].find((each) => each === user?.email)}
-                    />
-                  </Td>
+        {users?.length > 0 ? (
+          <TableContainer>
+            <Table variant="simple" bg={"gray.300"} _dark={{ bg: "gray.800" }}>
+              <Thead>
+                <Tr>
+                  <Th>Name</Th>
+                  <Th>Email</Th>
+                  <Th>Role</Th>
+                  <Th>Action</Th>
                 </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
+              </Thead>
+              <Tbody>
+                {users?.map((user, i) => (
+                  <Tr key={Math.random()}>
+                    <Td>{user?.name}</Td>
+                    <Td>{user?.email}</Td>
+                    <Td
+                      color={
+                        user?.role === "admin"
+                          ? "green.600"
+                          : user?.role === "seller"
+                          ? "primary"
+                          : "yellow.600"
+                      }
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      {user?.role === "admin" ? "Admin" : user?.role}
+                    </Td>
+
+                    <Td>
+                      <CustomButton
+                        size="sm"
+                        text={
+                          user.role === "admin"
+                            ? "Remove Admin Role"
+                            : "Make Admin"
+                        }
+                        action={() => handleMakeAdmin(user)}
+                        disabled={[
+                          "furnitureshala@gmail.com",
+                          "seller@gmail.com",
+                          "user@gmail.com",
+                        ].find((each) => each === user?.email)}
+                      />
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        ) : (
+          <NotFound message={"Users"} hideBtn={"none"} />
+        )}
       </div>
-    </div>
+    </>
   );
 };
 

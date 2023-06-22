@@ -17,10 +17,10 @@ import { AuthContext } from "../../../Context/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loader from "../../../Component/Loader";
-import NavItem from "../DashBoard/NavItem ";
 import NotFound from "../../../Component/NotFound/NotFound";
 import CustomButton from "../../../Component/CustomButton";
 import { useNavigate } from "react-router-dom";
+import { sortLatestItem } from "../../../Utilities/sortLatestItem";
 
 const MyOrders = () => {
   const { products } = useContext(DataStoreContext);
@@ -60,7 +60,7 @@ const MyOrders = () => {
       _id: order?._id,
       title: order?.productName,
       price: order?.productPrice,
-      date: order?.orderdAt,
+      createdAt: order?.orderdAt,
       paid: order?.paid,
       img: product?.productImg,
       productId: order?.productId,
@@ -99,7 +99,7 @@ const MyOrders = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {orderProducts?.map((product) => (
+              {sortLatestItem(orderProducts)?.map((product) => (
                 <Tr key={Math.random()}>
                   <Box w="12" h="12">
                     <Image
@@ -115,7 +115,7 @@ const MyOrders = () => {
 
                   <Td isNumeric>${product?.price}</Td>
                   {}
-                  <Td>{product?.date}</Td>
+                  <Td>{product?.createdAt}</Td>
                   <Td textTransform={"capitalize"}>
                     {product?.paid ? (
                       <Text color={"green.600"}>Paid</Text>
@@ -145,7 +145,7 @@ const MyOrders = () => {
           </Table>
         </TableContainer>
       ) : (
-        <NotFound message={"Orders"} buttonText={"Shop"} link={"/shop"} />
+        <NotFound message={"Orders"} buttonText={"Go To Shop"} link={"/shop"} />
       )}
     </div>
   );

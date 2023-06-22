@@ -1,14 +1,22 @@
-import { Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../../Context/AuthProvider";
+import useAdminSellerCheck from "../../../Hooks/useAdminSellerCheck";
+import AllSellers from "../AllSellers/AllSellers";
+import MyProducts from "../MyProducts/MyProducts";
+import MyOrders from "../MyOrders/MyOrders";
 
 const DashBoardIndex = () => {
-  return (
-    <div>
-      <Text fontSize={["2xl", "6xl"]} fontWeight={"semibold"}>
-        Welcome to DashBoard
-      </Text>
-    </div>
-  );
+  const { user } = useContext(AuthContext);
+  const [isShown, role] = useAdminSellerCheck(user?.email);
+
+  switch (role) {
+    case "admin":
+      return <AllSellers />;
+    case "seller":
+      return <MyProducts />;
+    default:
+      return <MyOrders />;
+  }
 };
 
 export default DashBoardIndex;

@@ -1,7 +1,7 @@
 import { Heading, Flex } from "@chakra-ui/react";
 import CustomGradientBtn from "../CustomGradientBtn";
 
-export default function NotFound({ message, buttonText, link }) {
+export default function NotFound({ message, buttonText, link, hideBtn }) {
   return (
     <Flex
       flexDir={"column"}
@@ -17,8 +17,8 @@ export default function NotFound({ message, buttonText, link }) {
         {message} Not Found
       </Heading>
 
-      <CustomGradientBtn size={"sm"} link={link}>
-        Go to {buttonText}
+      <CustomGradientBtn size={"sm"} link={link} display={hideBtn}>
+        {buttonText}
       </CustomGradientBtn>
     </Flex>
   );

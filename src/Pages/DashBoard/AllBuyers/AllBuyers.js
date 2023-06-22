@@ -16,6 +16,7 @@ import axios from "axios";
 import Loader from "../../../Component/Loader";
 import ConfirmationModal from "../../../Component/ConfirmationModal";
 import CustomButton from "../../../Component/CustomButton";
+import NotFound from "../../../Component/NotFound/NotFound";
 
 const AllBuyers = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -60,7 +61,7 @@ const AllBuyers = () => {
     return <Loader />;
   }
   return (
-    <div>
+    <>
       <Heading
         as="h3"
         size={["lg", "xl", "2xl"]}
@@ -69,52 +70,56 @@ const AllBuyers = () => {
       >
         All Buyers
       </Heading>
-      <TableContainer>
-        <Table variant="simple" bg={"gray.300"} _dark={{ bg: "gray.800" }}>
-          <Thead>
-            <Tr>
-              <Th>Name</Th>
-              <Th>Email</Th>
-              <Th>Role</Th>
-              <Th>Action</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {buyers?.map((buyer) => (
-              <Tr key={Math.random()}>
-                <Td>{buyer?.name}</Td>
-                <Td>{buyer?.email}</Td>
-
-                <Td color="primary" style={{ textTransform: "capitalize" }}>
-                  {buyer?.role === "user" && "Buyer"}
-                </Td>
-
-                <Td>
-                  <CustomButton
-                    size={"sm"}
-                    text={"Remove Buyer"}
-                    action={() => {
-                      onOpen();
-                      setBuyerInfo(buyer);
-                    }}
-                    disabled={"user@gmail.com" === buyer?.email}
-                    bg="red.600"
-                    _hover={{ bg: "red.700" }}
-                  />
-                </Td>
+      {buyers?.length > 0 ? (
+        <TableContainer>
+          <Table variant="simple" bg={"gray.300"} _dark={{ bg: "gray.800" }}>
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Email</Th>
+                <Th>Role</Th>
+                <Th>Action</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
-        <ConfirmationModal
-          isOpen={isOpen}
-          onClose={onClose}
-          handleAction={handleBuyersDelete}
-          targetedId={buyerInfo?._id}
-          modalBody={`Are you want to remove ${buyerInfo?.name} from ${buyerInfo?.role} role? Before take any action, You have to know that remove item cann't be undone.`}
-        />
-      </TableContainer>
-    </div>
+            </Thead>
+            <Tbody>
+              {buyers?.map((buyer) => (
+                <Tr key={Math.random()}>
+                  <Td>{buyer?.name}</Td>
+                  <Td>{buyer?.email}</Td>
+
+                  <Td color="primary" style={{ textTransform: "capitalize" }}>
+                    {buyer?.role === "user" && "Buyer"}
+                  </Td>
+
+                  <Td>
+                    <CustomButton
+                      size={"sm"}
+                      text={"Remove Buyer"}
+                      action={() => {
+                        onOpen();
+                        setBuyerInfo(buyer);
+                      }}
+                      disabled={"user@gmail.com" === buyer?.email}
+                      bg="red.600"
+                      _hover={{ bg: "red.700" }}
+                    />
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+          <ConfirmationModal
+            isOpen={isOpen}
+            onClose={onClose}
+            handleAction={handleBuyersDelete}
+            targetedId={buyerInfo?._id}
+            modalBody={`Are you want to remove ${buyerInfo?.name} from ${buyerInfo?.role} role? Before take any action, You have to know that remove item cann't be undone.`}
+          />
+        </TableContainer>
+      ) : (
+        <NotFound message={"Buyers"} hideBtn={"none"} />
+      )}
+    </>
   );
 };
 

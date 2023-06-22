@@ -15,11 +15,12 @@ import axios from "axios";
 import Loader from "../../../Component/Loader";
 import { AuthContext } from "../../../Context/AuthProvider";
 import CustomButton from "../../../Component/CustomButton";
+import NotFound from "../../../Component/NotFound/NotFound";
 
 const AllSellers = () => {
   const { userSignOut } = useContext(AuthContext);
   const {
-    data: users = [],
+    data: sellers = [],
     refetch,
     isLoading,
   } = useQuery({
@@ -92,57 +93,61 @@ const AllSellers = () => {
       >
         All Sellers
       </Heading>
-      <TableContainer>
-        <Table variant="simple" bg={"gray.300"} _dark={{ bg: "gray.800" }}>
-          <Thead>
-            <Tr>
-              <Th>Name</Th>
-              <Th>Email</Th>
-              <Th>Verify</Th>
-              <Th>Action</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {users?.map((seller) => (
-              <Tr key={Math.random()}>
-                <Td>{seller?.name}</Td>
-                <Td>{seller?.email}</Td>
-                {seller?.verfiedSeller ? (
-                  <>
-                    <Td
-                      color="green.600"
-                      style={{ textTransform: "capitalize" }}
-                    >
-                      Verified
+      {sellers?.length > 0 ? (
+        <TableContainer>
+          <Table variant="simple" bg={"gray.300"} _dark={{ bg: "gray.800" }}>
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Email</Th>
+                <Th>Verify</Th>
+                <Th>Action</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {sellers?.map((seller) => (
+                <Tr key={Math.random()}>
+                  <Td>{seller?.name}</Td>
+                  <Td>{seller?.email}</Td>
+                  {seller?.verfiedSeller ? (
+                    <>
+                      <Td
+                        color="green.600"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        Verified
+                      </Td>
+                    </>
+                  ) : (
+                    <Td style={{ textTransform: "capitalize" }}>
+                      <CustomButton
+                        size="sm"
+                        text={"Verfiy Seller"}
+                        action={() => {
+                          handleVerifySeller(seller?.email);
+                        }}
+                      />
                     </Td>
-                  </>
-                ) : (
-                  <Td style={{ textTransform: "capitalize" }}>
+                  )}
+
+                  <Td>
                     <CustomButton
-                      size="sm"
-                      text={"Verfiy Seller"}
-                      action={() => {
-                        handleVerifySeller(seller?.email);
-                      }}
+                      size={"sm"}
+                      text={"Remove Seller"}
+                      action={() => handleSellerDelete(seller?._id)}
+                      disabled={"seller@gmail.com" === seller?.email}
+                      bg="red.600"
+                      _hover={{ bg: "red.700" }}
                     />
                   </Td>
-                )}
-
-                <Td>
-                  <CustomButton
-                    size={"sm"}
-                    text={"Remove Seller"}
-                    action={() => handleSellerDelete(seller?._id)}
-                    disabled={"seller@gmail.com" === seller?.email}
-                    bg="red.600"
-                    _hover={{ bg: "red.700" }}
-                  />
-                </Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <NotFound message={"Sellers"} hideBtn={"none"} />
+      )}
     </div>
   );
 };
