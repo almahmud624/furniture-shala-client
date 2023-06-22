@@ -13,7 +13,7 @@ const CustomGradientBtn = ({
       <chakra.button
         h={12}
         px={6}
-        color="#gray.800"
+        color="gray.800"
         _dark={{ color: "#ffffff" }}
         size={size}
         fontWeight={"semibold"}

@@ -9,7 +9,7 @@ const Loader = () => {
         <Rings
           height="80"
           width="80"
-          color="#4fa94d"
+          color="#2C74B3"
           radius="6"
           wrapperStyle={{}}
           wrapperClass=""

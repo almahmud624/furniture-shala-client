@@ -20,6 +20,7 @@ import { AuthContext } from "../../Context/AuthProvider";
 import { DataStoreContext } from "../../Context/DataProvider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Loader from "../../Component/Loader";
 
 let settings = {
   dots: false,
@@ -66,78 +67,90 @@ const ProductSlider = () => {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [productInfo, setProductInfo] = useState();
-  const { products } = useContext(DataStoreContext);
+  const { products, isLoading, isError, error } = useContext(DataStoreContext);
 
   return (
     <div>
-      <Box mt={[0, 0, 32]} mb={[0, 0, "2rem"]}>
-        <Slider {...settings}>
-          {products?.map((product) => (
-            <div key={Math.random()}>
-              <Box px={2}>
-                <Card
-                  maxW="sm"
-                  margin={"auto"}
-                  bgGradient="linear(to-b, #ffffff, #2D3748)"
-                  _dark={{ bgGradient: "linear(to-b, #1A202C, #2D3748)" }}
-                >
-                  <CardBody>
-                    <Box height={"150px"} width={"100%"}>
-                      <Image
-                        src={product?.productImg}
-                        alt="Green double couch with wooden legs"
-                        borderRadius="md"
-                        w={"100%"}
-                        h={"100%"}
-                        objectFit={"cover"}
-                      />
-                    </Box>
-                    <Stack mt="6" spacing="3">
-                      <Heading
-                        size="sm"
-                        fontWeight={"normal"}
-                        noOfLines={1}
-                        color="gray.200"
-                        _dark={{ color: "gray.200" }}
-                      >
-                        {product?.productName}
-                      </Heading>
-                    </Stack>
-                  </CardBody>
-                  <Divider bg={"primary"} />
-                  <CardFooter
-                    justifyContent={"space-between"}
-                    alignItems={"center"}
+      {isLoading ? (
+        <Loader />
+      ) : isError ? (
+        <Text>{error}</Text>
+      ) : products?.length === 0 ? (
+        <Text>Product Not Found</Text>
+      ) : (
+        <Box mt={[0, 0, 32]} mb={[0, 0, "2rem"]}>
+          <Slider {...settings}>
+            {products?.map((product) => (
+              <div key={Math.random()}>
+                <Box px={2}>
+                  <Card
+                    maxW="sm"
+                    margin={"auto"}
+                    bgGradient="linear(to-b, #ffffff, #2D3748)"
+                    _dark={{ bgGradient: "linear(to-b, #1A202C, #2D3748)" }}
                   >
-                    <Button
-                      variant="solid"
-                      size={"sm"}
-                      bg="primary"
-                      color={"gray.300"}
-                      borderRadius="sm"
-                      _hover={{ bg: "secondary" }}
-                      transition={"all .3s"}
-                      onClick={() => {
-                        setProductInfo(product);
-                        onOpen();
-                        !user?.uid && navigate("/login");
-                      }}
+                    <CardBody>
+                      <Box height={"150px"} width={"100%"}>
+                        <Image
+                          src={product?.productImg}
+                          alt="Green double couch with wooden legs"
+                          borderRadius="md"
+                          w={"100%"}
+                          h={"100%"}
+                          objectFit={"cover"}
+                        />
+                      </Box>
+                      <Stack mt="6" spacing="3">
+                        <Heading
+                          size="sm"
+                          fontWeight={"normal"}
+                          noOfLines={1}
+                          color="gray.200"
+                          _dark={{ color: "gray.200" }}
+                        >
+                          {product?.productName}
+                        </Heading>
+                      </Stack>
+                    </CardBody>
+                    <Divider bg={"primary"} />
+                    <CardFooter
+                      justifyContent={"space-between"}
+                      alignItems={"center"}
                     >
-                      Buy now
-                    </Button>
-                    <Text color="primary" fontSize="xl">
-                      ${product?.newPrice}
-                    </Text>
-                  </CardFooter>
-                </Card>
-              </Box>
-            </div>
-          ))}
-        </Slider>
-        <FormModal isOpen={isOpen} onClose={onClose} modalTitle={"demo"}>
-          <OrderForm user={user} productInfo={productInfo} onClose={onClose} />
-        </FormModal>
-      </Box>
+                      <Button
+                        variant="solid"
+                        size={"sm"}
+                        bg="primary"
+                        color={"gray.300"}
+                        borderRadius="sm"
+                        _hover={{ bg: "secondary" }}
+                        transition={"all .3s"}
+                        onClick={() => {
+                          setProductInfo(product);
+                          onOpen();
+                          !user?.uid && navigate("/login");
+                        }}
+                      >
+                        Buy now
+                      </Button>
+                      <Text color="primary" fontSize="xl">
+                        ${product?.newPrice}
+                      </Text>
+                    </CardFooter>
+                  </Card>
+                </Box>
+              </div>
+            ))}
+          </Slider>
+          <FormModal isOpen={isOpen} onClose={onClose} modalTitle={"demo"}>
+            <OrderForm
+              user={user}
+              productInfo={productInfo}
+              onClose={onClose}
+            />
+          </FormModal>
+        </Box>
+      )}
     </div>
   );
 };

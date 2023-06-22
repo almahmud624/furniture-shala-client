@@ -49,35 +49,44 @@ const ShopProduct = ({ onOpen }) => {
     error,
     data: products,
     isFetching,
-  } = useQuery(
-    ["users", page],
-    async () => {
-      const res = await axios.get(
-        `https://furniture-shala-server.vercel.app/products?_limit=6&_page=${page}`
-      );
-
-      return res.data;
+    isPreviousData,
+  } = useQuery({
+    queryKey: ["products", page],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get(
+          `https://furniture-shala-server.vercel.app/products?_limit=6&_page=${page}`
+        );
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
     },
-    { keepPreviousData: true }
-  );
+    keepPreviousData: true,
+    staleTime: 5000,
+  });
+
+  const sortProductsFn = (values) => {
+    return values?.sort((a, b) => {
+      switch (sort) {
+        case "to-low":
+          return b.newPrice - a.newPrice;
+        case "to-high":
+          return a.newPrice - b.newPrice;
+        case "most-sold":
+          return b.totalSelled - a.totalSelled;
+        case "latest":
+          const dateA = new Date(a.createdAt);
+          const dateB = new Date(b.createdAt);
+          return dateB - dateA;
+        default:
+          return 0;
+      }
+    });
+  };
 
   // sort products
-  const sortedProducts = products?.sort((a, b) => {
-    switch (sort) {
-      case "to-low":
-        return b.newPrice - a.newPrice;
-      case "to-high":
-        return a.newPrice - b.newPrice;
-      case "most-sold":
-        return b.totalSelled - a.totalSelled;
-      case "latest":
-        const dateA = new Date(a.createdAt);
-        const dateB = new Date(b.createdAt);
-        return dateB - dateA;
-      default:
-        return 0;
-    }
-  });
+  const sortedProducts = sortProductsFn(products);
 
   // filter prodcuts
   const filteredProducts = allProducts
@@ -136,9 +145,12 @@ const ShopProduct = ({ onOpen }) => {
     });
 
   // const finally products show by condition
-  const showProducts = showFilterProducts ? filteredProducts : sortedProducts;
+  const showProducts = showFilterProducts
+    ? sortProductsFn(filteredProducts)
+    : sortedProducts;
 
   const { length: productsLength } = showProducts || [];
+
   return (
     <>
       <Box>
@@ -165,7 +177,7 @@ const ShopProduct = ({ onOpen }) => {
         </Flex>
         <Grid
           templateColumns={
-            productsLength === 0
+            productsLength === 0 || isError
               ? "1fr"
               : {
                   base: "1fr",
@@ -178,7 +190,14 @@ const ShopProduct = ({ onOpen }) => {
           {isLoading ? (
             <Loader />
           ) : isError ? (
-            <Text>Error:{error.message}</Text>
+            <Box
+              h={"md"}
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              <Heading>{error?.message}</Heading>
+            </Box>
           ) : productsLength === 0 ? (
             <Box
               h={"md"}
@@ -186,7 +205,7 @@ const ShopProduct = ({ onOpen }) => {
               alignItems={"center"}
               justifyContent={"center"}
             >
-              <Heading>No Products Found</Heading>
+              <Heading color={"red.600"}>No Products Found</Heading>
             </Box>
           ) : (
             showProducts?.map((product) => (
@@ -204,10 +223,7 @@ const ShopProduct = ({ onOpen }) => {
               Prev Page
             </Button>
 
-            <Button
-              onClick={() => setPage((prevState) => prevState + 1)}
-              disabled={showFilterProducts}
-            >
+            <Button onClick={() => setPage((prevState) => prevState + 1)}>
               Next Page
             </Button>
             <Text fontWeight={"semibold"}>

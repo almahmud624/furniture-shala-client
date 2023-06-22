@@ -92,7 +92,7 @@ const FeaturedProduct = () => {
           key={Math.random()}
           bg={"gray.900"}
           w={{ base: "full", md: "50%" }}
-          h={{ base: 40, md: "56" }}
+          h={{ base: 40, md: 56, lg: 56, "2xl": 64 }}
           pos={"relative"}
         >
           <Flex justify={"space-between"} alignItems={"center"} gap={4}>
@@ -139,7 +139,11 @@ const FeaturedProduct = () => {
                 Save {calculatePercentage(oldPrice, newPrice)}%
               </Text>
             </VStack>
-            <Box h={{ base: 40, md: "56" }} w={"72"} flexGrow={1}>
+            <Box
+              h={{ base: 40, md: 56, lg: 56, "2xl": 64 }}
+              w={"72"}
+              flexGrow={1}
+            >
               <LazyLoadImage
                 src={productImg}
                 height={"100%"}

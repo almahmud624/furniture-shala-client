@@ -22,7 +22,12 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
   return (
     <>
       <Flex gap={5} justify={"space-between"}>
-        <Box w={"xl"} h={{ base: 40, md: 56 }} bg={"gray.900"} pos={"relative"}>
+        <Box
+          w={{ lg: "xl", "2xl": "full" }}
+          h={{ base: 40, md: 56, lg: 56, "2xl": 64 }}
+          bg={"gray.900"}
+          pos={"relative"}
+        >
           <Flex h={"full"}>
             <Box w={{ base: "60%", md: "65%" }}>
               <Flex color={"gray.200"} h={"full"} align={"center"}>
@@ -124,7 +129,7 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
               <Box
                 pos={"absolute"}
                 top={"-10%"}
-                left={{ base: "-11%", md: "-8%" }}
+                left={{ base: "-11%", md: "-8%", lg: "-8%", "2xl": "-6%" }}
                 scale={2}
                 w={"8"}
                 h={"8"}
@@ -135,7 +140,7 @@ const ProductCoupon = ({ product, onOpen, setProductInfo, setCoupon }) => {
               <Box
                 pos={"absolute"}
                 bottom={"-10%"}
-                left={{ base: "-11%", md: "-8%" }}
+                left={{ base: "-11%", md: "-8%", lg: "-8%", "2xl": "-6%" }}
                 scale={2}
                 w={"8"}
                 h={"8"}

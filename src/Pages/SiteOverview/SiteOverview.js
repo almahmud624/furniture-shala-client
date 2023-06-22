@@ -33,7 +33,6 @@ const SiteOverview = () => {
     <Stack
       direction={{ base: "column", md: "row" }}
       my={"24"}
-      maxW={"7xl"}
       mx={"auto"}
       bg={"#EEEFF0"}
       _dark={{ bg: "#1E2532" }}

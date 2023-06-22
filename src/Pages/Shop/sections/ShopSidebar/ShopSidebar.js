@@ -1,26 +1,20 @@
 import { Box, Button, Flex, HStack, Text } from "@chakra-ui/react";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, {
+  Suspense,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { DataStoreContext } from "../../../../Context/DataProvider";
 import { useNavigate } from "react-router-dom";
 import useGetQueryValue from "../../../../Hooks/useGetQueryValue";
-const PriceRangeSlider = React.lazy(() =>
-  import("../../../../Component/PriceRangeSlider/PriceRangeSlider")
-);
-const SidebarCategories = React.lazy(() =>
-  import("../../../../Component/SidebarCategories/SidebarCategories")
-);
-const Discount = React.lazy(() =>
-  import("../../../../Component/Discount/Discount")
-);
-const SiderbarSeller = React.lazy(() =>
-  import("../../../../Component/SiderbarSellerFilter/SiderbarSeller")
-);
-const ProductUsageYear = React.lazy(() =>
-  import("../../../../Component/ProductUsageYear/ProductUsageYear")
-);
-const FilterByLocation = React.lazy(() =>
-  import("../../../../Component/FilterByLocation/FilterByLocation")
-);
+import PriceRangeSlider from "../../../../Component/PriceRangeSlider/PriceRangeSlider";
+import SidebarCategories from "../../../../Component/SidebarCategories/SidebarCategories";
+import Discount from "../../../../Component/Discount/Discount";
+import SiderbarSeller from "../../../../Component/SiderbarSellerFilter/SiderbarSeller";
+import ProductUsageYear from "../../../../Component/ProductUsageYear/ProductUsageYear";
+import FilterByLocation from "../../../../Component/FilterByLocation/FilterByLocation";
 
 const ShopSidebar = () => {
   const { products } = useContext(DataStoreContext);
@@ -137,28 +131,28 @@ const ShopSidebar = () => {
           </Button>
         </HStack>
         <Flex flexDir={"column"} gap={5}>
-          <React.Suspense fallback={<Text>Loading...</Text>}>
+          <Suspense fallback={<Text>Loading...</Text>}>
             <PriceRangeSlider
               max={maximumPrice}
               min={minimumPrice}
               {...commonProps}
             />
-          </React.Suspense>
-          <React.Suspense fallback={<Text>Loading...</Text>}>
+          </Suspense>
+          <Suspense fallback={<Text>Loading...</Text>}>
             <SidebarCategories {...commonProps} />
-          </React.Suspense>
-          <React.Suspense fallback={<Text>Loading...</Text>}>
+          </Suspense>
+          <Suspense fallback={<Text>Loading...</Text>}>
             <Discount {...commonProps} />
-          </React.Suspense>
-          <React.Suspense fallback={<Text>Loading...</Text>}>
+          </Suspense>
+          <Suspense fallback={<Text>Loading...</Text>}>
             <SiderbarSeller {...commonProps} />
-          </React.Suspense>
-          <React.Suspense fallback={<Text>Loading...</Text>}>
+          </Suspense>
+          <Suspense fallback={<Text>Loading...</Text>}>
             <ProductUsageYear {...commonProps} />
-          </React.Suspense>
-          <React.Suspense fallback={<Text>Loading...</Text>}>
+          </Suspense>
+          <Suspense fallback={<Text>Loading...</Text>}>
             <FilterByLocation {...commonProps} />
-          </React.Suspense>
+          </Suspense>
         </Flex>
       </Box>
     </>

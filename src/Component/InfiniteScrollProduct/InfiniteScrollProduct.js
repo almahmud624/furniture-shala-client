@@ -1,17 +1,6 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  Image,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, Text } from "@chakra-ui/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
-import CustomGradientBtn from "../CustomGradientBtn";
 import { useInView } from "react-intersection-observer";
 import { useContext, useEffect } from "react";
 import { ThreeDots } from "react-loader-spinner";

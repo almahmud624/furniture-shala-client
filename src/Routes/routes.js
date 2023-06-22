@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
-import Blog from "../Pages/Blog/Blog";
+
 import CategoryProducts from "../Pages/CategoryProducts/CategoryProducts";
 import AddProduct from "../Pages/DashBoard/AddProduct/AddProduct";
 import AllBuyers from "../Pages/DashBoard/AllBuyers/AllBuyers";
@@ -27,6 +27,9 @@ import Contact from "../Pages/Contact/Contact";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import Coupon from "../Pages/Coupon/Coupon";
 import FlashSale from "../Pages/FlashSale/FlashSale";
+import React, { Suspense } from "react";
+import Loader from "../Component/Loader";
+const Blog = React.lazy(() => import("../Pages/Blog/Blog"));
 
 export const routes = createBrowserRouter([
   {
@@ -45,7 +48,14 @@ export const routes = createBrowserRouter([
         ),
       },
       { path: "/login", element: <LoginSignUp /> },
-      { path: "/blog", element: <Blog /> },
+      {
+        path: "/blog",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Blog />
+          </Suspense>
+        ),
+      },
       { path: "/shop", element: <Shop /> },
       { path: "/search", element: <SearchProduct /> },
       { path: "/become-seller", element: <BecomeASeller /> },
@@ -132,4 +142,5 @@ export const routes = createBrowserRouter([
       },
     ],
   },
+  { path: "*", element: <ErrorPage /> },
 ]);

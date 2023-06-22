@@ -61,16 +61,20 @@ const Header = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Box maxW="7xl" px={{ base: 2, md: 3 }} mt={[5, 10, 16]}>
+      <Box px={{ base: 2, md: 3, "2xl": 0 }} mt={[5, 10, 16]} mx={"auto"}>
         <Stack
-          direction={{ base: "column-reverse", md: "row" }}
-          justifyContent="center"
+          direction={{
+            base: "column-reverse",
+            md: "column-reverse",
+            lg: "row",
+          }}
+          justifyContent={{ lg: "center", "2xl": "space-between" }}
           align={"center"}
           spacing={{ base: 14, md: 36 }}
         >
           <Stack
             justifyContent="center"
-            w={{ base: "sm", md: "2xl" }}
+            w={{ base: "sm", md: "2xl", lg: "2xl", "2xl": "3xl" }}
             boxSizing="border-box"
           >
             <Slider {...settings}>
@@ -121,9 +125,18 @@ const Header = () => {
           </Stack>
           <Box ml={{ base: 0, md: 5 }} pos="relative">
             <Box
-              height={{ base: "250px", md: "350px", lg: "450px" }}
-              // width={"90%"}
-              width={{ base: "250px", md: "350px", lg: "450px" }}
+              height={{
+                base: "250px",
+                md: "350px",
+                lg: "450px",
+                "2xl": "550px",
+              }}
+              width={{
+                base: "250px",
+                md: "350px",
+                lg: "450px",
+                "2xl": "550px",
+              }}
               display={"block"}
             >
               <Slider {...settings}>
@@ -132,13 +145,17 @@ const Header = () => {
                     <Box
                       p={2}
                       borderRadius="64% 36% 53% 47% / 50% 33% 67% 50% "
-                      boxShadow={"0px 0px 14px 0px rgba(0,0,0,0.45) "}
-                      borderWidth={1}
+                      borderWidth={2}
                       borderColor={"secondary"}
                     >
                       <Image
                         w="100%"
-                        height={{ base: "250px", md: "350px", lg: "450px" }}
+                        height={{
+                          base: "250px",
+                          md: "350px",
+                          lg: "450px",
+                          "2xl": "550px",
+                        }}
                         objectFit="cover"
                         src={item}
                         rounded="md"

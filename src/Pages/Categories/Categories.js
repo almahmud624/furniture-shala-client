@@ -51,7 +51,7 @@ const Categories = () => {
       </Box>
 
       <Flex
-        justify={"center"}
+        justify={{ lg: "center", "2xl": "space-between" }}
         align={"center"}
         gap={{ base: 10, md: 20 }}
         py={8}
@@ -71,7 +71,7 @@ const Categories = () => {
               transition={"all .3s"}
             >
               <Link to={`/categories/${category?.categoryName}`}>
-                <Box h={52}>
+                <Box h={{ lg: 52, "2xl": 72 }}>
                   <Image
                     src={category?.categoryImg}
                     alt="Green double couch with wooden legs"

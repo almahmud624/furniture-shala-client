@@ -1,8 +1,10 @@
 import React from "react";
-import { Box, Heading, Text, Button, Flex } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Box, Heading, Text, Flex } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import CustomButton from "../../Component/CustomButton";
 
 const ErrorPage = () => {
+  const navigate = useNavigate();
   return (
     <Flex h={"100vh"} justifyContent={"center"} alignItems={"center"}>
       <Box textAlign="center" py={10} px={6}>
@@ -10,26 +12,18 @@ const ErrorPage = () => {
           display="inline-block"
           as="h2"
           size={"4xl"}
-          bgGradient="linear(to-r, teal.400, primary)"
+          bgGradient="linear(to-t, secondary, primary)"
           backgroundClip="text"
         >
           404
         </Heading>
-        <Text fontSize="18px" mt={3} mb={2}>
-          Page Not Found
+        <Text fontSize="18px" mt={3} mb={2} fontWeight={"semibold"}>
+          Something Happend
         </Text>
         <Text color={"gray.500"} mb={6}>
           The page you're looking for does not seem to exist
         </Text>
-
-        <Button
-          colorScheme="teal"
-          bgGradient="linear(to-r, teal.400, teal.500, teal.600)"
-          color="white"
-          variant="solid"
-        >
-          <Link to="/">Go to Home</Link>
-        </Button>
+        <CustomButton text={"Go To Home"} action={() => navigate("/")} />
       </Box>
     </Flex>
   );

@@ -15,6 +15,8 @@ const DataProvider = ({ children }) => {
     data: products = [],
     isLoading,
     refetch,
+    isError,
+    error,
   } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
@@ -22,7 +24,6 @@ const DataProvider = ({ children }) => {
         const { data } = await axios.get(
           "https://furniture-shala-server.vercel.app/products"
         );
-        refetch();
         return data;
       } catch (error) {
         console.log(error);
@@ -30,10 +31,6 @@ const DataProvider = ({ children }) => {
     },
     // refetchInterval: 1000,
   });
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   const dataStore = {
     sellerProducts,
@@ -44,6 +41,8 @@ const DataProvider = ({ children }) => {
     setReportedItems,
     products,
     isLoading,
+    isError,
+    error,
   };
 
   return (
