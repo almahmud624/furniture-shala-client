@@ -15,7 +15,9 @@ import ReadMoreReadLess from "../../Component/ReadMoreReadLess";
 
 import data from "./blogDB.json";
 import BlogCard from "../../Component/BlogCard/BlogCard";
+import useDynamicTitle from "../../Hooks/useDynamicTitle";
 const Blog = () => {
+  useDynamicTitle("Blog");
   const [selectedBlog, setSelectedBlog] = useState(data[0]);
   function handleBlog(value) {
     window.scrollTo({

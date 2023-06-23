@@ -6,24 +6,17 @@ import {
   Image,
   Text,
   VStack,
-  useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 import CustomGradientBtn from "../CustomGradientBtn";
-import ProductModal from "../ProductDetailsModal/ProductModal";
 import WishlistButton from "../WishlistButton/WishlistButton";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const GridItemCard = ({ product }) => {
   const { productName, productImg, newPrice, categories } = product || {};
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [queryPath, setQueryPath] = useState("");
-  const { search } = useLocation();
+  const navigate = useNavigate();
   const handleProduct = () => {
-    setQueryPath(search);
-    setSelectedProduct(product);
-    onOpen();
+    navigate(`/product-details/${product?._id}`);
   };
 
   return (
@@ -93,14 +86,6 @@ const GridItemCard = ({ product }) => {
           </VStack>
         </Flex>
       </GridItem>
-      <ProductModal
-        onClose={onClose}
-        onOpen={onOpen}
-        isOpen={isOpen}
-        product={selectedProduct}
-        setSelectedProduct={setSelectedProduct}
-        queryPath={queryPath}
-      />
     </>
   );
 };

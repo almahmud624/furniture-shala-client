@@ -5,13 +5,13 @@ import displayProductCount from "../../../../Utilities/displayItemCount";
 import calculatePercentage from "../../../../Utilities/calculatePercentage";
 import useGetQueryValue from "../../../../Hooks/useGetQueryValue";
 import SortProducts from "../../../../Component/SortProducts/SortProducts";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import GridItemCard from "../../../../Component/GridItemCard/GridItemCard";
 import Loader from "../../../../Component/Loader";
 import { DataStoreContext } from "../../../../Context/DataProvider";
 import NotFound from "../../../../Component/NotFound/NotFound";
 
-const ShopProduct = ({ onOpen }) => {
+const ShopProduct = ({ onOpen, setProductsCount }) => {
   const [sort, setSort] = useState("");
   const { products: allProducts } = useContext(DataStoreContext);
 
@@ -147,7 +147,9 @@ const ShopProduct = ({ onOpen }) => {
     : sortedProducts;
 
   const { length: productsLength } = showProducts || [];
-
+  useEffect(() => {
+    setProductsCount(productsLength);
+  }, [setProductsCount, productsLength]);
   return (
     <>
       <Box>

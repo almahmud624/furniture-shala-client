@@ -31,7 +31,7 @@ const CustomGradientBtn = ({
         onClick={action}
         {...rest}
       >
-        <Link to={link}> {children} </Link>
+        {children}
       </chakra.button>
     </>
   );

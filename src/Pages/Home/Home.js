@@ -11,7 +11,9 @@ import TopSellingProduct from "./Sections/TopSellingProduct/TopSellingProduct";
 import SeasonSale from "./Sections/SeasonSale/SeasonSale";
 import ProductsGrid from "./Sections/ProductsGrid/ProductsGrid";
 import ScrollToTop from "../../Component/ScrollToTop/ScrollToTop";
+import useDynamicTitle from "../../Hooks/useDynamicTitle";
 const Home = () => {
+  useDynamicTitle("Home");
   return (
     <>
       <Box maxWidth={"90%"} margin={"auto"}>

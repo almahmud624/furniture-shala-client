@@ -1,7 +1,6 @@
 import {
   Flex,
   Box,
-  Button,
   VStack,
   FormControl,
   FormLabel,
@@ -9,15 +8,16 @@ import {
   InputGroup,
   InputLeftElement,
   Textarea,
-  Image,
 } from "@chakra-ui/react";
 import { MdOutlineEmail, MdPhone } from "react-icons/md";
 import PageHeader from "../../Component/PageHeader/PageHeader";
 import contactImg from "../../Assets/contact-img.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import CustomButton from "../../Component/CustomButton";
+import useDynamicTitle from "../../Hooks/useDynamicTitle";
 
 export default function Contact() {
+  useDynamicTitle("Contact Us");
   return (
     <Box
       maxW={"90%"}

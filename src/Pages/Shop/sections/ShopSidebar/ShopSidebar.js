@@ -1,11 +1,5 @@
 import { Box, Button, Flex, HStack, Text } from "@chakra-ui/react";
-import React, {
-  Suspense,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { DataStoreContext } from "../../../../Context/DataProvider";
 import { useNavigate } from "react-router-dom";
 import useGetQueryValue from "../../../../Hooks/useGetQueryValue";
@@ -15,8 +9,9 @@ import Discount from "../../../../Component/Discount/Discount";
 import SiderbarSeller from "../../../../Component/SiderbarSellerFilter/SiderbarSeller";
 import ProductUsageYear from "../../../../Component/ProductUsageYear/ProductUsageYear";
 import FilterByLocation from "../../../../Component/FilterByLocation/FilterByLocation";
+import displayProductCount from "../../../../Utilities/displayItemCount";
 
-const ShopSidebar = () => {
+const ShopSidebar = ({ productsCount }) => {
   const { products } = useContext(DataStoreContext);
   const navigate = useNavigate();
   const [queryLoad, setQueryLoad] = useState(false);
@@ -122,6 +117,14 @@ const ShopSidebar = () => {
         overflow={{ base: "none", md: "auto" }}
         id="scrollbar"
       >
+        <Text
+          fontWeight={"thin"}
+          fontSize={"lg"}
+          display={{ base: "block", md: "none" }}
+          mb={5}
+        >
+          {displayProductCount(productsCount, "Product")} Found!
+        </Text>
         <HStack justify={"space-between"} textAlign={"right"} mb={5}>
           <Text fontWeight={"semibold"} fontSize={"lg"}>
             Filter

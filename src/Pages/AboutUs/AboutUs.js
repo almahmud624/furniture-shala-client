@@ -13,6 +13,7 @@ import faqBg from "../../Assets/faq-bg.jpg";
 import aboutBg from "../../Assets/about-us-bg.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import PageHeader from "../../Component/PageHeader/PageHeader";
+import useDynamicTitle from "../../Hooks/useDynamicTitle";
 
 const data = [
   {
@@ -33,6 +34,7 @@ const data = [
 ];
 
 export default function AboutUs() {
+  useDynamicTitle("About Us");
   return (
     <Box maxW={"90%"} mx="auto">
       <Stack

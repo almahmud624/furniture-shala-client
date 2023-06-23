@@ -7,13 +7,12 @@ import {
   Image,
   Text,
   VStack,
-  useDisclosure,
 } from "@chakra-ui/react";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { DataStoreContext } from "../../../../Context/DataProvider";
 import CustomGradientBtn from "../../../../Component/CustomGradientBtn";
 import calculatePercentage from "../../../../Utilities/calculatePercentage";
-import ProductModal from "../../../../Component/ProductDetailsModal/ProductModal";
+import { useNavigate } from "react-router-dom";
 
 const ProductsGrid = () => {
   return (
@@ -75,8 +74,8 @@ const ProductGridItem = ({
   priceText,
   pricePercentage,
 }) => {
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
+
   const { products } = useContext(DataStoreContext);
   // get featured product from local db
   const featuredProduct = JSON.parse(
@@ -90,8 +89,8 @@ const ProductGridItem = ({
     restProducts?.[prodcutIndex] || {};
 
   const handleProduct = () => {
-    setSelectedProduct(restProducts?.[prodcutIndex] || {});
-    onOpen();
+    const product = restProducts?.[prodcutIndex];
+    navigate(`/product-details/${product?._id}`);
   };
 
   return (
@@ -149,13 +148,6 @@ const ProductGridItem = ({
           </VStack>
         </HStack>
       </Box>
-      <ProductModal
-        onClose={onClose}
-        onOpen={onOpen}
-        isOpen={isOpen}
-        product={selectedProduct}
-        setSelectedProduct={setSelectedProduct}
-      />
     </>
   );
 };

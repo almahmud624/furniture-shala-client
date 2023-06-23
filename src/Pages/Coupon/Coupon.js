@@ -5,9 +5,11 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useState } from "react";
 import FormModal from "../../Component/FormModal";
 import OrderForm from "../../Component/OrderForm";
+import useDynamicTitle from "../../Hooks/useDynamicTitle";
 const { Box, Flex, useDisclosure } = require("@chakra-ui/react");
 
 const Coupon = () => {
+  useDynamicTitle("Coupon");
   const products = JSON.parse(
     localStorage.getItem("furniture_shala_featured_product")
   );

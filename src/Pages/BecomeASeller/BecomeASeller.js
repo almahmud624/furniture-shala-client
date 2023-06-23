@@ -17,6 +17,7 @@ import {
 import PageHeader from "../../Component/PageHeader/PageHeader";
 import sellerImg from "../../Assets/seller.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import useDynamicTitle from "../../Hooks/useDynamicTitle";
 const data = [
   {
     title: "Maximize Your Earnings",
@@ -45,6 +46,7 @@ const data = [
 ];
 
 const BecomeASeller = () => {
+  useDynamicTitle("Become Seller");
   return (
     <>
       <Box py={10} maxWidth={"90%"} margin={"auto"}>

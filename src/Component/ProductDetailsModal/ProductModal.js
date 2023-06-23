@@ -19,7 +19,6 @@ const ProductModal = ({
   product = {},
   discount,
   setSelectedProduct,
-  queryPath,
 }) => {
   const [scrollBehavior] = useState("inside");
   const [isOrder, setIsOrder] = useState(false);

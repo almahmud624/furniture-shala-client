@@ -5,7 +5,7 @@ import useAdminSellerCheck from "../../Hooks/useAdminSellerCheck";
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [isAdminSeller] = useAdminSellerCheck();
+  const [isAdminSeller, role] = useAdminSellerCheck();
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -41,16 +41,18 @@ const ScrollToTop = () => {
           <Text
             pos={"absolute"}
             transform={"rotate(90deg)"}
-            bottom={28}
-            right={"-68px"}
+            bottom={20}
+            right={{ base: "-77px", md: "-68px" }}
             w={52}
             h={"full"}
+            textTransform={"capitalize"}
           >
-            View Only Mode Activated
+            {role} Mode Activated
           </Text>
         )}
         <Button
-          rounded={"xl"}
+          size={{ base: "sm", md: "md" }}
+          rounded={"md"}
           borderWidth={1}
           borderColor={"gray.400"}
           className="btn-scrollTop"

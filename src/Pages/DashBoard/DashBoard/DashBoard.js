@@ -11,8 +11,10 @@ import {
 
 import SidebarContent from "./SidebarContent";
 import MobileNav from "./MobileNav";
+import useDynamicTitle from "../../../Hooks/useDynamicTitle";
 
 const DashBoard = ({ children }) => {
+  useDynamicTitle("Dashboard");
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <div>

@@ -17,7 +17,9 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { DataStoreContext } from "../../Context/DataProvider";
 import ProductModal from "../../Component/ProductDetailsModal/ProductModal";
 import { calculateDiscountAmount } from "../../Utilities/calculateDiscountAmount";
+import useDynamicTitle from "../../Hooks/useDynamicTitle";
 const FlashSale = () => {
+  useDynamicTitle("Flash Sale");
   const [couponStatus, setCouponStatus] = useState({});
   const { products } = useContext(DataStoreContext);
   const [selectedProduct, setSelectedProduct] = useState({});

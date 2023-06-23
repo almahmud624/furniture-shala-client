@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import {
   Box,
   Flex,
@@ -15,8 +15,10 @@ import {
   useColorModeValue,
   useColorMode,
   Stack,
-  Text,
   Image,
+  useOutsideClick,
+  Text,
+  AvatarBadge,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -29,12 +31,21 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 import logo2 from "../../Assets/logo2.png";
 import FeaturesMenu from "../../Component/FeaturesMenu/FeaturesMenu";
+import useAdminSellerCheck from "../../Hooks/useAdminSellerCheck";
+import useCheckOnlineStatus from "../../Hooks/useCheckOnlineStatus";
 
 const Navbar = () => {
   const { user, userSignOut } = useContext(AuthContext);
   const [showFeaturesMenu, setShowFeaturesMenu] = useState(false);
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isAdminSeller, role] = useAdminSellerCheck();
+  const isOnline = useCheckOnlineStatus();
+  const ref = useRef();
+  useOutsideClick({
+    ref: ref,
+    handler: () => onClose(),
+  });
   const linkItems = (
     <>
       <Stack spacing={{ base: "6", md: "8" }} align="start">
@@ -109,7 +120,7 @@ const Navbar = () => {
 
   return (
     <>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} ref={ref}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={["sm", "md"]}
@@ -168,12 +179,29 @@ const Navbar = () => {
                           ? user?.photoURL
                           : "https://smartkid.club/assets/images/default-user.png"
                       }
-                    />
+                    >
+                      <AvatarBadge
+                        boxSize="1.25em"
+                        bg={isOnline ? "green.500" : "tomato"}
+                      />
+                    </Avatar>
                   )}
                 </MenuButton>
                 <MenuList zIndex={50}>
-                  <MenuItem>{user?.displayName}</MenuItem>
-                  <MenuItem>Profile</MenuItem>
+                  <MenuItem textTransform={"capitalize"}>
+                    {user?.displayName}
+                  </MenuItem>
+                  {isAdminSeller && (
+                    <MenuItem
+                      bg={"gray.400"}
+                      _dark={{ bg: "gray.800", color: "gray.200" }}
+                    >
+                      Logged in as{" "}
+                      <Text as={"span"} textTransform={"capitalize"} ml={2}>
+                        {role}
+                      </Text>
+                    </MenuItem>
+                  )}
                   <MenuDivider />
                   <MenuItem onClick={() => userSignOut()}>Log Out</MenuItem>
                 </MenuList>

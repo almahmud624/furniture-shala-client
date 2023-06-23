@@ -8,9 +8,13 @@ import {
 
 import ShopProduct from "../../Pages/Shop/sections/ShopProduct/ShopProduct";
 import ShopSidebar from "../../Pages/Shop/sections/ShopSidebar/ShopSidebar";
+import { useState } from "react";
+import useDynamicTitle from "../../Hooks/useDynamicTitle";
 
 export default function Shop() {
+  useDynamicTitle("Shop | Choose your desire");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [productsCount, setProductsCount] = useState();
   return (
     <Box maxW={"90%"} mx={"auto"}>
       <SidebarContent
@@ -27,7 +31,7 @@ export default function Shop() {
         size="full"
       >
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent onClose={onClose} productsCount={productsCount} />
         </DrawerContent>
       </Drawer>
       <Box
@@ -36,13 +40,13 @@ export default function Shop() {
         py={{ base: 6, md: "4" }}
         mt={2}
       >
-        <ShopProduct onOpen={onOpen} />
+        <ShopProduct onOpen={onOpen} setProductsCount={setProductsCount} />
       </Box>
     </Box>
   );
 }
 
-const SidebarContent = ({ onClose, ...rest }) => {
+const SidebarContent = ({ onClose, productsCount, ...rest }) => {
   return (
     <Box
       w={{ base: "full", md: 72 }}
@@ -52,7 +56,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
       top={{ base: 7, md: "24" }}
       p={{ base: 5, md: 0 }}
     >
-      <ShopSidebar />
+      <ShopSidebar productsCount={productsCount} />
       <Button
         mt={7}
         w={"full"}

@@ -154,7 +154,7 @@ export default function OrderForm({
                   color="gray.500"
                   rounded="md"
                 >
-                  11% Discount Applied
+                  Discount Applied
                 </InputRightAddon>
               )}
             </InputGroup>
