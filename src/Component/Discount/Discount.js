@@ -23,6 +23,7 @@ const Discount = ({ filterInfo, setFilterInfo, generateQueryPath }) => {
         <VStack align={"left"} mt={2} color={"gray.200"}>
           {data.map(({ title, value }) => (
             <HStack
+              key={title}
               justify={"space-between"}
               bg={"gray.900"}
               pl={2}

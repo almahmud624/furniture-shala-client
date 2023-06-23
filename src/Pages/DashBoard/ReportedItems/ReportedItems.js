@@ -1,15 +1,10 @@
-import React, { useContext } from "react";
 import {
   Card,
-  CardHeader,
   CardBody,
-  CardFooter,
   Heading,
   Flex,
-  Image,
   Stack,
   Text,
-  Button,
   SimpleGrid,
   Box,
   Badge,
@@ -34,7 +29,6 @@ const ReportedItems = () => {
       }
     },
   });
-  console.log(reportedItems);
 
   if (isLoading) {
     return <Loader />;

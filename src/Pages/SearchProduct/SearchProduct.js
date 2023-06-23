@@ -11,17 +11,19 @@ import {
 import React, { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import InfiniteScrollProduct from "../../Component/InfiniteScrollProduct/InfiniteScrollProduct";
+import useDynamicTitle from "../../Hooks/useDynamicTitle";
 const SearchProduct = () => {
+  useDynamicTitle("Search Product");
   const [searchParams] = useSearchParams();
   const paramQueryText = searchParams.get("_q");
   const paramQueryTagText = searchParams.get("tag");
   const navigate = useNavigate();
-
   const initialQueryCondition =
     paramQueryText || paramQueryTagText
       ? paramQueryText || paramQueryTagText
       : "";
   const [searchQuery, setSearchQuery] = useState(initialQueryCondition);
+
   // using debounce handler making some delay for set price range in query path
   const debounceHandler = (fn, delay) => {
     let timeOutId;

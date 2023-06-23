@@ -58,8 +58,8 @@ const Coupon = () => {
         <Flex
           justify={"space-between"}
           mt={10}
-          flexDir={{ base: "column", md: "row" }}
-          gap={{ base: 5, md: 0 }}
+          flexDir={{ base: "column", md: "column", lg: "row" }}
+          gap={{ base: 5, md: 12, lg: 0 }}
         >
           {products?.map((product) => (
             <ProductCoupon

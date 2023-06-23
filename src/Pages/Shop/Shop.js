@@ -35,7 +35,7 @@ export default function Shop() {
         </DrawerContent>
       </Drawer>
       <Box
-        ml={{ base: 0, md: 80 }}
+        ml={{ base: 0, md: "44", lg: 80 }}
         p={{ base: 0, md: "4" }}
         py={{ base: 6, md: "4" }}
         mt={2}
@@ -49,7 +49,7 @@ export default function Shop() {
 const SidebarContent = ({ onClose, productsCount, ...rest }) => {
   return (
     <Box
-      w={{ base: "full", md: 72 }}
+      w={{ base: "full", md: "40", lg: 72 }}
       pos="absolute"
       h="full"
       {...rest}

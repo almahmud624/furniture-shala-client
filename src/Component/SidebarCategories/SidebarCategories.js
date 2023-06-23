@@ -35,6 +35,7 @@ const SidebarCategories = ({
         <VStack align={"left"} color={"gray.200"}>
           {Object.entries(categoryCounts).map(([categoryName, count]) => (
             <HStack
+              key={categoryName}
               justify={"space-between"}
               bg={"gray.900"}
               pl={2}

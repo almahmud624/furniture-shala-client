@@ -1,4 +1,12 @@
-import { Box, Heading, chakra, Image, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  chakra,
+  Image,
+  Flex,
+  Grid,
+  GridItem,
+} from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -19,7 +27,7 @@ const categories = [
 ];
 const Categories = () => {
   return (
-    <Box mx={"auto"} my={[30, 20, 8]}>
+    <Box mx={"auto"} my={{ base: 30, md: 20, lg: 8 }}>
       <Box>
         <chakra.h2
           mb={4}
@@ -50,15 +58,19 @@ const Categories = () => {
         </chakra.p>
       </Box>
 
-      <Flex
+      <Grid
         justify={{ lg: "center", "2xl": "space-between" }}
         align={"center"}
-        gap={{ base: 10, md: 20 }}
+        gap={{ base: 10, md: 10, lg: 20 }}
         py={8}
-        flexDir={{ base: "column", md: "row" }}
+        templateColumns={{
+          base: "1fr",
+          md: "repeat(2, 1fr)",
+          lg: "repeat(3, 1fr)",
+        }}
       >
         {categories?.map((category) => (
-          <Box role="group" key={Math.random()}>
+          <GridItem role="group" key={Math.random()}>
             <Box
               px={5}
               pt={5}
@@ -101,9 +113,9 @@ const Categories = () => {
                 </Heading>
               </Link>
             </Box>
-          </Box>
+          </GridItem>
         ))}
-      </Flex>
+      </Grid>
     </Box>
   );
 };

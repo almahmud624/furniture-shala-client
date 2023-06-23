@@ -92,7 +92,7 @@ const FeaturedProduct = () => {
         <Box
           key={Math.random()}
           bg={"gray.900"}
-          w={{ base: "full", md: "50%" }}
+          w={{ base: "full", md: "full", lg: "50%" }}
           h={{ base: 40, md: 56, lg: 56, "2xl": 64 }}
           pos={"relative"}
         >

@@ -79,13 +79,13 @@ const ProductDetails = ({ product, setIsOrder, discount }) => {
         <Box my={10} maxW={isDetailsPage ? "90%" : "4xl"} mx={"auto"}>
           <Flex gap={5} flexDir={{ base: "column", md: "row" }}>
             <Box w={{ base: "full", md: isDetailsPage ? "50%" : "40%" }}>
-              <Box w={"full"} h={"full"}>
+              <Box w={"full"} h={isDetailsPage ? "450px" : "full"}>
                 <Image
                   w={"full"}
                   objectFit={"cover"}
                   h={"full"}
                   src={productImg}
-                  rounded={{ base: "md", md: "none" }}
+                  rounded={{ base: "md", md: "sm" }}
                 />
               </Box>
             </Box>

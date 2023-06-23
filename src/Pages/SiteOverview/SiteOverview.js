@@ -31,7 +31,7 @@ const statData = [
 const SiteOverview = () => {
   return (
     <Stack
-      direction={{ base: "column", md: "row" }}
+      direction={{ base: "column", md: "column", lg: "row" }}
       mt={{ base: 16, md: 24 }}
       mb={{ base: 12, md: 24 }}
       mx={"auto"}

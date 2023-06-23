@@ -10,6 +10,7 @@ import GridItemCard from "../../../../Component/GridItemCard/GridItemCard";
 import Loader from "../../../../Component/Loader";
 import { DataStoreContext } from "../../../../Context/DataProvider";
 import NotFound from "../../../../Component/NotFound/NotFound";
+import { ThreeDots } from "react-loader-spinner";
 
 const ShopProduct = ({ onOpen, setProductsCount }) => {
   const [sort, setSort] = useState("");
@@ -223,7 +224,9 @@ const ShopProduct = ({ onOpen, setProductsCount }) => {
               Next Page
             </Button>
             <Text fontWeight={"semibold"}>
-              {isFetching ? "Loading..." : null}
+              {isFetching ? (
+                <ThreeDots height="32" width="32" color="teal" />
+              ) : null}
             </Text>
           </Flex>
         )}

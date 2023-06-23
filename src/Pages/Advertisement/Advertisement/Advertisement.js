@@ -25,24 +25,26 @@ const Advertisement = () => {
             _dark={{
               bg: "gray.800",
             }}
-            pt={{ base: 0, md: 20 }}
-            pb={20}
+            pb={{ base: 20, md: 20, lg: 0 }}
             mx="auto"
           >
             <SimpleGrid
               alignItems="start"
               columns={{
                 base: 1,
-                md: 2,
+                md: 1,
+                lg: 2,
               }}
               mb={24}
               spacingY={{
                 base: 10,
-                md: 32,
+                md: 10,
+                lg: 32,
               }}
               spacingX={{
                 base: 10,
-                md: 24,
+                md: 10,
+                lg: 24,
               }}
             >
               <Box>

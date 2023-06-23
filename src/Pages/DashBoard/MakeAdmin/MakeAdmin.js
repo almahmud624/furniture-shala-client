@@ -68,7 +68,6 @@ const MakeAdmin = () => {
         }
       });
   };
-  console.log(users);
 
   if (isLoading) {
     return <Loader />;

@@ -67,8 +67,6 @@ const MyProducts = () => {
         }
       )
       .then((res) => {
-        console.log(res);
-
         if (res.data.modifiedCount > 0) {
           if (!product.advertisement) {
             toast({

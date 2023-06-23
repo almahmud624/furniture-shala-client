@@ -80,12 +80,18 @@ const Header = () => {
             <Slider {...settings}>
               {textContents?.map((item) => (
                 <React.Fragment key={item}>
-                  <VStack alignItems={{ base: "center", md: "flex-start" }}>
+                  <VStack
+                    alignItems={{
+                      base: "center",
+                      md: "center",
+                      lg: "flex-start",
+                    }}
+                  >
                     <chakra.h1
                       fontSize={["2xl", "3xl", "5xl"]}
                       lineHeight={1.3}
                       fontWeight="bold"
-                      textAlign={{ base: "center", md: "left" }}
+                      textAlign={{ base: "center", md: "center", lg: "left" }}
                     >
                       <chakra.span color="primary">
                         {item?.hightlightTitle1}{" "}
@@ -97,7 +103,7 @@ const Header = () => {
                     </chakra.h1>
                     <Text
                       fontSize={["1em", "1em", "1.1em"]}
-                      textAlign={{ base: "center", md: "left" }}
+                      textAlign={{ base: "center", md: "center", lg: "left" }}
                       lineHeight="1.375"
                       fontWeight="400"
                       color="gray.500"

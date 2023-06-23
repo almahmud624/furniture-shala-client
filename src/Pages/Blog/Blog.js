@@ -34,7 +34,7 @@ const Blog = () => {
         gap={{ base: 0, md: 7 }}
         flexDirection={{ base: "column", sm: "row" }}
         justifyContent="space-between"
-        mb={{ base: 40, md: "10" }}
+        mb={{ base: 40, md: 20, lg: "10" }}
       >
         <Box
           mb={"10"}
@@ -93,7 +93,7 @@ const Blog = () => {
         </Box>
       </Box>
 
-      <Box mt={{ base: 40, md: "10" }}>
+      <Box mt={{ base: 40, md: 40, lg: "10" }}>
         <Heading>Latest Blog</Heading>
         <Divider marginTop="5" />
         <Grid
@@ -101,12 +101,12 @@ const Blog = () => {
           gap={5}
           templateColumns={{
             base: "1fr",
-            md: "repeat(3,1fr)",
+            md: "repeat(2,1fr)",
             lg: "repeat(4,1fr)",
           }}
         >
           {data?.map((item) => (
-            <BlogCard item={item} handleBlog={handleBlog} />
+            <BlogCard item={item} key={item?.title} handleBlog={handleBlog} />
           ))}
         </Grid>
       </Box>
